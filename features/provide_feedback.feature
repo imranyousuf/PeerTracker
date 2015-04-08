@@ -18,6 +18,6 @@ Scenario: give feedback for one student
   And I fill in "content" with "did not participate"
   And I click on "Submit"
   Then I click on "Submitted Feedbacks"
-  And I clikc on "Aladdin"
+  And I click on "Aladdin"
   Then I should see "30"
   Then I should see "did not participate"

@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @student.name
+%p
+  %b Email:
+  = @student.email
+%p
+  %b Quiz1:
+  = @student.quiz1
+%p
+  %b Quiz2:
+  = @student.quiz2
+%p
+  %b Quiz3:
+  = @student.quiz3
+%p
+  %b Overall:
+  = @student.overall
+
+= link_to 'Edit', edit_student_path(@student)
+\|
+= link_to 'Back', students_path

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @teacher.name
+%p
+  %b Email:
+  = @teacher.email
+%p
+  %b Score:
+  = @teacher.score
+
+= link_to 'Edit', edit_teacher_path(@teacher)
+\|
+= link_to 'Back', teachers_path

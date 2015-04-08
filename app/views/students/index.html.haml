@@ -1,5 +1,41 @@
-!!!5
-.html
-.head
-.body
-	This is a test
+%center
+  %h1 List of Students Data
+.media
+  .media-body
+    .container
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Name 
+            %th Email 
+            %th Quiz1 
+            %th Quiz2 
+            %th Quiz3 
+            %th Overall
+            %th
+            %th
+            %th
+
+          %tbody
+            - @students.each do |student|
+              %tr
+                %td= student.name
+                %td= student.email
+                %td= student.quiz1
+                %td= student.quiz2
+                %td= student.quiz3
+                %td= student.overall
+                %td= link_to 'Show', student
+                %td= link_to 'Edit', edit_student_path(student)
+                %td= link_to 'Destroy', student, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+.container
+  %h3 Import Student Data
+  = form_tag import_students_path, multipart: true do 
+    =file_field_tag :file
+    =submit_tag "Upload Data"
+
+  %br
+  %br
+  = link_to 'New Student', new_student_path

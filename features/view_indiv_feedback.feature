@@ -4,7 +4,7 @@ Feature: view feedback for individual student
   So that I can evaluate a student’s contributions
   I want to view all the feedback for an individual student
 
-Background: Given I have a student with mulitple feedbacks
+Background: Given I have a student with multiple feedbacks
   Given I am logged in as a Teacher
   Given the following students exist:
   | name          | team        | teacher         | course

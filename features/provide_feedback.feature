@@ -5,10 +5,10 @@ Feature: provide feedback for teammates
 
 Background:
   Given the following students exist:
-  | name          | team        | teacher         | course
-  | Aladdin       | Brown       | Lion King       | Math
-  | Monkey        | Brown       | Lion King       | Math
-  | Jasmine       | Brown       | Lion King       | Math
+  | name          | team        | teacher         | course |
+  | Aladdin       | Brown       | Lion King       | Math   |
+  | Monkey        | Brown       | Lion King       | Math   |
+  | Jasmine       | Brown       | Lion King       | Math   |
   Given I am logged in as "Jasmine"
 
 Scenario: give feedback for one student

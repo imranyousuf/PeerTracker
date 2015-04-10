@@ -7,17 +7,17 @@ Feature: view feedback for individual student
 Background: Given I have a student with multiple feedbacks
   Given I am logged in as a Teacher
   Given the following students exist:
-  | name          | team        | teacher         | course
-  | Aladdin       | Brown       | Lion King       | Math
-  | Monkey        | Brown       | Lion King       | Math
-  | Jasmine       | Brown       | Lion King       | Math
+  | name          | team        | teacher         | course |
+  | Aladdin       | Brown       | Lion King       | Math   |
+  | Monkey        | Brown       | Lion King       | Math   |
+  | Jasmine       | Brown       | Lion King       | Math   |
   Given the following feedbacks exist:
-  | writer        | recipient   | rating          | content
-  | Aladdin       | Jasmine     | 30              | "OH so pretty"
-  | Monkey        | Jasmine     | 2               | "OH so ugly"
+  | writer        | recipient   | rating          | content        |
+  | Aladdin       | Jasmine     | 30              | "OH so pretty" |
+  | Monkey        | Jasmine     | 2               | "OH so ugly"   |
 
 Scenario: view feedback for one student
   Given I click on "All Students"
   And I follow "Jasmine"
-  I should see "OH so pretty"
-  I should see "OH so ugly"
+  Then I should see "OH so pretty"
+  And I should see "OH so ugly"

@@ -1,0 +1,10 @@
+= simple_form_for(@assignment) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :assignment_name
+    = f.input :course
+    = f.input :deadline
+
+  .form-actions
+    = f.button :submit

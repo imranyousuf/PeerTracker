@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 20150411002836) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "instructors", force: :cascade do |t|
+    t.text     "name"
+    t.text     "sid"
+    t.text     "email"
+    t.text     "teams"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "models", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -48,19 +57,10 @@ ActiveRecord::Schema.define(version: 20150411002836) do
 
   create_table "students", force: :cascade do |t|
     t.text     "name"
+    t.text     "sid"
     t.text     "email"
-    t.integer  "quiz1"
-    t.integer  "quiz2"
-    t.integer  "quiz3"
-    t.text     "overall"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "teachers", force: :cascade do |t|
-    t.text     "name"
-    t.text     "email"
-    t.text     "score"
+    t.text     "instructor"
+    t.text     "team"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

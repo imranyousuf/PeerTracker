@@ -4,20 +4,17 @@
   %b Name:
   = @student.name
 %p
+  %b SID:
+  = @student.sid
+%p
   %b Email:
   = @student.email
 %p
-  %b Quiz1:
-  = @student.quiz1
+  %b Instructor:
+  = @student.instructor
 %p
-  %b Quiz2:
-  = @student.quiz2
-%p
-  %b Quiz3:
-  = @student.quiz3
-%p
-  %b Overall:
-  = @student.overall
+  %b Team:
+  = @student.team
 
 = link_to 'Edit', edit_student_path(@student)
 \|

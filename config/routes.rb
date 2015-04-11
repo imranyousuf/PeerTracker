@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
-  resources :teachers
+  resources :instructors
 
   resources :students do
   	collection { post :import }

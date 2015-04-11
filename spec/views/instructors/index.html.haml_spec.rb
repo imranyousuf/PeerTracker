@@ -1,23 +1,26 @@
 require 'rails_helper'
 
-RSpec.describe "teachers/index", type: :view do
+RSpec.describe "instructors/index", type: :view do
   before(:each) do
-    assign(:teachers, [
-      Teacher.create!(
+    assign(:instructors, [
+      Instructor.create!(
         :name => "MyText",
+        :sid => "MyText",
         :email => "MyText",
-        :score => "MyText"
+        :teams => "MyText"
       ),
-      Teacher.create!(
+      Instructor.create!(
         :name => "MyText",
+        :sid => "MyText",
         :email => "MyText",
-        :score => "MyText"
+        :teams => "MyText"
       )
     ])
   end
 
-  it "renders a list of teachers" do
+  it "renders a list of instructors" do
     render
+    assert_select "tr>td", :text => "MyText".to_s, :count => 2
     assert_select "tr>td", :text => "MyText".to_s, :count => 2
     assert_select "tr>td", :text => "MyText".to_s, :count => 2
     assert_select "tr>td", :text => "MyText".to_s, :count => 2

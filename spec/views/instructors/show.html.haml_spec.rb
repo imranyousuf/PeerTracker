@@ -1,16 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe "teachers/show", type: :view do
+RSpec.describe "instructors/show", type: :view do
   before(:each) do
-    @teacher = assign(:teacher, Teacher.create!(
+    @instructor = assign(:instructor, Instructor.create!(
       :name => "MyText",
+      :sid => "MyText",
       :email => "MyText",
-      :score => "MyText"
+      :teams => "MyText"
     ))
   end
 
   it "renders attributes in <p>" do
     render
+    expect(rendered).to match(/MyText/)
     expect(rendered).to match(/MyText/)
     expect(rendered).to match(/MyText/)
     expect(rendered).to match(/MyText/)

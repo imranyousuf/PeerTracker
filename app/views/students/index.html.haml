@@ -7,11 +7,11 @@
         %thead
           %tr
             %th Name 
+            %th SID 
             %th Email 
-            %th Quiz1 
-            %th Quiz2 
-            %th Quiz3 
-            %th Overall
+            %th Instructor 
+            %th Team 
+            %th
             %th
             %th
             %th
@@ -20,11 +20,10 @@
             - @students.each do |student|
               %tr
                 %td= student.name
+                %td= student.sid
                 %td= student.email
-                %td= student.quiz1
-                %td= student.quiz2
-                %td= student.quiz3
-                %td= student.overall
+                %td= student.instructor
+                %td= student.team
                 %td= link_to 'Show', student
                 %td= link_to 'Edit', edit_student_path(student)
                 %td= link_to 'Destroy', student, :method => :delete, :data => { :confirm => 'Are you sure?' }

@@ -1,10 +1,11 @@
-= simple_form_for(@teacher) do |f|
+= simple_form_for(@instructor) do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :name
+    = f.input :sid
     = f.input :email
-    = f.input :score
+    = f.input :teams
 
   .form-actions
     = f.button :submit

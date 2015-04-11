@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @instructor.name
+%p
+  %b SID:
+  = @instructor.sid
+%p
+  %b Email:
+  = @instructor.email
+%p
+  %b Teams:
+  = @instructor.teams
+
+= link_to 'Edit', edit_instructor_path(@instructor)
+\|
+= link_to 'Back', instructors_path

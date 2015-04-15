@@ -15,15 +15,18 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
-    when /^the new article page$/
-      '/admin/content/new'
-    when /^the edit article page for "(.*)"$/
-      @article = Article.where(title: "#{$1}").first
-      "/admin/content/edit/#{@article.id}"
-    when /^the new category page$/
-      '/admin/categories/new'
-    when /^the edit category page for (.*)$/
-      "/admin/categories/edit/#{$1}"
+    when /^view course page for "(.*)"$/
+      @course = Course.where(name: "#{$1}").first
+      "/courses/#{@course.id}"
+    when /^view team page for course "(.*), team "(.*)"$/
+      @course = Course.where(name: "#{$1}").first
+      @team = Team.where(name: "#{$2}", course_id: @course.id).first
+      "/courses/#{@course.id}/teams/#{@team.id}"
+    when /^new feedback page for course "(.*)", team "(.*)", assignment "(.*)"$/
+      @course = Course.where(name: "#{$1}").first
+      @team = Team.where(name: "#{$2}", course_id: @course.id).first
+      @assignment = Assignment.where(name: "#{3}", course_id: @course.id).first
+      "/courses/#{@course.id}/teams/#{@team.id}/assignment/#{@assignment.id}/feedback/new"
 
     
     # Add more mappings here.

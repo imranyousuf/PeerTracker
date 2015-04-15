@@ -11,15 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415191031) do
-
-  create_table "admins", force: :cascade do |t|
-    t.string   "last_name"
-    t.string   "first_name"
-    t.integer  "uid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20150415233229) do
 
   create_table "assignments", force: :cascade do |t|
     t.string   "assignment_name"
@@ -31,16 +23,16 @@ ActiveRecord::Schema.define(version: 20150415191031) do
 
   create_table "courses", force: :cascade do |t|
     t.string  "course_name"
-    t.integer "professor_id"
+    t.integer "user_id"
   end
 
-  create_table "courses_students", id: false, force: :cascade do |t|
+  create_table "courses_users", id: false, force: :cascade do |t|
     t.integer "course_id"
-    t.integer "student_id"
+    t.integer "user_id"
   end
 
-  add_index "courses_students", ["course_id"], name: "index_courses_students_on_course_id"
-  add_index "courses_students", ["student_id"], name: "index_courses_students_on_student_id"
+  add_index "courses_users", ["course_id"], name: "index_courses_users_on_course_id"
+  add_index "courses_users", ["user_id"], name: "index_courses_users_on_user_id"
 
   create_table "credentials", force: :cascade do |t|
     t.integer "uid"
@@ -50,7 +42,7 @@ ActiveRecord::Schema.define(version: 20150415191031) do
   create_table "feedback_givens", force: :cascade do |t|
     t.text     "comments"
     t.integer  "rating"
-    t.integer  "student_id"
+    t.integer  "user_id"
     t.integer  "assignment_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -59,19 +51,10 @@ ActiveRecord::Schema.define(version: 20150415191031) do
   create_table "feedback_receiveds", force: :cascade do |t|
     t.text     "comments"
     t.integer  "rating"
-    t.integer  "student_id"
+    t.integer  "user_id"
     t.integer  "assignment_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-  end
-
-  create_table "instructors", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "sid"
-    t.string   "email"
-    t.integer  "course_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "models", force: :cascade do |t|
@@ -92,26 +75,21 @@ ActiveRecord::Schema.define(version: 20150415191031) do
   add_index "models", ["email"], name: "index_models_on_email", unique: true
   add_index "models", ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true
 
-  create_table "students", force: :cascade do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name"
-    t.integer  "sid"
-    t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "students_teams", id: false, force: :cascade do |t|
-    t.integer "student_id"
-    t.integer "team_id"
-  end
-
-  add_index "students_teams", ["student_id"], name: "index_students_teams_on_student_id"
-  add_index "students_teams", ["team_id"], name: "index_students_teams_on_team_id"
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+  add_index "roles", ["name"], name: "index_roles_on_name"
 
   create_table "teams", force: :cascade do |t|
     t.string  "name"
     t.integer "course_id"
-    t.integer "instructor_id"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -127,9 +105,25 @@ ActiveRecord::Schema.define(version: 20150415191031) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+
+  create_table "users_teams", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "team_id"
+  end
+
+  add_index "users_teams", ["team_id"], name: "index_users_teams_on_team_id"
+  add_index "users_teams", ["user_id"], name: "index_users_teams_on_user_id"
 
 end

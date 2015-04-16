@@ -5,30 +5,36 @@ Feature:
 
   Background:
     Given the following users exist:
-      | name          | uid          | email            | password | encrypted_password | created_at  | updated_at  |
-      | Kevin Casey   | 00000002     | kev@berkeley.edu | password | no_password        | 30-Nov-2014 | 30-Nov-2014 |
-      | Masta Ruiqi   | 12345678     | rw@carry.com     | password | no_password        | 25-Nov-1992 | 25-Nov-1992 |
-      | Masta Phyllis | 23421232     | pk@carry.com     | password | no_password        | 30-Nov-2000 | 30-Nov-2000 |
+      | name          | user_id          | email            | password | encrypted_password | created_at  | updated_at  |
+      | Kevin Casey   | 00000002         | kev@berkeley.edu | password | no_password        | 30-Nov-2014 | 30-Nov-2014 |
+      | Masta Ruiqi   | 12345678         | rw@carry.com     | password | no_password        | 25-Nov-1992 | 25-Nov-1992 |
+      | Masta Phyllis | 23421232         | pk@carry.com     | password | no_password        | 30-Nov-2000 | 30-Nov-2000 |
+    Given the following roles exist:
+      | name          | 
+      | Admin         |
+      | Instructor    |
+      | Student       |
     Given the following users_roles exist:
-      | user_id | role_id |
-      | 1       | 2       |
-      | 2       | 3       |
-      | 3       | 3       |
+      | user_id  | role_id |
+      | 00000002 | 2       |
+      | 12345678 | 3       |
+      | 23421232 | 3       |
     Given the following courses exist:
-      | course_name |
-      | CS 169      |
+      | course_name | user_id  | 
+      | CS 169      | 00000002 |
     Given the following courses_users exist:
-      | uid         | course_id    |
+      | user_id     | course_id    |
       | 00000002    | 1            |
       | 12345678    | 1            |
       | 23421232    | 1            |
     Given the following teams exist:
-      | name       | course_id | instructor_uid |
-      | Kevin Dogs | 1         | 00000002       |
+      | name       | course_id |
+      | Kevin Dogs | 1         |
     Given the following users_teams exist:
-      | student_uid    | team_id |
-      | 2              | 1       |
-      | 3              | 1       |
+      | user_id    | team_id |
+      | 12345678   | 1       |
+      | 23421232   | 1       |
+      | 00000002   | 1       |
     Given the following assignments exist:
       | assignment_name | course_id | deadline    | created_at  | updated_at  |
       | Project 1       | 1         | 11-Apr-2015 | 04-Apr-2015 | 04-Apr-2015 |

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415234641) do
+ActiveRecord::Schema.define(version: 20150416084053) do
 
   create_table "assignments", force: :cascade do |t|
     t.string   "assignment_name"
@@ -89,7 +89,6 @@ ActiveRecord::Schema.define(version: 20150415234641) do
   create_table "teams", force: :cascade do |t|
     t.string  "name"
     t.integer "course_id"
-    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -107,7 +106,6 @@ ActiveRecord::Schema.define(version: 20150415234641) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "name"
-    t.integer  "uid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

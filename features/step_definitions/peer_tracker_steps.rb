@@ -13,22 +13,33 @@ Given /the following users exist/ do |users_table|
   end
 end
 
+Given /the following roles exist/ do |roles_table|
+  roles_table.hashes.each do |role|
+  	Role.create!(role)
+  end
+end
+
 Given /the following users_roles exist/ do |users_roles_table|
   users_roles_table.hashes.each do |user_role|
-    #@user = User.find(user_role[:user_id])
-    #oles.create!(user_role)
+    @user = User.where(:user_id => user_role[:user_id]).first
+    @role = Role.find(user_role[:role_id])
+    @user.add_role @role.name
   end
 end
 
 Given /the following courses exist/ do |courses_table|
   courses_table.hashes.each do |course|
-  	Course.create!(user)
+  	Course.create!(course)
   end
 end
 
 Given /the following courses_users exist/ do |courses_users_table|
   courses_users_table.hashes.each do |course_user|
-  	CourseUser.create!(course_user)
+    @course = Course.find(course_user[:course_id])
+    @user = User.where(:user_id => course_user[:user_id]).first
+    @user.courses << @course
+    @course.users << @user
+    puts @user.courses.inspect
   end
 end
 
@@ -40,7 +51,10 @@ end
 
 Given /the following users_teams exist/ do |users_teams_table|
   users_teams_table.hashes.each do |user_team|
-  	UserTeam.create!(user_team)
+    @user = User.where(:user_id => user_team[:user_id]).first
+    @team = Team.where(:id => user_team[:team_id]).first
+    @team.users << @user
+    @user.teams << @team
   end
 end
 

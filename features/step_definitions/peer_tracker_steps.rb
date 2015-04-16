@@ -15,7 +15,8 @@ end
 
 Given /the following users_roles exist/ do |users_roles_table|
   users_roles_table.hashes.each do |user_role|
-  	UserRole.create!(user_role)
+    #@user = User.find(user_role[:user_id])
+    #oles.create!(user_role)
   end
 end
 

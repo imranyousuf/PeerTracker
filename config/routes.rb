@@ -1,17 +1,28 @@
 Rails.application.routes.draw do
 
-  resources :assignments
+  #resources :assignments
 
-  resources :feedbacks
+  #resources :feedbacks
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
-  resources :instructors
+  #resources :instructors
 
-  resources :students do
-  	collection { post :import }
+
+  
+  #resources :students do
+  #	collection { post :import }
+  #  end
+
+  root 'users#index'
+
+  resources :users
+  resources :courses do
+    resources :teams do
+      resources :assignments do
+        resources :feedbacks
+      end
+    end
   end
-
-  root 'students#index'
 
 end

@@ -1,4 +1,4 @@
-class AddingCoursesAssignmentsFeedbacks < ActiveRecord::Migration
+class InitialDatabaseSchema < ActiveRecord::Migration
   def change
   	# COURSES table
   	create_table :courses do |t|
@@ -53,18 +53,13 @@ class AddingCoursesAssignmentsFeedbacks < ActiveRecord::Migration
     create_table :teams do |t|
       t.string :name
       t.integer :course_id
-      t.integer :user_id #Instructor ID
     end
     add_foreign_key :teams, :courses
 
-    #adding user_id to USER TABLE
-    add_column :users, :user_id, :integer
-
      #USERS/TEAMS JOIN TABLE
-    create_table :users_teams, id: false do |t|
+    create_table :teams_users, id: false do |t|
     	t.belongs_to :user, index: true
     	t.belongs_to :team, index:true
     end
-
   end
 end

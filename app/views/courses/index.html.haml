@@ -1,19 +1,19 @@
-%h1 Listing courses
+%h1{:align => "center"} Your Courses
 
-%table
+%table.table-bordered{:width => "90%", :align => "center"}
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th{:align => "center"} Course Name
+      %th{:align => "center"} Instructor
+      %th{:align => "center"} Members
 
   %tbody
     - @courses.each do |course|
       %tr
-        %td= link_to 'Show', course
-        %td= link_to 'Edit', edit_course_path(course)
-        %td= link_to 'Destroy', course, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= course.course_name
+        %td= "TODO"
+
+        %td= course.users.map(&:name).join(",")
 
 %br
 
-= link_to 'New Course', new_course_path

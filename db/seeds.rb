@@ -42,20 +42,6 @@
 @pls.users << @j
 @pls.users << @k
 
-@a.courses << @carry
-@b.courses << @carry
-@c.courses << @carry
-@d.courses << @carry
-@e.courses << @carry
-@k.courses << @carry
-
-@f.courses << @pls
-@g.courses << @pls
-@h.courses << @pls
-@i.courses << @pls
-@j.courses << @pls
-@k.courses << @pls
-
 #Creating Teams
 @team1 = Team.create! :name => 'Team1', :course_id => @carry.id
 @team2 = Team.create! :name => 'Team2', :course_id => @carry.id
@@ -76,20 +62,6 @@
 @team4.users << @i
 @team4.users << @j
 @team4.users << @k
-
-@a.teams << @team1
-@b.teams << @team1
-@c.teams << @team1
-@d.teams << @team2
-@e.teams << @team2
-@k.teams << @team2
-
-@f.teams << @team3
-@g.teams << @team3
-@h.teams << @team3
-@i.teams << @team4
-@j.teams << @team4
-@k.teams << @team4
 
 #Adding teams to courses
 @carry.teams << @team1

@@ -1,11 +1,11 @@
 %h1{:align => "center"} Your Courses
 
-%table.responsive{:width => "100%"}
+%table.table-bordered{:width => "90%", :align => "center"}
   %thead
     %tr
-      %th Course Name
-      %th Instructor
-      %th Members
+      %th{:align => "center"} Course Name
+      %th{:align => "center"} Instructor
+      %th{:align => "center"} Members
 
   %tbody
     - @courses.each do |course|
@@ -13,10 +13,7 @@
         %td= course.course_name
         %td= "TODO"
 
-        %td
-          - @course.users.each do |user|
-            user.name
+        %td= course.users.map(&:name).join(",")
 
 %br
 
-= link_to 'New Course', new_course_path

@@ -1,16 +1,16 @@
-%h1 Listing courses
+%h1{:align => "center"} Your Courses
 
-%table
+%table.responsive{:width => "100%"}
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th Course Name
+      %th Instructor
+      %th Members
 
   %tbody
     - @courses.each do |course|
       %tr
-        %td= link_to 'Show', course
+        %td= link_to 'Show', course.name
         %td= link_to 'Edit', edit_course_path(course)
         %td= link_to 'Destroy', course, :method => :delete, :data => { :confirm => 'Are you sure?' }
 

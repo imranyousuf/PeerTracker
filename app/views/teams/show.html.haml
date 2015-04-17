@@ -1,6 +1,16 @@
 %p#notice= notice
 
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
 
-= link_to 'Edit', edit_team_path(@team)
-\|
-= link_to 'Back', teams_path
+  %tbody
+    - @assignments.each do |assignment|
+      %tr
+        %td= link_to "Add feedback for #{assignment.assignment_name}", "/courses/#{@team.course_id}/teams/#{@team.id}/assignments/#{assignment.id}/feedbacks/new"
+
+%br
+

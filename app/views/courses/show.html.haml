@@ -1,6 +1,20 @@
 %p#notice= notice
 
 
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @teams.each do |team|
+      %tr
+        %td= link_to team.name, "/courses/#{@course.id}/teams/#{team.id}/"
+
+%br
+
 = link_to 'Edit', edit_course_path(@course)
 \|
 = link_to 'Back', courses_path

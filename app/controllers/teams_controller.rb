@@ -10,6 +10,9 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
+    @team = Team.find(params[:id])
+    @assignments = Assignment.where("course_id = ? and deadline > ?", @team.course_id, Time.zone.now)
+    puts @assignments
   end
 
   # GET /teams/new

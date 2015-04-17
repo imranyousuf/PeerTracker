@@ -39,7 +39,7 @@ group :development, :test do
   gem 'cucumber-rails', :require => false
   gem 'rspec-rails', '~> 3.2.1'
   gem 'simplecov', '~> 0.9.2'
-
+  gem 'launchy'
 end
 
 group :production do

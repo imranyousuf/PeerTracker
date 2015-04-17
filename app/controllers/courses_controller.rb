@@ -10,6 +10,9 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    puts params[:id]
+    @course = Course.find(params[:id])
+    @teams = Team.where(:course_id => params[:id])
   end
 
   # GET /courses/new

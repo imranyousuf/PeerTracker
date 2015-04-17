@@ -4,7 +4,7 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks
   # GET /feedbacks.json
   def index
-    @feedbacks = Feedback.all
+    @feedbacks = FeedbackReceived.all
   end
 
   # GET /feedbacks/1
@@ -14,7 +14,7 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/new
   def new
-    @feedback = Feedback.new
+    @feedback = FeedbackGiven.new
   end
 
   # GET /feedbacks/1/edit

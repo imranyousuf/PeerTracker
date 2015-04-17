@@ -18,7 +18,7 @@
 @g = User.create! :name => 'G', :email => 'g@test.com', :password => 'gpassword', :password_confirmation => 'gpassword', :user_id => '10000006'
 @h = User.create! :name => 'H', :email => 'h@test.com', :password => 'hpassword', :password_confirmation => 'hpassword', :user_id => '10000007'
 @i = User.create! :name => 'I', :email => 'i@test.com', :password => 'ipassword', :password_confirmation => 'ipassword', :user_id => '10000008'
-@j = User.create! :name => 'J', :email => 'j@test.com', :password => 'jpassword', :password_confirmation => 'jpassword', :user_id => '10000008'
+@j = User.create! :name => 'J', :email => 'j@test.com', :password => 'jpassword', :password_confirmation => 'jpassword', :user_id => '10000009'
 @k = User.create! :name => 'K', :email => 'k@test.com', :password => 'kpassword', :password_confirmation => 'kpassword', :user_id => '10000010'
 
 #Creating Instructor Users

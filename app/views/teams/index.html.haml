@@ -4,13 +4,15 @@
   %thead
     %tr
       %th{:align => "center"} Team Name
+      %th{:align => "center"} Instructor
       %th{:align => "center"} Team Members
 
   %tbody
-    - @teams.each do |team|
+    - @teams_params.each do |team|
       %tr
-        %td= team.name
-        %td= team.users.map(&:name).join(",")
+        %td= team[0]
+        %td= team[1]
+        %td= team[2].join(", ")
 
 %br
 

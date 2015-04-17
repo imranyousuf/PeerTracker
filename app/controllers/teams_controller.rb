@@ -6,6 +6,7 @@ class TeamsController < ApplicationController
   def index
     @teams = current_user.teams.where(:course_id => params[:course_id])
     @course = Course.find(params[:course_id])
+    @teams_params = getTeamNameInstructorandMembers
   end
 
   # GET /teams/1
@@ -74,5 +75,24 @@ class TeamsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def team_params
       params[:team]
+    end
+
+    def getTeamNameInstructorandMembers
+      teams_params = []
+      for team in @teams
+        instructor = "None"
+        users = []
+        for user in team.users
+          if user.has_role? :instructor
+            instructor = user.name
+          elsif user.has_role? :student
+            users << user.name
+          else
+
+          end
+        end
+        teams_params << [team.name, instructor, users]
+      end
+      return teams_params
     end
 end

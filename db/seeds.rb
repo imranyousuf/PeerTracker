@@ -20,11 +20,26 @@
 @i = User.create! :name => 'I', :email => 'i@test.com', :password => 'ipassword', :password_confirmation => 'ipassword', :user_id => '10000008'
 @j = User.create! :name => 'J', :email => 'j@test.com', :password => 'jpassword', :password_confirmation => 'jpassword', :user_id => '10000009'
 @k = User.create! :name => 'K', :email => 'k@test.com', :password => 'kpassword', :password_confirmation => 'kpassword', :user_id => '10000010'
+@a.add_role :student
+@b.add_role :student
+@c.add_role :student
+@d.add_role :student
+@e.add_role :student
+@f.add_role :student
+@g.add_role :student
+@h.add_role :student
+@i.add_role :student
+@j.add_role :student
+@k.add_role :student
+
 
 #Creating Instructor Users
 @mastakevin = User.create! :name => 'MUDDAFUDGING KEVIN', :email => 'kevin@test.com', :password => 'kevinpassword', :password_confirmation => 'kevinpassword', :user_id => '77777777'
+@mastakevin.add_role :instructor
 @phyllis = User.create! :name => 'SERVANT PHIL', :email => 'littleboy@test.com', :password => 'iamsmall', :password_confirmation => 'iamsmall', :user_id => '22222222'
+@phyllis.add_role :instructor
 @mastaricky = User.create! :name => 'MASTA RICKY', :email => 'bigboy@test.com', :password => 'iamswole', :password_confirmation => 'iamswole', :user_id => '88888888'
+@mastaricky.add_role :professor
 
 #User Courses Relations
 @carry = @mastaricky.courses.create! :course_name => 'CARRY101', :user_id => '88888888'
@@ -34,7 +49,7 @@
 @carry.users << @d
 @carry.users << @e
 @carry.users << @k
-@pls = @mastakevin.courses.create! :course_name => 'PLSDOWORK', :user_id => '77777777'
+@pls = @mastaricky.courses.create! :course_name => 'PLSDOWORK', :user_id => '88888888'
 @pls.users << @f
 @pls.users << @g
 @pls.users << @h
@@ -48,7 +63,7 @@
 @team3 = Team.create! :name => 'Team3', :course_id => @pls.id
 @team4 = Team.create! :name => 'Team4', :course_id => @pls.id
 
-#Adding Users to Teams
+#Adding Student Users to Teams
 @team1.users << @a
 @team1.users << @b
 @team1.users << @c
@@ -62,6 +77,12 @@
 @team4.users << @i
 @team4.users << @j
 @team4.users << @k
+
+#Adding Instructor Users to Teams
+@team1.users << @mastakevin
+@team2.users << @mastakevin
+@team3.users << @phyllis
+@team4.users << @phyllis
 
 #Adding teams to courses
 @carry.teams << @team1

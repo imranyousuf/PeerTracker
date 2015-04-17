@@ -4,14 +4,14 @@
   %thead
     %tr
       %th{:align => "center"} Course Name
-      %th{:align => "center"} Instructor
+      %th{:align => "center"} Professor
       %th{:align => "center"} Members
 
   %tbody
     - @courses.each do |course|
       %tr
         %td= link_to course.course_name, course_path(:id => course.id)
-        %td= "TODO"
+        %td= User.where(:user_id => course.user_id).first.name
         %td= course.users.map(&:name).join(",")
 
 %br

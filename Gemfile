@@ -18,6 +18,8 @@ gem "haml-rails", "~> 0.9"
 gem 'rails_admin', '~> 0.6.7'
 gem 'cancancan'
 gem 'rolify'
+gem "factory_girl_rails", "~> 4.0"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

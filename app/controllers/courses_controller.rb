@@ -5,12 +5,13 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @courses = Course.all
+  
   end
 
   # GET /courses/1
   # GET /courses/1.json
   def show
-    puts params[:id]
+    #puts params[:id]
     @course = Course.find(params[:id])
     @teams = Team.where(:course_id => params[:id])
   end
@@ -28,9 +29,9 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(course_params)
-
     respond_to do |format|
-      if @course.save
+      #instructor_exists
+      if !course_name_exists? and instructor_exist? and @course.save
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
         format.json { render :show, status: :created, location: @course }
       else
@@ -44,7 +45,7 @@ class CoursesController < ApplicationController
   # PATCH/PUT /courses/1.json
   def update
     respond_to do |format|
-      if @course.update(course_params)
+      if instructor_exist? and @course.update(course_params)
         format.html { redirect_to @course, notice: 'Course was successfully updated.' }
         format.json { render :show, status: :ok, location: @course }
       else
@@ -72,6 +73,24 @@ class CoursesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
-      params[:course]
+       params.require(:course).permit(:course_name, :user_id)
+    end
+
+    def course_name_exists?
+      all_names = Course.pluck(:course_name)
+      all_names.include? course_params[:course_name]
+    end
+    
+    def instructor_exist?
+      if course_params[:user_id] == nil
+        return true
+      end
+      all_users = User.all
+      for user in all_users
+        if user.has_role? :instructor and user.user_id == course_params[:user_id].to_i
+          return true
+        end
+      end
+      return false
     end
 end

@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
   def show
     #puts params[:id]
     @course = Course.find(params[:id])
-    @teams = Team.where(:course_id => params[:id])
+    redirect_to course_teams_path(:course_id => @course.id)
   end
 
   # GET /courses/new

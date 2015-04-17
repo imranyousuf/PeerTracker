@@ -1,19 +1,16 @@
-%h1 Listing teams
+%h1{:align => "center"}= "Your Teams for " +  @course.course_name
 
-%table
+%table.table-bordered{:width => "90%", :align => "center"}
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th{:align => "center"} Team Name
+      %th{:align => "center"} Team Members
 
   %tbody
     - @teams.each do |team|
       %tr
-        %td= link_to 'Show', team
-        %td= link_to 'Edit', edit_team_path(team)
-        %td= link_to 'Destroy', team, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= team.name
+        %td= team.users.map(&:name).join(",")
 
 %br
 
-= link_to 'New Team', new_team_path

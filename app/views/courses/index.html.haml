@@ -10,9 +10,8 @@
   %tbody
     - @courses.each do |course|
       %tr
-        %td= course.course_name
+        %td= link_to course.course_name, course_path(:id => course.id)
         %td= "TODO"
-
         %td= course.users.map(&:name).join(",")
 
 %br

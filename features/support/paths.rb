@@ -29,7 +29,7 @@ module NavigationHelpers
       @course = Course.where(course_name: "#{$1}").first
       @team = Team.where(name: "#{$2}", course_id: @course.id).first
       @assignment = Assignment.where(assignment_name: "#{$3}", course_id: @course.id).first
-      "/courses/#{@course.id}/teams/#{@team.id}/assignments/#{@assignment.id}/feedback_givens/new"
+      "/courses/#{@course.id}/teams/#{@team.id}/assignments/#{@assignment.id}/feedbacks/new"
 
     
     # Add more mappings here.

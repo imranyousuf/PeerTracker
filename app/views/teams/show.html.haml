@@ -10,7 +10,7 @@
   %tbody
     - @assignments.each do |assignment|
       %tr
-        %td= link_to "Add feedback for #{assignment.assignment_name}", "/courses/#{@team.course_id}/teams/#{@team.id}/assignments/#{assignment.id}/feedback_givens/new"
+        %td= link_to "Add feedback for #{assignment.assignment_name}", "/courses/#{@team.course_id}/teams/#{@team.id}/assignments/#{assignment.id}/feedbacks/new"
 
 %br
 

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :courses do
     resources :teams do
       resources :assignments do
-        resources :feedback_givens, :feedback_receiveds
+        resources :feedbacks
       end
     end
   end

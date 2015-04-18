@@ -4,8 +4,9 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = current_user.teams.where(:course_id => params[:course_id])
+    @teams = current_user.teams.where(:course_id => params[:course_id]).uniq
     @course = Course.find(params[:course_id])
+    @course_id = @course.id
     @teams_params = getTeamNameInstructorandMembers
   end
 
@@ -91,7 +92,7 @@ class TeamsController < ApplicationController
 
           end
         end
-        teams_params << [team.name, instructor, users]
+        teams_params << [team.name, instructor, users, team.id]
       end
       return teams_params
     end

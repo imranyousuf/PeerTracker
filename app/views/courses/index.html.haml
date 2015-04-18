@@ -12,7 +12,12 @@
       %tr
         %td= link_to course.course_name, course_path(:id => course.id)
         %td= User.where(:user_id => course.user_id).first.name
-        %td= course.users.map(&:name).join(",")
+        %td= course.users.select{ |user| user.user_id != course.user_id}.map(&:name).join(",")
+    -
+
+%div{:align => "center"}
+  - if @permission.has_role? :professor
+    = link_to "Add a New Course", new_course_path
 
 %br
 

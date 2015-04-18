@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @courses = current_user.courses
-    puts current_user.roles.all.first
+    @permission = current_user
   end
 
   # GET /courses/1
@@ -28,10 +28,12 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
-    @course = Course.new(course_params)
+    @course = current_user.courses.new(course_params)
+    @course.user_id = @current_user.user_id
     respond_to do |format|
       #instructor_exists
       if !course_name_exists? and professor_exist? and @course.save
+        current_user.courses << @course
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
         format.json { render :show, status: :created, location: @course }
       else

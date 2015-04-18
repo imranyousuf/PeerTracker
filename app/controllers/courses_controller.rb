@@ -11,7 +11,8 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    #puts params[:id]
+    puts params[:id]
+    puts "HEREEEEEEEE"
     @course = Course.find(params[:id])
     if current_user.has_role? :student or current_user.has_role? :instructor
       redirect_to course_teams_path(:course_id => @course.id)

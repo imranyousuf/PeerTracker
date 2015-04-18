@@ -14,7 +14,15 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/new
   def new
-    @feedback = Feedback.new
+    @feedbacks = []
+    team = Team.find(params[:team_id])
+    members = team.users.uniq
+    for m in members
+      f = Feedback.new
+      f.giver_id = current_user.id
+      f.receiver_id = m.id
+      @feedbacks << f
+    end
   end
 
   # GET /feedbacks/1/edit
@@ -28,11 +36,9 @@ class FeedbacksController < ApplicationController
 
     respond_to do |format|
       if @feedback.save
-        format.html { redirect_to @feedback, notice: 'Feedback was successfully created.' }
-        format.json { render :show, status: :created, location: @feedback }
+        format.html { redirect_to course_team_path(params[:course_id], params[:team_id]), notice: 'Feedback was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @feedback.errors, status: :unprocessable_entity }
       end
     end
   end

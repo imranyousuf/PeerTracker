@@ -39,19 +39,13 @@ Feature:
       | assignment_name | course_id | deadline    | created_at  | updated_at  |
       | Project 1       | 1         | 11-Apr-2015 | 04-Apr-2015 | 04-Apr-2015 |
       | Project 2       | 1         | 16-Apr-2300 | 13-Apr-2015 | 13-Apr-2015 |
-    Given I am signed on with uid: 12345678
-    Given I am on view course page for "CS 169"
-    And I follow "Kevin Dogs"
     
-  Scenario: See an option to add a feedback before a deadline
-    Then I should see "Add feedback for Project 2"
-    Then I should not see "Add feedback for Project 1"
-  
   Scenario: Add a new feedback
+    Given I am signed on with uid: 12345678
     Given I am on new feedback page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
-    When I fill in "comment_own" with "i tried so hard" 
-    And I fill in "comment_1" with "pls try harder"
-    And I fill in "rating_1" with "15"
-    And I press "Submit"
+    When I fill in "comments_2" with "i tried so hard" 
+    And I fill in "comments_3" with "pls try harder"
+    And I fill in "rating_3" with "15"
+    And I vague click "submit_3"
     Then I should be on view team page for course "CS 169", team "Kevin Dogs"
-    Then I should see "Succesfully Recorded Feedback for Project 2"
+    Then I should see "Feedback was successfully created"

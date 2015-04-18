@@ -14,7 +14,8 @@ module NavigationHelpers
     case page_name
 
     when /^the sign in page$/
-      '/users/sign_in'
+      new_user_session_path
+      #'/users/sign_in'
     when /^the home\s?page$/
       '/'
     when /^view course page for "(.*)"$/

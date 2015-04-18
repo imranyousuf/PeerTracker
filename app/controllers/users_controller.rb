@@ -4,7 +4,21 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    puts current_user.roles.inspect
+    if current_user != nil 
+      if current_user.has_role? :student
+        redirect_to courses_path 
+      elsif current_user.has_role? :professor 
+        @users = find_students_for_professor
+      elsif current_user.has_role? :instructor
+        @users = find_students_for_instructor 
+      else
+        @users = User.all
+      end 
+    else
+      redirect_to new_user_registration_path
+    end
+  
   end
 
   # GET /users/1
@@ -80,5 +94,33 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params[:user]
+    end
+
+    def find_students_for_professor
+      users = []
+      @professor = current_user
+      @courses = @professor.courses
+      for course in @courses
+        for user in course.users
+          if user.has_role? :student
+            users << user
+          end
+        end
+      end
+      users
+    end
+
+    def find_students_for_instructor
+      users = []
+      @instructor = current_user
+      @teams = @instructor.teams
+      for team in @teams
+        for user in team.users
+          if user.has_role? :student
+            users << user
+          end
+        end
+      end
+    users
     end
 end

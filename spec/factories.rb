@@ -7,7 +7,7 @@ FactoryGirl.define do
     user_id 30000001
   end
 
-  factory :instructor, class: User do
+  factory :professor, class: User do
     name "Kevin Casey"
     email "casey@berkeley.edu"
     password "nomore169"

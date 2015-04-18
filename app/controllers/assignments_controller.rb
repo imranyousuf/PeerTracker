@@ -7,6 +7,12 @@ class AssignmentsController < ApplicationController
     @assignments = Assignment.all
   end
 
+  def professorindex
+    @course = Course.find(params[:id])
+    @assignments = @course.assignments.all
+    @permission = current_user.has_role? :professor
+  end
+
   # GET /assignments/1
   # GET /assignments/1.json
   def show

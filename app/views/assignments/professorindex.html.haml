@@ -1,0 +1,22 @@
+%h1{:align => "center"}= "All Assignments for " + @course.course_name
+
+%table.table-bordered{:width => '90%', :align => 'center'}
+  %thead
+    %tr
+      %th{:align => 'center'} Assignment Name
+      %th Deadline
+      - if @permission
+        %th
+
+  %tbody
+    - @assignments.each do |assignment|
+      %tr
+        %td= assignment.assignment_name
+        %td= assignment.deadline
+        %td= link_to "Edit this assignment", edit_course_assignment_path(params[:id => @course.id, :assignment_id => assignment.id])
+
+%br
+%div{:align => "center"}
+  - if @permission
+    = link_to 'New Assignment', new_course_assignment_path
+%br

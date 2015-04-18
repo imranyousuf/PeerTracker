@@ -1,5 +1,15 @@
-%h1 New user
+%h1 Add New User(s)
 
 = render 'form'
+%br
+.container
+  %h4 Import User Data
+  = form_tag import_users_path, multipart: true do 
+    =file_field_tag :file
+    =submit_tag "Upload Data"
+%br
+
+
+
 
 = link_to 'Back', users_path

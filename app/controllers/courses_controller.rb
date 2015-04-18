@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     respond_to do |format|
       #instructor_exists
-      if !course_name_exists? and instructor_exist? and @course.save
+      if !course_name_exists? and professor_exist? and @course.save
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
         format.json { render :show, status: :created, location: @course }
       else
@@ -45,7 +45,7 @@ class CoursesController < ApplicationController
   # PATCH/PUT /courses/1.json
   def update
     respond_to do |format|
-      if instructor_exist? and @course.update(course_params)
+      if professor_exist? and @course.update(course_params)
         format.html { redirect_to @course, notice: 'Course was successfully updated.' }
         format.json { render :show, status: :ok, location: @course }
       else
@@ -81,13 +81,13 @@ class CoursesController < ApplicationController
       all_names.include? course_params[:course_name]
     end
     
-    def instructor_exist?
+    def professor_exist?
       if course_params[:user_id] == nil
         return true
       end
       all_users = User.all
       for user in all_users
-        if user.has_role? :instructor and user.user_id == course_params[:user_id].to_i
+        if user.has_role? :professor and user.user_id == course_params[:user_id].to_i
           return true
         end
       end

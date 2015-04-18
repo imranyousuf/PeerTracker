@@ -61,6 +61,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def import
+    begin
+      User.import(params[:file])
+      redirect_to users_path, notice: "User Data successfully uploaded"
+    rescue
+      redirect_to users_path, notice: "Invalid CSV file format" 
+    end 
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

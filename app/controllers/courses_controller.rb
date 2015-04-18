@@ -14,7 +14,12 @@ class CoursesController < ApplicationController
     puts params[:id]
     puts "HEREEEEEEEE"
     @course = Course.find(params[:id])
-    redirect_to course_teams_path(:course_id => @course.id)
+    if current_user.has_role? :student or current_user.has_role? :instructor
+      redirect_to course_teams_path(:course_id => @course.id)
+    elsif current_user.has_role? :professor
+      redirect_to all_assignments_path(params[:id])
+    else
+    end
   end
 
   # GET /courses/new

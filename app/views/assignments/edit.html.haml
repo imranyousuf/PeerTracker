@@ -1,7 +1,5 @@
-%h1 Editing assignment
+%container{:align => "center"}
 
-= render 'form'
-
-= link_to 'Show', @assignment
-\|
-= link_to 'Back', course_team_assignments_path
+  = render 'form'
+  %div{:align => "center"}
+    = link_to 'Back', all_assignments_path(:id => @course.id), :style => "width: 40%; margin: 0 auto; text-align: center"

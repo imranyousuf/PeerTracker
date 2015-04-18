@@ -33,6 +33,7 @@ class Ability
       can :manage, :all
     elsif  user.has_role? :professor
       can :manage, Course
+      can :manage, Assignment
     elsif user.has_role? :instructor
       can :manage, Team
       can :read, Feedback

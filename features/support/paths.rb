@@ -20,8 +20,9 @@ module NavigationHelpers
     when /^view course page for "(.*)"$/
       puts "#{$1}"
       @course = Course.where(course_name: "#{$1}").first
-      "/courses/#{@course.id}"
-    when /^view team page for course "(.*), team "(.*)"$/
+      #"/courses/#{@course.id}"
+      course_path(@course.id)
+    when /^view team page for course "(.*)", team "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       @team = Team.where(name: "#{$2}", course_id: @course.id).first
       "/courses/#{@course.id}/teams/#{@team.id}"

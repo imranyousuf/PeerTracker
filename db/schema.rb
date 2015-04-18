@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416090452) do
+ActiveRecord::Schema.define(version: 20150418010526) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string   "last_name"
+    t.string   "first_name"
+    t.integer  "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "assignments", force: :cascade do |t|
     t.string   "assignment_name"
@@ -39,22 +47,11 @@ ActiveRecord::Schema.define(version: 20150416090452) do
     t.integer "course_id"
   end
 
-  create_table "feedback_givens", force: :cascade do |t|
-    t.text     "comments"
-    t.integer  "rating"
-    t.integer  "user_id"
-    t.integer  "assignment_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  create_table "feedback_receiveds", force: :cascade do |t|
-    t.text     "comments"
-    t.integer  "rating"
-    t.integer  "user_id"
-    t.integer  "assignment_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+  create_table "feedbacks", force: :cascade do |t|
+    t.string  "comments"
+    t.integer "rating"
+    t.integer "giver_id"
+    t.integer "receiver_id"
   end
 
   create_table "models", force: :cascade do |t|

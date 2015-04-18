@@ -1,11 +1,10 @@
 %h1 New feedback
 
-- resource = @feedback
-= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+= simple_form_for(@feedback, url: new_course_team_assignment_feedback_path(params[:course_id], params[:team_id], params[:assignment_id])) do |f|
   .form-inputs
     = f.input :comments, required: false, autofocus: true
     = f.input :rating, required: false
   .form-actions
     = f.button :submit, "Submit"
 
-= link_to 'Back', feedbacks_path
+

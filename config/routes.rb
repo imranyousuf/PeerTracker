@@ -9,16 +9,14 @@ Rails.application.routes.draw do
   #resources :instructors
 
 
-  
-  #resources :students do
-  #	collection { post :import }
-  #  end
-
   root 'users#index'
 
-  resources :users
+  resources :users do
+    collection {post :import }
+  end
   resources :courses do
     resources :teams do
+      collection { post :import }
       resources :assignments do
         resources :feedbacks
       end

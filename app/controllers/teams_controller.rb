@@ -4,8 +4,9 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = current_user.teams.where(:course_id => params[:course_id])
+    @teams = current_user.teams.where(:course_id => params[:course_id]).uniq
     @course = Course.find(params[:course_id])
+    @course_id = @course.id
     @teams_params = getTeamNameInstructorandMembers
   end
 
@@ -20,6 +21,12 @@ class TeamsController < ApplicationController
         @users << user
       end
     end
+
+    @feedbacks = []
+    for u in @users
+      @feedbacks << Feedback.where("receiver_id = ?", u.id)
+    end
+
     @assignments = Assignment.where("course_id = ? and deadline > ?", @team.course_id, Time.zone.now)
     puts @assignments
   end
@@ -73,6 +80,15 @@ class TeamsController < ApplicationController
     end
   end
 
+  def import
+    begin
+      Team.import(params[:file])
+      redirect_to teams_path, notice: "Team Data successfully uploaded"
+    rescue
+      redirect_to teams_path, notice: "Invalid CSV file format" 
+    end 
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
@@ -98,7 +114,7 @@ class TeamsController < ApplicationController
 
           end
         end
-        teams_params << [team.name, instructor, users]
+        teams_params << [team.name, instructor, users, team.id]
       end
       return teams_params
     end

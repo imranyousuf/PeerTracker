@@ -17,16 +17,17 @@ Rails.application.routes.draw do
   resources :courses do
     resources :teams do
       collection { post :import }
-      resources :assignments, :except => ['create', 'edit', 'update'] do
+      resources :assignments, :except => ['new', 'create', 'edit', 'update'] do
         resources :feedbacks
       end
     end
   end
 
   get 'courses/:id/assignments/new', to: 'assignments#new', :as => 'new_course_assignment'
-  get 'courses/:id/assignments/:assignment_id/', to: 'assignments#edit', :as => 'edit_course_assignment'
-  patch 'courses/:id/assignments/:assignment_id/', to: 'assignments#update'
-  put 'courses/:id/assignments/:assignment_id/', to: 'assignments#update'
+  get 'courses/:id/assignments/:assignment_id/edit', to: 'assignments#edit', :as => 'edit_course_assignment'
+  post 'courses/:id/assignments/', to: 'assignments#create'
+  patch 'courses/:id/assignments/', to: 'assignments#update'
+  put 'courses/:id/assignments/', to: 'assignments#update'
   get 'courses/:id/assignments/', to: 'assignments#professorindex', :as => 'all_assignments'
 
 

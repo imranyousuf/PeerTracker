@@ -92,10 +92,6 @@
 
 @carry.assignments.create! :assignment_name => 'proj1', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 30)
 @carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 29)
-@assignment1 = Assignment.create! :assignment_name => 'proj1'
-@assignment2 = Assignment.create! :assignment_name => 'proj2'
-@carry.assignments << @assignment1
-@carry.assignments << @assignment2
 
 
 

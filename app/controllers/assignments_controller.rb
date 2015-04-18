@@ -9,7 +9,9 @@ class AssignmentsController < ApplicationController
 
   def professorindex
     @course = Course.find(params[:id])
+    puts @course.id
     @assignments = @course.assignments.all
+    puts @assignments.count
     @permission = current_user.has_role? :professor
   end
 
@@ -25,16 +27,19 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/1/edit
   def edit
+    @assignment = Assignment.find(params[:assignment_id])
+    @course = Course.find(params[:id])
   end
 
   # POST /assignments
   # POST /assignments.json
   def create
     @assignment = Assignment.new(assignment_params)
-
+    @course = Course.find(params[:id])
     respond_to do |format|
       if @assignment.save
-        format.html { redirect_to @assignment, notice: 'Assignment was successfully created.' }
+        @course.assignments << @assignment
+        format.html { redirect_to all_assignments_path, notice: 'Assignment was successfully created.' }
         format.json { render :show, status: :created, location: @assignment }
       else
         format.html { render :new }
@@ -48,7 +53,7 @@ class AssignmentsController < ApplicationController
   def update
     respond_to do |format|
       if @assignment.update(assignment_params)
-        format.html { redirect_to @assignment, notice: 'Assignment was successfully updated.' }
+        format.html { redirect_to all_assignments_path, notice: 'Assignment was successfully updated.' }
         format.json { render :show, status: :ok, location: @assignment }
       else
         format.html { render :edit }

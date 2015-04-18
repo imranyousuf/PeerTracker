@@ -90,8 +90,13 @@
 @pls.teams << @team3
 @pls.teams << @team4
 
+#creating feedback and assigning to users
+# @fr1 = @d.feedback_receiveds.create(:comments => 'good job!', :ratings => '1', :user_id => @d.id)
 
-
-
-
+@fr1 = @d.feedback_receiveds << FeedbackReceived.create(:comments => 'good job!', :rating => '1', :user_id => @d.id)
+@fr2 = @d.feedback_receiveds << FeedbackReceived.create(:comments => 'bad job!', :rating => '2', :user_id => @d.id)
+@fr3 = @e.feedback_receiveds << FeedbackReceived.create(:comments => 'wow, so good', :rating => '3', :user_id => @e.id)
+@fr4 = @e.feedback_receiveds << FeedbackReceived.create(:comments => 'good job E!', :rating => '4', :user_id => @e.id)
+@fr5 = @k.feedback_receiveds << FeedbackReceived.create(:comments => 'Needs improvement', :rating => '5', :user_id => @k.id)
+@fr6 = @k.feedback_receiveds << FeedbackReceived.create(:comments => 'Doesnt help at all', :rating => '6', :user_id => @k.id)
 

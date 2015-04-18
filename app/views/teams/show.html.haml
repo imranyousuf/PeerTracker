@@ -1,3 +1,4 @@
+%h1{:align => "center"}= "Feedback for Team " +  @team.name
 %p#notice= notice
 
 %table
@@ -11,6 +12,18 @@
     - @assignments.each do |assignment|
       %tr
         %td= link_to "Add feedback for #{assignment.assignment_name}", "/courses/#{@team.course_id}/teams/#{@team.id}/assignments/#{assignment.id}/feedbacks/new"
+
+  %tbody
+    - @users.each do |member|
+      %tr
+        %h2= member.name
+        - member.feedback_receiveds.each do |f|
+          %tr
+            %h5= "Rating: " + f.rating.to_s
+            %h5= "Comments: " + f.comments
+        / %td= link_to team[0], course_team_path(:id => @teams[i].id)
+        / %td= team[1]
+        / %td= team[2].join(", ")
 
 %br
 

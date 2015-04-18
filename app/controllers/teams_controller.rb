@@ -13,6 +13,13 @@ class TeamsController < ApplicationController
   # GET /teams/1.json
   def show
     @team = Team.find(params[:id])
+    instructor = ""
+    @users = []
+    for user in @team.users
+      if user.has_role? :student
+        @users << user
+      end
+    end
     @assignments = Assignment.where("course_id = ? and deadline > ?", @team.course_id, Time.zone.now)
     puts @assignments
   end

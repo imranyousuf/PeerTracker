@@ -11,9 +11,9 @@ Feature:
       | Masta Phyllis | 23421232         | pk@carry.com     | password | 30-Nov-2000 | 30-Nov-2000 |
     Given the following roles exist:
       | name          | 
-      | Admin         |
-      | Instructor    |
-      | Student       |
+      | admin         |
+      | instructor    |
+      | student       |
     Given the following users_roles exist:
       | user_id  | role_id |
       | 00000002 | 2       |

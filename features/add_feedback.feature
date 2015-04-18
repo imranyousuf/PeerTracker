@@ -5,10 +5,10 @@ Feature:
 
   Background:
     Given the following users exist:
-      | name          | user_id          | email            | password | encrypted_password | created_at  | updated_at  |
-      | Kevin Casey   | 00000002         | kev@berkeley.edu | password | no_password        | 30-Nov-2014 | 30-Nov-2014 |
-      | Masta Ruiqi   | 12345678         | rw@carry.com     | password | no_password        | 25-Nov-1992 | 25-Nov-1992 |
-      | Masta Phyllis | 23421232         | pk@carry.com     | password | no_password        | 30-Nov-2000 | 30-Nov-2000 |
+      | name          | user_id          | email            | password | created_at  | updated_at  |
+      | Kevin Casey   | 00000002         | kev@berkeley.edu | password | 30-Nov-2014 | 30-Nov-2014 |
+      | Masta Ruiqi   | 12345678         | rw@carry.com     | password | 25-Nov-1992 | 25-Nov-1992 |
+      | Masta Phyllis | 23421232         | pk@carry.com     | password | 30-Nov-2000 | 30-Nov-2000 |
     Given the following roles exist:
       | name          | 
       | Admin         |
@@ -49,7 +49,6 @@ Feature:
   
   Scenario: Add a new feedback
     Given I am on new feedback page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
-    Then show me the page
     When I fill in "comment_own" with "i tried so hard" 
     And I fill in "comment_1" with "pls try harder"
     And I fill in "rating_1" with "15"

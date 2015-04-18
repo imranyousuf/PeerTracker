@@ -65,9 +65,13 @@ Given /the following assignments exist:/ do |assignments_table|
 end
 
 Given /^I am signed on with uid: (.+)$/ do |uid|
+  include Devise::TestHelpers
   visit path_to('the sign in page')
   @user = User.where(:user_id => uid.to_i).first
   fill_in("Email", :with=>@user.email)
-  fill_in("Password", :with=>@user.password)
+  puts @user.email
+  puts @user.password
+  puts @user.created_at
+  fill_in("Password", :with=>"password")
   click_button("Log in")
 end

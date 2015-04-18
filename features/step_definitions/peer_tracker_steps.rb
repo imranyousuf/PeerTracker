@@ -7,6 +7,10 @@ Given /^the course is set up:$/ do
 	Course.create() 
 end
 
+Given /^I visit this specific page$/ do
+  visit "/courses/1"
+end
+
 Given(/^the following users exist:$/) do |users_table|
   users_table.hashes.each do |user|
   	User.create!(user)

@@ -100,3 +100,7 @@
 @fr5 = Feedback.create(:comments => 'Needs improvement', :rating => '5', :giver_id => @a.id, :receiver_id => @k.id)
 @fr6 = Feedback.create(:comments => 'Doesnt help at all', :rating => '6', :giver_id => @a.id, :receiver_id => @k.id)
 
+@assignment1 = Assignment.create! :assignment_name => 'proj1'
+@carry.assignments << @assignment1
+
+

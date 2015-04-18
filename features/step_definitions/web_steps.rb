@@ -24,6 +24,12 @@ require 'cgi'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "selectors"))
 
+def select_by_value(id, value)
+  option_xpath = "//*[@id='#{id}']/option[@value='#{value}']"
+  option = find(:xpath, option_xpath).text
+  select(option, :from => id)
+end
+
 module WithinHelpers
   def with_scope(locator)
     locator ? within(*selector_for(locator)) { yield } : yield
@@ -42,6 +48,7 @@ When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
+  puts path_to(page_name)
   visit path_to(page_name)
 end
 
@@ -51,6 +58,10 @@ end
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
   click_button(button)
+end
+
+When /^(?:|I )vague click "(.+)"$/ do |id|
+  find_by_id(id).click
 end
 
 When /^(?:|I )follow "([^"]*)"$/ do |link|

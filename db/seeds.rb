@@ -90,7 +90,8 @@
 @pls.teams << @team3
 @pls.teams << @team4
 
-
+@assignment1 = Assignment.create! :assignment_name => 'proj1'
+@carry.assignments << @assignment1
 
 
 

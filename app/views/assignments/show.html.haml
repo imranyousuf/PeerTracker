@@ -10,6 +10,9 @@
   %b Deadline:
   = @assignment.deadline
 
-= link_to 'Edit', edit_assignment_path(@assignment)
+
+
+= link_to 'Edit', edit_course_team_assignment(@assignment)
+/= link_to 'Edit', edit_assignment_path(@assignment)
 \|
-= link_to 'Back', assignments_path
+= link_to 'Back', course_team_assignments_path

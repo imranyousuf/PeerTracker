@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     resources :teams do
       collection { post :import }
       resources :assignments do
-        resources :feedback_givens, :feedback_receiveds
+        resources :feedbacks
       end
     end
   end

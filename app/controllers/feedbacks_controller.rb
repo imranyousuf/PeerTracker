@@ -14,7 +14,7 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/new
   def new
-    @feedback = FeedbackGiven.new
+    @feedback = Feedback.new
   end
 
   # GET /feedbacks/1/edit

@@ -11,7 +11,7 @@ RSpec.describe "assignments/new", type: :view do
   it "renders new assignment form" do
     render
 
-    assert_select "form[action=?][method=?]", assignments_path, "post" do
+    assert_select "form[action=?][method=?]", course_team_assignments_path, "post" do
 
       assert_select "input#assignment_assignment_name[name=?]", "assignment[assignment_name]"
 

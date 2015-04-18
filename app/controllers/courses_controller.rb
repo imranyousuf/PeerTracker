@@ -12,6 +12,7 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     puts params[:id]
+    puts "HEREEEEEEEE"
     @course = Course.find(params[:id])
     redirect_to course_teams_path(:course_id => @course.id)
   end

@@ -40,7 +40,6 @@ class Ability
       can :create, Feedback
       can :read, Feedback
     else
-      
     end
   end
 end

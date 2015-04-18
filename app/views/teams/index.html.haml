@@ -10,7 +10,7 @@
   %tbody
     - @teams_params.each do |team|
       %tr
-        %td= team[0]
+        %td= link_to team[0], "/courses/#{@course_id}/teams/#{team[3]}"
         %td= team[1]
         %td= team[2].join(", ")
 

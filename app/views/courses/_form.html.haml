@@ -1,7 +1,9 @@
-= simple_form_for(@course) do |f|
+= simple_form_for(@course, :html => {:class => "form-horizontal", :style => "margin: 0 auto; width: 40%;"}) do |f|
+
   = f.error_notification
 
-  .form-inputs
+  .form-input{:width => "70%"}
+    = f.input :course_name, :required => true, placeholder: "Course Name Here"
 
   .form-actions
     = f.button :submit

@@ -1,5 +1,7 @@
-%h1 New course
+%h1{:align => "center"} New course
 
-= render 'form'
+%container{:align => "center"}
 
-= link_to 'Back', courses_path
+  = render 'form'
+  %div{:align => "center"}
+    = link_to 'Back', courses_path, :style => "width: 40%; margin: 0 auto; text-align: center"

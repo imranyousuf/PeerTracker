@@ -3,7 +3,7 @@
 %table
   %thead
     %tr
-      %th Assignment name
+      %th Assignment Name
       %th Course
       %th Deadline
       %th
@@ -16,10 +16,10 @@
         %td= assignment.assignment_name
         %td= assignment.course
         %td= assignment.deadline
-        %td= link_to 'Show', assignment
-        %td= link_to 'Edit', edit_assignment_path(assignment)
-        %td= link_to 'Destroy', assignment, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= link_to 'Show', course_team_assignment
+        %td= link_to 'Edit', edit_course_team_assignment_path(assignment)
+        %td= link_to 'Destroy', course_team_assignment, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
-= link_to 'New Assignment', new_assignment_path
+= link_to 'New Assignment', new_course_team_assignment_path

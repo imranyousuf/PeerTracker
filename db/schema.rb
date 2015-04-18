@@ -34,14 +34,6 @@ ActiveRecord::Schema.define(version: 20150418010526) do
     t.integer "user_id"
   end
 
-  create_table "courses_students", id: false, force: :cascade do |t|
-    t.integer "course_id"
-    t.integer "student_id"
-  end
-
-  add_index "courses_students", ["course_id"], name: "index_courses_students_on_course_id"
-  add_index "courses_students", ["student_id"], name: "index_courses_students_on_student_id"
-
   create_table "courses_users", id: false, force: :cascade do |t|
     t.integer "course_id"
     t.integer "user_id"
@@ -60,15 +52,6 @@ ActiveRecord::Schema.define(version: 20150418010526) do
     t.integer "rating"
     t.integer "giver_id"
     t.integer "receiver_id"
-  end
-
-  create_table "instructors", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "sid"
-    t.string   "email"
-    t.integer  "course_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "models", force: :cascade do |t|
@@ -100,22 +83,6 @@ ActiveRecord::Schema.define(version: 20150418010526) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
 
-  create_table "students", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "sid"
-    t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "students_teams", id: false, force: :cascade do |t|
-    t.integer "student_id"
-    t.integer "team_id"
-  end
-
-  add_index "students_teams", ["student_id"], name: "index_students_teams_on_student_id"
-  add_index "students_teams", ["team_id"], name: "index_students_teams_on_team_id"
-
   create_table "teams", force: :cascade do |t|
     t.string  "name"
     t.integer "course_id"
@@ -144,7 +111,6 @@ ActiveRecord::Schema.define(version: 20150418010526) do
     t.datetime "updated_at"
     t.string   "name"
     t.integer  "user_id"
-    t.string   "password"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

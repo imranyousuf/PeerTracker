@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    puts current_user.roles.inspect
     if current_user != nil 
       if current_user.has_role? :student
         redirect_to courses_path 

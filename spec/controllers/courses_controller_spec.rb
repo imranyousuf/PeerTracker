@@ -28,8 +28,8 @@ RSpec.describe CoursesController, type: :controller do
     # @request.env["devise.mapping"] = Devise.mappings[:student]
     @student = create(:student)
     #puts @student.inspect
-    @instructor = create(:instructor)
-    @instructor.add_role :instructor
+    @professor = create(:professor)
+    @professor.add_role :professor
     @student.add_role :student
 
   end
@@ -58,7 +58,7 @@ RSpec.describe CoursesController, type: :controller do
     it "assigns all appropriate courses as @courses" do
       course = Course.create! valid_attributes
       @student.courses << course
-      @instructor.courses << course     
+      @professor.courses << course     
       get :index, {}, valid_session
       expect(assigns(:courses)).to eq([course])
     end
@@ -76,21 +76,21 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe "GET #new" do
-    it "assigns a new course as @course instructor" do
-      sign_in @instructor
+    it "assigns a new course @course as professor" do
+      sign_in @professor
       get :new, {}, valid_session
       expect(assigns(:course)).to be_a_new(Course)
     end
-    it "does not assign a new course if student" do
+    it "does not assign a new course if student signed on" do
       sign_in @student
       get :new, {}, valid_session
-      
+      expect(assigns(:course).id).to eq(nil) 
     end
   end
 
   describe "GET #edit" do
     it "assigns the requested course as @course" do
-      sign_in @instructor
+      sign_in @professor
       course = Course.create! valid_attributes
       get :edit, {:id => course.to_param}, valid_session
       expect(assigns(:course)).to eq(course)
@@ -99,7 +99,7 @@ RSpec.describe CoursesController, type: :controller do
 
   describe "POST #create" do
     before (:each) do
-      sign_in @instructor
+      sign_in @professor
     end
     
     context "with valid params" do
@@ -142,7 +142,7 @@ RSpec.describe CoursesController, type: :controller do
 
   describe "PUT #update" do
     before (:each) do
-      sign_in @instructor
+      sign_in @professor
     end
     context "with valid params" do
       let(:new_attributes) {
@@ -187,7 +187,7 @@ RSpec.describe CoursesController, type: :controller do
 
   describe "DELETE #destroy" do
     before (:each) do
-      sign_in @instructor
+      sign_in @professor
     end
     it "destroys the requested course" do
       course = Course.create! valid_attributes

@@ -42,6 +42,8 @@ class Ability
       can :update, Feedback
       can :create, Feedback
       can :read, Feedback
+      can :index, Course
+      can :show, Course
     else
     end
   end

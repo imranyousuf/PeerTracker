@@ -5,8 +5,8 @@
   = @feedback.comments
 %p
   %b Ratings:
-  = @feedback.ratings
+  = @feedback.rating
 
-= link_to 'Edit', edit_feedback_path(@feedback)
+= link_to 'Edit', edit_course_team_assignment_feedback_path(:id => @feedback.id, :team_id => params[:team_id], :course_id => params[:course_id], :assignment_id => params[:assignment_id]) 
 \|
-= link_to 'Back', feedbacks_path
+= link_to 'Back', course_team_assignment_feedback_path(:team_id => params[:team_id], :course_id => params[:course_id], :assignment_id => params[:assignment_id])

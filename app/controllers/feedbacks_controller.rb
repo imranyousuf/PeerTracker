@@ -4,7 +4,8 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks
   # GET /feedbacks.json
   def index
-    @feedbacks = FeedbackReceived.all
+    @user = current_user
+    @feedbacks = Feedback.where(team_id: params[:team_id], giver_id: current_user.user_id)
   end
 
   # GET /feedbacks/1
@@ -19,8 +20,8 @@ class FeedbacksController < ApplicationController
     members = team.users.uniq
     for m in members
       f = Feedback.new
-      f.giver_id = current_user.id
-      f.receiver_id = m.id
+      f.giver_id = current_user.user_id
+      f.receiver_id = m.user_id
       @feedbacks << f
     end
   end

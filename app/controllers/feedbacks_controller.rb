@@ -32,6 +32,7 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/1/edit
   def edit
+    @feedback = Feedback.find(params[:id])
   end
 
   # POST /feedbacks
@@ -57,11 +58,10 @@ class FeedbacksController < ApplicationController
   def update
     respond_to do |format|
       if @feedback.update(feedback_params)
-        format.html { redirect_to action: "index", notice: 'Feedback was successfully updated.' }
-        format.json { render :show, status: :ok, location: @feedback }
+        format.html { redirect_to course_team_path(params[:course_id], params[:team_id]), notice: 'Feedback was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @feedback.errors, status: :unprocessable_entity }
+        #format.json { render json: @feedback.errors, status: :unprocessable_entity }
       end
     end
   end

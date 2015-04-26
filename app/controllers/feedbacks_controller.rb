@@ -4,6 +4,10 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks
   # GET /feedbacks.json
   def index
+    @course = Course.find(params[:course_id])
+    @team = @course.teams.find(params[:team_id])
+    @feedbacksgiven = @team.feedbacks.all.where(:giver_id => current_user.user_id)
+    @feedbacksreceived = @team.feedbacks.all.where(:receiver_id => current_user.user_id)
     @user = current_user
     @feedbacks = Feedback.where(team_id: params[:team_id], giver_id: current_user.user_id)
   end
@@ -55,7 +59,6 @@ class FeedbacksController < ApplicationController
     respond_to do |format|
       if @feedback.update(feedback_params)
         format.html { redirect_to course_team_path(params[:course_id], params[:team_id]), notice: 'Feedback was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @feedback }
       else
         format.html { render :edit }
         #format.json { render json: @feedback.errors, status: :unprocessable_entity }

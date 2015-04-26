@@ -1,20 +1,42 @@
-%h1 Listing feedbacks
+%h1{:align => "Center"} Feedbacks
 
-%table
+%br
+
+%h3{:align => "Center"} Feedbacks Given By You
+
+%table.table-bordered{:width => "90%", :align => "center"}
+  %thead
+    %tr
+      %th Member Name
+      %th Comments
+      %th Rating
+
+  %tbody
+    - @feedbacksgiven.each do |feedback|
+      %tr
+        %td= @team.users.all.where(:user_id => feedback.receiver_id).first.name
+        %td= feedback.comments
+        %td= feedback.rating
+        //%td= link_to 'Show', feedback
+        //%td= link_to 'Edit', edit_feedback_path(feedback)
+        //%td= link_to 'Destroy', feedback, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+%h3{:align => "Center"} Feedbacks You Received
+
+%table.table-bordered{:width => "90%", :align => "center"}
   %thead
     %tr
       %th Comments
-      %th Ratings
-      %th
-      %th
+      %th Rating
 
   %tbody
-    - @feedbacks.each do |feedback|
+    - @feedbacksreceived.each do |feedback|
       %tr
         %td= feedback.comments
         %td= feedback.rating
-        %td= link_to 'Show', course_team_assignment_feedback_path(:id => feedback.id, :team_id => params[:team_id], :course_id => params[:course_id], :assignment_id => params[:assignment_id])
-        %td= link_to 'Edit', edit_course_team_assignment_feedback_path(:id => feedback.id, :team_id => params[:team_id], :course_id => params[:course_id], :assignment_id => params[:assignment_id])
 
 %br
+
 

@@ -3,7 +3,7 @@
 = simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/#{@feedback.id}") do |f|
   .form-inputs
     = f.input :comments, required: false, autofocus: true, input_html: {id: "comments_#{@feedback.receiver_id}"}
-    = f.input :rating, required: false, input_html: {id: "rating_#{@feedback.receiver_id}"}
+    = f.input :rating, required: false, input_html: {id: "rating_#{@feedback.receiver_id}", type: "number"}
   .form-actions
     = f.button :submit, "Submit", id: "submit_#{@feedback.receiver_id}"
 

@@ -50,7 +50,7 @@ Background:
     When I fill in "comments_12345678" with "nvm tried so hard" 
     And I vague click "submit_12345678"
     Then I should be on view team page for course "CS 169", team "Kevin Dogs"
-    Then I should see "Feedback was successfully created"
+    Then I should see "Feedback was successfully updated"
     Given I am on all feedbacks page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
     Then I should not see "i suck balls"
     Then I should see "4"

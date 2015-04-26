@@ -32,8 +32,12 @@ class FeedbacksController < ApplicationController
   # POST /feedbacks
   # POST /feedbacks.json
   def create
-    @feedback = Feedback.new(feedback_params)
-
+    @team = Team.find(params[:team_id])
+    if @team == nil
+        flash[:notice] = "Could not find team"
+        redirect_to course_path(params[:course_id])
+    end
+    @feedback = @team.feedbacks.new(feedback_params)
     respond_to do |format|
       if @feedback.save
         format.html { redirect_to course_team_path(params[:course_id], params[:team_id]), notice: 'Feedback was successfully created.' }

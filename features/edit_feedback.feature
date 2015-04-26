@@ -1,25 +1,51 @@
 Feature:
   As a student
-  I want to be able to edit my feedback before a given deadline
-  So that I can update my feedback to accurately reflect my opinions
+  So that I can accurately reflect my opinions on my teammates
+  I want to be able to edit a feedback
 
-  Background:
-    Given the following students exist:
-      | name          | team        | teacher         | course      |
-      | Abby          | USA         | Obama           | IR          |
-      | Briana        | USA         | Obama           | IR          |
-    Given the following feedback exists:
-      | writer        | recipient   | rating          | content     |
-      | Abby          | Briana      | 1               | "u suck"    |
-    Given I am logged in as Abby
+Background:
+   Given the following users exist:
+      | name          | user_id          | email            | password | created_at  | updated_at  |
+      | Kevin Casey   | 00000002         | kev@berkeley.edu | password | 30-Nov-2014 | 30-Nov-2014 |
+      | Masta Ruiqi   | 12345678         | rw@carry.com     | password | 25-Nov-1992 | 25-Nov-1992 |
+      | Masta Phyllis | 23421232         | pk@carry.com     | password | 30-Nov-2000 | 30-Nov-2000 |
+    Given the following roles exist:
+      | name          | 
+      | admin         |
+      | instructor    |
+      | student       |
+    Given the following users_roles exist:
+      | user_id  | role_id |
+      | 00000002 | 2       |
+      | 12345678 | 3       |
+      | 23421232 | 3       |
+    Given the following courses exist:
+      | course_name | user_id  | 
+      | CS 169      | 00000002 |
+    Given the following courses_users exist:
+      | user_id     | course_id    |
+      | 00000002    | 1            |
+      | 12345678    | 1            |
+      | 23421232    | 1            |
+    Given the following teams exist:
+      | name       | course_id |
+      | Kevin Dogs | 1         |
+    Given the following users_teams exist:
+      | user_id    | team_id |
+      | 12345678   | 1       |
+      | 23421232   | 1       |
+      | 00000002   | 1       |
+    Given the following assignments exist:
+      | assignment_name | course_id | deadline    | created_at  | updated_at  |
+      | Project 1       | 1         | 11-Apr-2015 | 04-Apr-2015 | 04-Apr-2015 |
+      | Project 2       | 1         | 16-Apr-2300 | 13-Apr-2015 | 13-Apr-2015 |
 
-  Scenario:
-    Given I am on the edit page for the feedback to "Briana"
-    And I fill in "content" with "u rok"
-    And I fill in "rating" with "9"
-    And I click "Submit"
-    And I am on the view page for the feedback to "Briana"
-    Then I should see "u rok"
-    And I should not see "u suck"
-    And I should see "9"
-    And I should not see "1" 
+  Scenario: Add a new feedback
+    Given I am signed on with uid: 12345678
+    Given I am on new feedback page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
+    When I fill in "comments_2" with "i tried so hard" 
+    And I fill in "comments_3" with "pls try harder"
+    And I fill in "rating_3" with "15"
+    And I vague click "submit_3"
+    Then I should be on view team page for course "CS 169", team "Kevin Dogs"
+    Then I should see "Feedback was successfully created"

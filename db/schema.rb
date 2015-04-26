@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418010526) do
+ActiveRecord::Schema.define(version: 20150426071759) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "last_name"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150418010526) do
     t.integer "rating"
     t.integer "giver_id"
     t.integer "receiver_id"
+    t.integer "team_id"
   end
 
   create_table "models", force: :cascade do |t|

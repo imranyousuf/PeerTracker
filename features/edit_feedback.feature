@@ -47,11 +47,12 @@ Background:
   Scenario: Edit  a new feedback
     Given I am signed on with uid: 12345678
     Given I am on edit feedback page for course "CS 169", team "Kevin Dogs", assignment "Project 2", feedback "1"
-    When I fill in "comments_12345678" with "nvm tried so hard" 
+    When I fill in "comments_12345678" with "nvm tried so hard"
+    When I fill in "rating_12345678" with "1000"
     And I vague click "submit_12345678"
     Then I should be on view team page for course "CS 169", team "Kevin Dogs"
     Then I should see "Feedback was successfully updated"
     Given I am on all feedbacks page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
     Then I should not see "i suck balls"
-    Then I should see "4"
+    Then I should see "1000"
     Then I should see "nvm tried so hard"

@@ -4,14 +4,13 @@ class AssignmentsController < ApplicationController
   # GET /assignments
   # GET /assignments.json
   def index
-    @assignments = Assignment.all
+    @course = Course.find(params[:course_id])
+    @assignments = @course.assignments.all
   end
 
   def professorindex
     @course = Course.find(params[:id])
-    puts @course.id
     @assignments = @course.assignments.all
-    puts @assignments.count
     @permission = current_user.has_role? :professor
   end
 

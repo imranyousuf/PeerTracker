@@ -94,8 +94,21 @@
 @pls.teams << @team3
 @pls.teams << @team4
 
-@carry.assignments.create! :assignment_name => 'proj1', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 30)
+#Creating Assignments for course
+@proj1 = @carry.assignments.create! :assignment_name => 'proj1', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 30)
 @carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 29)
+
+#Creating Feedbacks
+
+@feed1 = Feedback.create! :comments => 'YOU FUDGIN SUCK', :rating => '0', :giver_id => @k.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
+@feed2 = Feedback.create! :comments => 'YOU ALSO FUDGIN SUCK', :rating => '1', :giver_id => @k.user_id, :receiver_id => @d.user_id, :team_id => @team2.id
+@feed3 = Feedback.create! :comments => 'You are the master carrier', :rating => '100', :giver_id => @e.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
+@feed4 = Feedback.create! :comments => 'You are da masta', :rating => '95', :giver_id => @d.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
+
+@proj1.feedbacks << @feed1
+@proj1.feedbacks << @feed2
+@proj1.feedbacks << @feed3
+@proj1.feedbacks << @feed4
 
 
 

@@ -13,14 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20150426071759) do
 
-  create_table "admins", force: :cascade do |t|
-    t.string   "last_name"
-    t.string   "first_name"
-    t.integer  "uid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "assignments", force: :cascade do |t|
     t.string   "assignment_name"
     t.integer  "course_id"
@@ -52,8 +44,12 @@ ActiveRecord::Schema.define(version: 20150426071759) do
     t.integer "rating"
     t.integer "giver_id"
     t.integer "receiver_id"
+    t.integer "assignment_id"
     t.integer "team_id"
   end
+
+  add_index "feedbacks", ["assignment_id"], name: "index_feedbacks_on_assignment_id"
+  add_index "feedbacks", ["team_id"], name: "index_feedbacks_on_team_id"
 
   create_table "models", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

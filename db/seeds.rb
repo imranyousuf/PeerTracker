@@ -57,6 +57,10 @@
 @pls.users << @j
 @pls.users << @k
 
+#Adding Instructors to Courses
+@carry.users << @mastakevin
+@pls.users << @phyllis
+
 #Creating Teams
 @team1 = Team.create! :name => 'Team1', :course_id => @carry.id
 @team2 = Team.create! :name => 'Team2', :course_id => @carry.id

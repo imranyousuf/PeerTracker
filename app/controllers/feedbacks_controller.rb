@@ -8,6 +8,8 @@ class FeedbacksController < ApplicationController
     @team = @course.teams.find(params[:team_id])
     @feedbacksgiven = @team.feedbacks.all.where(:giver_id => current_user.user_id)
     @feedbacksreceived = @team.feedbacks.all.where(:receiver_id => current_user.user_id)
+    @user = current_user
+    @feedbacks = Feedback.where(team_id: params[:team_id], giver_id: current_user.user_id)
   end
 
   # GET /feedbacks/1
@@ -22,8 +24,8 @@ class FeedbacksController < ApplicationController
     members = team.users.uniq
     for m in members
       f = Feedback.new
-      f.giver_id = current_user.id
-      f.receiver_id = m.id
+      f.giver_id = current_user.user_id
+      f.receiver_id = m.user_id
       @feedbacks << f
     end
   end

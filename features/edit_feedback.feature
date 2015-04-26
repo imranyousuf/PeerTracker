@@ -39,13 +39,19 @@ Background:
       | assignment_name | course_id | deadline    | created_at  | updated_at  |
       | Project 1       | 1         | 11-Apr-2015 | 04-Apr-2015 | 04-Apr-2015 |
       | Project 2       | 1         | 16-Apr-2300 | 13-Apr-2015 | 13-Apr-2015 |
+    Given the following feedbacks exist:
+      | comments         | rating | giver_id   | receiver_id | team_id |
+      | i suck balls     | 4      | 12345678   | 12345678    | 1       |
+      | u good brah      | 16     | 12345678   | 23421232    | 1       |
 
-  Scenario: Add a new feedback
+  Scenario: Edit  a new feedback
     Given I am signed on with uid: 12345678
-    Given I am on new feedback page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
-    When I fill in "comments_2" with "i tried so hard" 
-    And I fill in "comments_3" with "pls try harder"
-    And I fill in "rating_3" with "15"
-    And I vague click "submit_3"
+    Given I am on edit feedback page for course "CS 169", team "Kevin Dogs", assignment "Project 2", feedback "1"
+    When I fill in "comments_12345678" with "nvm tried so hard" 
+    And I vague click "submit_12345678"
     Then I should be on view team page for course "CS 169", team "Kevin Dogs"
     Then I should see "Feedback was successfully created"
+    Given I am on all feedbacks page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
+    Then I should not see "i suck balls"
+    Then I should see "4"
+    Then I should see "nvm tried so hard"

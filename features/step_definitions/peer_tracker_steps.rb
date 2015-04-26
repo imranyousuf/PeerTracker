@@ -68,6 +68,12 @@ Given /the following assignments exist:/ do |assignments_table|
   end
 end
 
+Given /the following feedbacks exist:/ do |feedbacks_table|
+  feedbacks_table.hashes.each do |feedback|
+    Feedback.create!(feedback)
+  end
+end
+
 Given /^I am signed on with uid: (.+)$/ do |uid|
   include Devise::TestHelpers
   visit path_to('the sign in page')

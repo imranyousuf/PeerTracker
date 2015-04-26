@@ -32,8 +32,17 @@ module NavigationHelpers
       @team = Team.where(name: "#{$2}", course_id: @course.id).first
       @assignment = Assignment.where(assignment_name: "#{$3}", course_id: @course.id).first
       "/courses/#{@course.id}/teams/#{@team.id}/assignments/#{@assignment.id}/feedbacks/new"
-
+    when /^all feedbacks page for course "(.*)", team "(.*)", assignment "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      @team = Team.where(name: "#{$2}", course_id: @course.id).first
+      @assignment = Assignment.where(assignment_name: "#{$3}", course_id: @course.id).first
+      "/courses/#{@course.id}/teams/#{@team.id}/assignments/#{@assignment.id}/feedbacks"
     
+    when /^edit feedback page for course "(.*)", team "(.*)", assignment "(.*)", feedback "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      @team = Team.where(name: "#{$2}", course_id: @course.id).first
+      @assignment = Assignment.where(assignment_name: "#{$3}", course_id: @course.id).first
+      "/courses/#{@course.id}/teams/#{@team.id}/assignments/#{@assignment.id}/feedbacks/#{$4}/edit"
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

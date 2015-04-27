@@ -42,14 +42,14 @@
 @mastaricky.add_role :professor
 
 #User Courses Relations
-@carry = @mastaricky.courses.create! :course_name => 'CARRY101', :user_id => '88888888'
+@carry = @mastaricky.courses.create! :course_name => 'CARRY 101', :user_id => '88888888'
 @carry.users << @a
 @carry.users << @b 
 @carry.users << @c
 @carry.users << @d
 @carry.users << @e
 @carry.users << @k
-@pls = @mastaricky.courses.create! :course_name => 'PLSDOWORK', :user_id => '88888888'
+@pls = @mastaricky.courses.create! :course_name => 'PLSDOWORK 103', :user_id => '88888888'
 @pls.users << @f
 @pls.users << @g
 @pls.users << @h

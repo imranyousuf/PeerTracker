@@ -15,7 +15,7 @@ class UsersController < ApplicationController
         @users = User.all
       end 
     else
-      redirect_to new_user_registration_path
+      redirect_to user_session_path
     end
   
   end

@@ -1,13 +1,17 @@
-%h1 New feedback
+%container{:align => "center", :width => "70%"}
 
-- @feedbacks.each do |feedback|
-  = render 'form', :feedback => feedback
-  -#= feedback.receiver_id.to_s
-  -#= simple_form_for(feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks") do |f|
-  -#	.form-inputs
-  -#		= f.input :comments, required: false, autofocus: true, input_html: {id: "comments_#{feedback.receiver_id}"}
-  -#		= f.input :rating, required: false, input_html: {id: "rating_#{feedback.receiver_id}"}
-  -#	.form-actions
-  -#		= f.button :submit, "Submit", id: "submit_#{feedback.receiver_id}"
+  %h1 New feedback
+
+
+  = simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/", :html => {:style => "width: 40%; margin: 0 auto"}) do |f|
+    .form-inputs{:width => "90%"}
+      = collection_select(:user, :user_id, @users, :user_id, :name, {:include_blank => "Select a Team Member"})
+      = f.input :comments, :as => :text, input_html: {id: "comments"}
+      = f.input :rating, input_html: {id: "rating"}
+      = f.hidden_field :giver_id, :value => @user.user_id
+    .form-actions
+      = f.button :submit, "Submit", id: "submit"
+
+    //= render 'form', :feedback => feedback
 
 

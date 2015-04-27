@@ -10,6 +10,7 @@
       %th Member Name
       %th Comments
       %th Rating
+      %th
 
   %tbody
     - @feedbacksgiven.each do |feedback|
@@ -18,8 +19,13 @@
         %td= feedback.comments
         %td= feedback.rating
         //%td= link_to 'Show', feedback
-        //%td= link_to 'Edit', edit_feedback_path(feedback)
+        %td= link_to 'Edit', edit_course_team_assignment_feedback_path(:course_id => params[:course_id], :team_id => params[:team_id], :assignment_id => params[:assignment_id], :id => feedback.id)
         //%td= link_to 'Destroy', feedback, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+%div{:align => "Center"} 
+  = link_to 'New Feedback', new_course_team_assignment_feedback_path
 
 %br
 

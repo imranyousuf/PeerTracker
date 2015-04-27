@@ -43,9 +43,9 @@ Feature:
   Scenario: Add a new feedback
     Given I am signed on with uid: 12345678
     Given I am on new feedback page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
-    When I fill in "comments_12345678" with "i tried so hard" 
-    And I fill in "comments_23421232" with "pls try harder"
-    And I fill in "rating_12345678" with "15"
-    And I vague click "submit_12345678"
+    When I select 23421232 from "user[user_id]"
+    And I fill in "comments" with "i tried so hard" 
+    And I fill in "rating" with "15"
+    And I vague click "submit"
     Then I should be on view team page for course "CS 169", team "Kevin Dogs"
     Then I should see "Feedback was successfully created"

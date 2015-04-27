@@ -17,7 +17,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     #@assignments = Assignment.where("course_id = ? and deadline > ?", @team.course_id, Time.zone.now) 
     if current_user.has_role? :student
-      redirect_to course_team_assignments_path, :assignments => @assignments
+      redirect_to course_team_assignments_path(:team_id => @team.id), :assignments => @assignments
     elsif current_user.has_role? :instructor
       flash[:notice] = "not implemented for instructor yet!"
       redirect_to course_teams_path  #TODO
@@ -45,20 +45,28 @@ class TeamsController < ApplicationController
     @team = Team.new(name: team_params[:name], course_id: params[:course_id])
     @team.users << current_user
     @student_sids = put_empty_members
+    error = ""
     begin
       validate_team_members
     rescue Exception => e
-      flash[:error] = e.message
-      render :new
-      return
+      error = e.message
     end
     respond_to do |format|
-      if @team.save
+      if @team.save and error.blank?
         format.html { redirect_to course_teams_path , notice: 'Team was successfully created.' }
         #format.json { render :show, status: :created, location: @team }
       else
+         
+        if !error.blank?
+          @team.errors.add(:validate, error)
+          flash[:error] = error
+        end
+        if @team.errors[:message].empty? and error.blank?
+          flash[:error] = "Team name exists"
+        end
         format.html { render :new }
-        #format.json { render json: @team.errors, status: :unprocessable_entity }
+        #format.html { redirect_to new_course_team_path, notice: @team.errors[:name][0]}
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -145,6 +153,8 @@ class TeamsController < ApplicationController
           if sid.nil? or sid.blank? or sid == "(Optional)"
           elsif  !course.users.include? user
             raise(ArgumentError, "Student with SID: #{sid} is not enrolled in this class")
+          elsif @team.users.include? user
+            raise(ArgumentError, "Student with SID: #{sid} is being added more than once!")
           else
             @team.users << user
           end

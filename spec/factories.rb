@@ -14,4 +14,9 @@ FactoryGirl.define do
     encrypted_password "nomore169"
     user_id 20000001
   end
+  
+  factory :instructor, class: User do
+    name "Bryan Munar"
+    email "bkmunar@berkeley.edu"
+  end
 end

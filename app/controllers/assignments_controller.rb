@@ -36,6 +36,14 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params)
     @course = Course.find(params[:id])
+    if @assignment.assignment_name == ""
+      flash[:error] = "Assignment Name cannot be nil"
+      return redirect_to :action => "new"
+    end
+    if @assignment.deadline < Time.now
+      flash[:error] = "Assignment cannot be due in the past"
+      return redirect_to :action => "new"
+    end
     respond_to do |format|
       if @assignment.save
         @course.assignments << @assignment

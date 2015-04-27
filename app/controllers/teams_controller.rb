@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+
   # GET /teams
   # GET /teams.json
   def index
@@ -12,10 +13,18 @@ class TeamsController < ApplicationController
 
   # GET /teams/1
   # GET /teams/1.json
-  def show
+  def show 
     @team = Team.find(params[:id])
-    @assignments = Assignment.where("course_id = ? and deadline > ?", @team.course_id, Time.zone.now)
-    puts @assignments
+    #@assignments = Assignment.where("course_id = ? and deadline > ?", @team.course_id, Time.zone.now) 
+    if current_user.has_role? :student
+      redirect_to course_team_assignments_path, :assignments => @assignments
+    elsif current_user.has_role? :instructor
+      flash[:notice] = "not implemented for instructor yet!"
+      redirect_to course_teams_path  #TODO
+      return
+    else
+    end
+  
   end
 
   # GET /teams/new
@@ -83,8 +92,7 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to course_teams_path, notice: 'Team was successfully removed.' }
     end
   end
 
@@ -122,7 +130,7 @@ class TeamsController < ApplicationController
 
           end
         end
-        teams_params << [team.name, instructor, users, team.id]
+        teams_params << [team, instructor, users, team.id]
       end
       return teams_params
     end

@@ -8,7 +8,9 @@
 
   .form-inputs
     = f.input :name, required: true, autofocus: true, label: 'Team Name'
-    -#= f.input :student_1_name, required: false,  input_html: { value: nil }, label: "Student 1 Name"
+    <br />
+    = f.label "Remove student by leaving it empty or (Optional)", required: false
+    <br />
     <br />
     - (1..6).each do |n|
       = f.label "Student #{n} SID"

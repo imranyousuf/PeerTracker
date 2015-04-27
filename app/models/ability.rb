@@ -42,6 +42,7 @@ class Ability
       can :read, Feedback
       can :index, Course
       can :show, Course
+      can :manage, Assignment
     elsif user.has_role? :student
       can :read, Team
       can :index, Team

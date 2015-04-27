@@ -34,12 +34,17 @@ class Ability
     elsif  user.has_role? :professor
       can :manage, Course
       can :manage, Assignment
+      can :manage, Team
     elsif user.has_role? :instructor
       can :manage, Team
+      can :index, Team
+      can :new, Team
       can :read, Feedback
       can :index, Course
       can :show, Course
     elsif user.has_role? :student
+      can :read, Team
+      can :index, Team
       can :update, Feedback
       can :create, Feedback
       can :read, Feedback

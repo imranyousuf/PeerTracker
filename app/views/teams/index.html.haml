@@ -6,13 +6,18 @@
       %th{:align => "center"} Team Name
       %th{:align => "center"} Instructor
       %th{:align => "center"} Team Members
-
+      %th
+      %th
   %tbody
     - @teams_params.each do |team|
       %tr
-        %td= link_to team[0], "/courses/#{@course_id}/teams/#{team[3]}/assignments"
+        %td= link_to team[0].name, course_team_path(id: team[3])
         %td= team[1]
         %td= team[2].join(", ")
-
+        %td= link_to "Edit", edit_course_team_path(id: team[3])
+        %td= link_to "Remove", course_team_path(id: team[3]), :method => :delete, :data=> { :confirm => "Are you sure?"}
 %br
 
+%div{:align => "center"}
+  - if current_user.has_role? :instructor
+    = link_to "Add a New Team", new_course_team_path

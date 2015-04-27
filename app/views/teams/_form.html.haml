@@ -1,7 +1,18 @@
-= simple_form_for(@team) do |f|
+= simple_form_for(:team, url: course_teams_path) do |f|
   = f.error_notification
 
   .form-inputs
-
+    = f.input :name, required: true, autofocus: true, label: 'Team Name'
+    -#= f.input :student_1_name, required: false,  input_html: { value: nil }, label: "Student 1 Name"
+    <br />
+    = f.label :leave_empty , "Remove student by leaving it empty or (Optional)"
+    <br />
+    <br />
+    - (1..6).each do |n|
+      = f.label :student_id, "Student #{n} SID"
+      = text_field_tag "student_sid_#{n}", (@student_sids[n] or "(Optional)")
+      <br />
+      <br />
+    <br />
   .form-actions
-    = f.button :submit
+    = f.button :submit, "Save Team", :id => "save_team"

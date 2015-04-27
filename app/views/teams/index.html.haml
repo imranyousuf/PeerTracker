@@ -16,3 +16,6 @@
 
 %br
 
+%div{:align => "center"}
+  - if current_user.has_role? :instructor
+    = link_to "Add a New Team", new_course_team_path

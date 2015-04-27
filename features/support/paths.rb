@@ -19,10 +19,15 @@ module NavigationHelpers
     when /^the home\s?page$/
       '/'
     when /^view course page for "(.*)"$/
-      puts "#{$1}"
       @course = Course.where(course_name: "#{$1}").first
-      #"/courses/#{@course.id}"
       course_path(@course.id)
+    when /^view teams page for course "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      "/courses/#{@course.id}/teams" 
+    when /^edit team page for course "(.*)", team "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      @team = Team.where(name: "#{$2}", course_id: @course.id).first
+      "/courses/#{@course.id}/teams/#{@team.id}/edit"
     when /^view team page for course "(.*)", team "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       @team = Team.where(name: "#{$2}", course_id: @course.id).first
@@ -43,7 +48,8 @@ module NavigationHelpers
       @team = Team.where(name: "#{$2}", course_id: @course.id).first
       @assignment = Assignment.where(assignment_name: "#{$3}", course_id: @course.id).first
       "/courses/#{@course.id}/teams/#{@team.id}/assignments/#{@assignment.id}/feedbacks/#{$4}/edit"
-    # Add more mappings here.
+   
+      # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
     #   when /^(.*)'s profile page$/i

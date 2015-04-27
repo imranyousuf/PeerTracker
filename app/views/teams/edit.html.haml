@@ -1,7 +1,26 @@
 %h1 Editing team
 
-= render 'form'
+-#= render 'form', :team => @team
 
-= link_to 'Show', @team
+
+%container{:align => "center", :width => "90%"}
+  = simple_form_for(:team, url: course_team_path, :method => :put, :html => {:class => "form-horizontal"}) do |f|
+    = f.error_notification
+
+    .form-inputs
+      = f.input :name, required: true, autofocus: true, label: 'Team Name'
+      <br />
+      = f.label "Remove student by leaving it empty or (Optional)", required: false
+      <br />
+      <br />
+      - (1..6).each do |n|
+        = f.label "Student #{n} SID"
+        = text_field_tag "student_sid_#{n}", (@student_sids[n] or ""), :placeholder => "(Optional)"
+        <br />
+        <br />
+      <br />
+    .form-actions
+      = f.button :submit, "Save Team", :id => "save_team"
+-#= link_to 'Show', @team
 \|
-= link_to 'Back', teams_path
+= link_to 'Back', course_teams_path

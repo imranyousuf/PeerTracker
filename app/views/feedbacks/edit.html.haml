@@ -1,7 +1,8 @@
-%h1 Editing feedback
+%h1{:align => "center"}= "Feedback for " + @receiver.first_name + " " + @receiver.last_name
 
-= render 'form'
-
-= link_to 'Show', @feedback
-\|
-= link_to 'Back', feedbacks_path
+%container{:align => "center", :width => "70%"}
+  %br
+  = render 'form'
+  %br
+  %div{:align => "center"}
+    = link_to 'Back', course_team_assignment_feedback_path(:team_id => params[:team_id], :course_id => params[:course_id], :assignment_id => params[:assignment_id]), :style => "width: 40%; margin: 0 auto; text-align: center"

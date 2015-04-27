@@ -1,9 +1,8 @@
-= simple_form_for(@feedback) do |f|
-  = f.error_notification
-
+= simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/#{params[:id]}", :html => {:class => "form-horizontal", :style => "margin: 0 auto; width: 40%;"}) do |f|
   .form-inputs
-    = f.input :comments
-    = f.input :ratings
-
+    = f.input :comments, required: false, autofocus: true, input_html: {id: "comments"}, :as => :text
+    = f.input :rating, required: false, input_html: {id: "rating"}
+    = f.hidden_field :receiver_id, :value => @feedback.receiver_id
   .form-actions
-    = f.button :submit
+    = f.button :submit, "Submit", id: "submit"
+

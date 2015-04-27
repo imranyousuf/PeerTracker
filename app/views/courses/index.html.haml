@@ -5,18 +5,18 @@
     %tr
       %th{:align => "center"} Course Name
       %th{:align => "center"} Professor
-      %th{:align => "center"} Members
-      - if @permission.has_role? :professor
+      - if @permission.has_role?(:professor) || @permission.has_role?(:instructor)
         %th{:align => "center"}
 
   %tbody
     - @courses.each do |course|
       %tr
         %td= link_to course.course_name, course_path(:id => course.id)
-        %td= User.where(:user_id => course.user_id).first.name
-        %td= course.users.select{ |user| user.user_id != course.user_id}.map(&:name).join(",")
+        %td= User.where(:user_id => course.user_id).first.full_name
         - if @permission.has_role? :professor
           %td= link_to "Edit this course", edit_course_path(:id => course.id)
+        - if @permission.has_role? :instructor
+          %td= link_to "See all assignments", all_assignments_path(:id => course.id)
 
 %div{:align => "center"}
   - if @permission.has_role? :professor

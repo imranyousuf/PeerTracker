@@ -1,5 +1,8 @@
 = simple_form_for(@course, :html => {:class => "form-horizontal", :style => "margin: 0 auto; width: 40%;"}) do |f|
 
+  %div{:align => "center"}
+    = "Department Abbreviation (CAPS), followed by a space and Course Number"
+  <br/>
   = f.error_notification
 
   .form-input{:width => "70%"}

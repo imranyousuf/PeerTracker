@@ -4,12 +4,20 @@ class AssignmentsController < ApplicationController
   # GET /assignments
   # GET /assignments.json
   def index
-    @assignments = Assignment.all
+    @course = Course.find(params[:course_id])
+    @assignments = @course.assignments.all
+  end
+
+  def professorindex
+    @course = Course.find(params[:id])
+    @assignments = @course.assignments.all
+    @permission = current_user.has_role?(:instructor) || current_user.has_role?(:professor)
   end
 
   # GET /assignments/1
   # GET /assignments/1.json
   def show
+    redirect_to course_team_assignment_feedbacks_path(:course_id => params[:course_id], :team_id => params[:team_id], :assignment_id => params[:id])
   end
 
   # GET /assignments/new
@@ -19,16 +27,27 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/1/edit
   def edit
+    @assignment = Assignment.find(params[:assignment_id])
+    @course = Course.find(params[:id])
   end
 
   # POST /assignments
   # POST /assignments.json
   def create
     @assignment = Assignment.new(assignment_params)
-
+    @course = Course.find(params[:id])
+    if @assignment.assignment_name == ""
+      flash[:error] = "Assignment Name cannot be nil"
+      return redirect_to :action => "new"
+    end
+    if @assignment.deadline < Time.now
+      flash[:error] = "Assignment cannot be due in the past"
+      return redirect_to :action => "new"
+    end
     respond_to do |format|
       if @assignment.save
-        format.html { redirect_to @assignment, notice: 'Assignment was successfully created.' }
+        @course.assignments << @assignment
+        format.html { redirect_to all_assignments_path, notice: 'Assignment was successfully created.' }
         format.json { render :show, status: :created, location: @assignment }
       else
         format.html { render :new }
@@ -42,7 +61,7 @@ class AssignmentsController < ApplicationController
   def update
     respond_to do |format|
       if @assignment.update(assignment_params)
-        format.html { redirect_to @assignment, notice: 'Assignment was successfully updated.' }
+        format.html { redirect_to all_assignments_path, notice: 'Assignment was successfully updated.' }
         format.json { render :show, status: :ok, location: @assignment }
       else
         format.html { render :edit }

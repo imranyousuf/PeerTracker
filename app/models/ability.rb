@@ -28,17 +28,24 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-
+    user ||= User.new # guest user
     if user.has_role? :admin
       can :manage, :all
     elsif  user.has_role? :professor
       can :manage, Course
+      can :manage, Assignment
+      can :manage, Team
     elsif user.has_role? :instructor
       can :manage, Team
+      can :index, Team
+      can :new, Team
       can :read, Feedback
       can :index, Course
       can :show, Course
+      can :manage, Assignment
     elsif user.has_role? :student
+      can :read, Team
+      can :index, Team
       can :update, Feedback
       can :create, Feedback
       can :read, Feedback

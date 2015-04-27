@@ -123,9 +123,9 @@ class TeamsController < ApplicationController
         users = []
         for user in team.users
           if user.has_role? :instructor
-            instructor = user.name
+            instructor = user.full_name
           elsif user.has_role? :student
-            users << user.name
+            users << user.full_name
           else
 
           end

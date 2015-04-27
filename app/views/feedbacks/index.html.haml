@@ -15,7 +15,7 @@
   %tbody
     - @feedbacksgiven.each do |feedback|
       %tr
-        %td= @team.users.all.where(:user_id => feedback.receiver_id).first.name
+        %td= @team.users.all.where(:user_id => feedback.receiver_id).first.full_name
         %td= feedback.comments
         %td= feedback.rating
         //%td= link_to 'Show', feedback
@@ -25,7 +25,7 @@
 %br
 
 %div{:align => "Center"} 
-  = link_to 'New Feedback', new_course_team_assignment_feedback_path
+  = link_to 'New Feedback', new_course_team_assignment_feedback_path, :id => "newfeedback"
 
 %br
 

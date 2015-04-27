@@ -11,7 +11,7 @@ class AssignmentsController < ApplicationController
   def professorindex
     @course = Course.find(params[:id])
     @assignments = @course.assignments.all
-    @permission = current_user.has_role? :professor
+    @permission = current_user.has_role?(:instructor) || current_user.has_role?(:professor)
   end
 
   # GET /assignments/1

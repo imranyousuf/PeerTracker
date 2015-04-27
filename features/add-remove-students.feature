@@ -7,9 +7,9 @@ Feature: add/remove students
     Given I am logged in as a Teacher
     Given I am on the dashboard of course "CS169"
     Given the following students exist:
-      | name          | team        | teacher         | course      |
-      | Douglas Kim   | USA         | Kevin           | CS169       |
-      | Jonathan Kim  | USA         | Kevin           | CS169       |
+      | first_name          | last_name    |team        | teacher         | course      |
+      | Douglas             | Kim          |USA         | Kevin           | CS169       |
+      | Jonathan            | Kim          |USA         | Kevin           | CS169       |
     Given I am on the "Add/Remove Students" page
 
   Scenario: Add student(s)

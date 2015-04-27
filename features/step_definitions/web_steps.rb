@@ -94,9 +94,13 @@ When /^(?:|I )fill in the following:$/ do |fields|
 end
 
 When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
-  puts value
-  puts field
-  select(value, :from => field)
+  
+  #require 'irb'
+  #require 'irb/completion'
+  #ARGV.clear
+  #IRB.start
+  
+  select value, :from => field
 end
 
 When /^(?:|I )check "([^"]*)"$/ do |field|

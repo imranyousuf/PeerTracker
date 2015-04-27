@@ -5,15 +5,15 @@ Feature:
 
   Background:
     Given the following users exist:
-      | name          | user_id          | email            | password | created_at  | updated_at  |
-      | Kevin Casey   | 00000002         | kev@berkeley.edu | password | 30-Nov-2014 | 30-Nov-2014 |
-      | Masta Ruiqi   | 12345678         | rw@carry.com     | password | 25-Nov-1992 | 25-Nov-1992 |
-      | Masta Phyllis | 23421232         | pk@carry.com     | password | 30-Nov-2000 | 30-Nov-2000 |
+      | first_name    | last_name       | user_id          | email            | password | created_at  | updated_at  |
+      | Kevin         | Casey           | 00000002         | kev@berkeley.edu | password | 30-Nov-2014 | 30-Nov-2014 |
+      | Masta         | Ruiqi           | 12345678         | rw@carry.com     | password | 25-Nov-1992 | 25-Nov-1992 |
+      | Masta         | Phyllis         | 23421232         | pk@carry.com     | password | 30-Nov-2000 | 30-Nov-2000 |
     Given the following roles exist:
       | name          | 
-      | Admin         |
-      | Instructor    |
-      | Student       |
+      | admin         |
+      | instructor    |
+      | student       |
     Given the following users_roles exist:
       | user_id  | role_id |
       | 00000002 | 2       |
@@ -42,10 +42,11 @@ Feature:
     
   Scenario: Add a new feedback
     Given I am signed on with uid: 12345678
-    Given I am on new feedback page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
-    When I select 23421232 from "user[user_id]"
+    Given I am on all feedbacks page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
+    And I vague click "newfeedback"
+    When I select "Masta Phyllis" from "user[user_id]"
     And I fill in "comments" with "i tried so hard" 
     And I fill in "rating" with "15"
     And I vague click "submit"
-    Then I should be on view team page for course "CS 169", team "Kevin Dogs"
+    Then I should be on all feedbacks page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
     Then I should see "Feedback was successfully created"

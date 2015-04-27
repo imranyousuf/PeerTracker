@@ -1,14 +1,14 @@
 %h1 Add New Team
 
-= render 'form', :team => @team
-
-%br
+%container{:align => "center", :width => "90%"}
+  = render 'form', :team => @team
+  %br
 
 -#.container
   %h3 Import Team Data
   = form_tag import_teams_path, multipart: true do 
     =file_field_tag :file
     =submit_tag "Upload Data"
-%br
+  %br
 
 -#= link_to 'Back', teams_path

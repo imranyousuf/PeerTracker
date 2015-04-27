@@ -4,6 +4,7 @@ class Team < ActiveRecord::Base
 	has_many :feedbacks
   belongs_to :course
 	belongs_to :instructor
+  validates :name, uniqueness: { case_sensitive: false, scope: :course_id, message: "Team name exists"}
 
    def self.import(file)
        CSV.foreach(file.path, headers: true) do |row|

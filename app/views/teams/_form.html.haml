@@ -1,6 +1,6 @@
-= simple_form_for(:team, url: course_teams_path) do |f|
+= simple_form_for(:team, url: course_teams_path, :html => {:class => "form-horizontal"}) do |f|
+  
   = f.error_notification
-
   .form-inputs
     = f.input :name, required: true, autofocus: true, label: 'Team Name'
     -#= f.input :student_1_name, required: false,  input_html: { value: nil }, label: "Student 1 Name"
@@ -10,7 +10,7 @@
     <br />
     - (1..6).each do |n|
       = f.label :student_id, "Student #{n} SID"
-      = text_field_tag "student_sid_#{n}", (@student_sids[n] or "(Optional)")
+      = text_field_tag "student_sid_#{n}", (@student_sids[n] or ""), :placeholder => "(Optional)"
       <br />
       <br />
     <br />

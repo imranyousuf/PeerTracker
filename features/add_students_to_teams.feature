@@ -40,5 +40,19 @@ Feature: add/remove students to teams
     Then I should see "Team was successfully created."
     Then I should see "Team Best"
     Then I should see "Masta Ruiqi"
-    
+  
+  Scenario: Remove a student from a team
+    Given I am signed on with uid: 00000002
+    And I am on view teams page for course "CS 169"
+    And I follow "Add a New Team"
+    When I fill in "team[name]" with "Team Best"
+    And I fill in "student_sid_1" with ""
+    And I vague click "save_team"
+    Then I should not see "Masta Ruiqi"
+
+
+
+
+
+
 

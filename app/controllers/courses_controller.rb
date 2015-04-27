@@ -44,6 +44,9 @@ class CoursesController < ApplicationController
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
         format.json { render :show, status: :created, location: @course }
       else
+        if @course.errors[:message].empty?
+          @course.errors.add(:course_name, "Course name exists")
+        end
         format.html { render :new }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end

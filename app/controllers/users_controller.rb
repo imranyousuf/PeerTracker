@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def index
     if current_user != nil 
       if current_user.has_role? :student
-        redirect_to courses_path 
+          redirect_to courses_path 
       elsif current_user.has_role? :professor 
         @users = find_students_for_professor
       elsif current_user.has_role? :instructor
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
         @users = User.all
       end 
     else
-      redirect_to user_session_path
+      redirect_to new_user_session_path
     end
   
   end
@@ -23,11 +23,18 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    flash[:notice] = "No Information can be shown about student!" 
+    redirect_to users_path
   end
 
   # GET /users/new
   def new
-    @user = User.new
+    #if current_user.has_role? :instructor
+   #   @user = 
+   # end
+   # @user = User.new
+    flash[:notice] = "Cannot add new student yet!"
+    redirect_to users_path
   end
 
   # GET /users/1/edit

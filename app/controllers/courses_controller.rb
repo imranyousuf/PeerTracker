@@ -4,6 +4,10 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
+    if current_user.nil?
+      redirect_to user_session_path
+      return
+    end
     @courses = current_user.courses
     @permission = current_user
   end

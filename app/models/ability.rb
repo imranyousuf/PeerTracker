@@ -52,6 +52,7 @@ class Ability
       can :index, Course
       can :show, Course
     else
+      can :index, Course
     end
   end
 end

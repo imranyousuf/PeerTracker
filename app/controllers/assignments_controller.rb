@@ -9,7 +9,7 @@ class AssignmentsController < ApplicationController
   end
 
   def professorindex
-    @course = Course.find(params[:id])
+    @course = Course.find(params[:course_id])
     @assignments = @course.assignments.all
     @permission = current_user.has_role?(:instructor) || current_user.has_role?(:professor)
   end
@@ -27,15 +27,15 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/1/edit
   def edit
-    @assignment = Assignment.find(params[:assignment_id])
-    @course = Course.find(params[:id])
+    @course = Course.find(params[:course_id])
+    @assignment = @course.assignments.find(params[:id])
   end
 
   # POST /assignments
   # POST /assignments.json
   def create
     @assignment = Assignment.new(assignment_params)
-    @course = Course.find(params[:id])
+    @course = Course.find(params[:course_id])
     if @assignment.assignment_name == ""
       flash[:error] = "Assignment Name cannot be nil"
       return redirect_to :action => "new"

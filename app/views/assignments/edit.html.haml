@@ -1,5 +1,16 @@
 %container{:align => "center"}
 
-  = render 'form'
+  = simple_form_for(@assignment, :url => "/courses/#{params[:course_id]}/assignments/#{params[:id]}/", :html => {:class => "form-horizontal", :style => "margin: 0 auto; width: 40%;"}) do |f|
+
+    = f.error_notification
+
+    .form-input{:width => "70%"}
+      = f.input :assignment_name, :required => true, placeholder: "Assignment Name Here"
+    .form-input{:width => "70%"}
+      = f.input :deadline, :required => true, placeholder: "Due Date Here"
+    .form-actions
+      = f.button :submit
+
   %div{:align => "center"}
     = link_to 'Back', all_assignments_path(:id => @course.id), :style => "width: 40%; margin: 0 auto; text-align: center"
+

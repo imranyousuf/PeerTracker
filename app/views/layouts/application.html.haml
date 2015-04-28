@@ -32,10 +32,12 @@
             %ul.dropdown-menu{:role => "menu"}
               -for team in current_user.teams
                 %li= link_to "#{team.name}", course_team_path(:course_id => team.course.id, :id => team.id)
-              
               -if !current_user.has_role? :student
                 %li.divider
+                %li= link_to "All Teams", course_teams_path(:course_id => current_user.courses[0].id)
+                %li.divider
                 %li.active= link_to "All Students", users_path
+
 
           %li.dropdown{:role => "presentation"}
             %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
@@ -79,6 +81,14 @@
     = yield
 
 :css
+  .navbar-brand
+  {
+    margin-left:50px !important;
+  }
+  .navbar-right
+  {
+    margin-right:50px !important;
+  }
   .alert, .error, .notice, .success { padding:.8em 0; margin:0 0 2px 0; border:2px solid #ddd; font-size:1.6em; text-align:center;}
 
   .error { background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4; }

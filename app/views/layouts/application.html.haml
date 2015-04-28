@@ -10,69 +10,69 @@
 
   %body
     %nav.navbar.navbar-default
-
-      %ul.nav.navbar-nav
-        .navbar-brand= link_to "PeerTracker", root_path
-        -if user_signed_in?
-          %li.dropdown{:role => "presentation"}
-            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-              Courses
-              %span.caret
-            %ul.dropdown-menu{:role => "menu"}
-              -for course in current_user.courses
-                %li= link_to "#{course.course_name}", course_path(course.id)
-
-          %li.dropdown{:role => "presentation"}
-            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-              Teams
-              -if !current_user.has_role? :student
-                %span.badge= current_user.teams.count
-              %span.caret
-
-            %ul.dropdown-menu{:role => "menu"}
-              -for team in current_user.teams
-                %li= link_to "#{team.name}", course_team_path(:course_id => team.course.id, :id => team.id)
-              -if !current_user.has_role? :student
-                %li.divider
-                %li= link_to "All Teams", course_teams_path(:course_id => current_user.courses[0].id)
-                %li.divider
-                %li.active= link_to "All Students", users_path
-
-
-          %li.dropdown{:role => "presentation"}
-            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-              -if current_user.has_role? :student
-                Assignments
-              -else
-                Manage Assignments
-              -if !current_user.has_role? :student
-                -count_assignment = 0
+      .container-fluid
+        %ul.nav.navbar-nav
+          .navbar-brand= link_to "PeerTracker", root_path
+          -if user_signed_in?
+            %li.dropdown{:role => "presentation"}
+              %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                Courses
+                %span.caret
+              %ul.dropdown-menu{:role => "menu"}
                 -for course in current_user.courses
-                  -count_assignment += Assignment.where(:course_id => course.id).count
-                %span.badge= count_assignment
-              %span.caret
-            %ul.dropdown-menu{:role => "menu"}
-              -for course in current_user.courses
-                %li.disabled{:role => "presentation"}= link_to "#{course.course_name}"
-                -if current_user.has_role? :student
-                  -for assignment in course.assignments
-                    -teams = Team.where(:course_id => course.id)
-                    -for team in teams
-                      -if team.users.include? current_user
-                        %li{align: :left}= link_to "#{assignment.assignment_name}", course_team_assignment_path(:course_id => course.id, :team_id => team.id, :id => assignment.id)
-                -else
-                  -for assignment in course.assignments
-                    %li{align: :left}= link_to "#{assignment.assignment_name}", edit_course_assignment_path(:course_id => course.id, :id => assignment.id)
-                  %li.active= link_to "Add Assignment", new_course_assignment_path(:course_id => course.id)
+                  %li= link_to "#{course.course_name}", course_path(course.id)
 
-      -if user_signed_in?
-        %ul.nav.navbar-nav.navbar-right
-          %li= link_to "Account", edit_user_registration_path
-          %li= link_to "Sign Out", destroy_user_session_path, method: :delete
-      -else
-        %ul.nav.navbar-nav.navbar-right
-          %li= link_to "Sign Up", new_user_registration_path
-          %li= link_to "Sign In", new_user_session_path
+            %li.dropdown{:role => "presentation"}
+              %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                Teams
+                -if !current_user.has_role? :student
+                  %span.badge= current_user.teams.count
+                %span.caret
+
+              %ul.dropdown-menu{:role => "menu"}
+                -for team in current_user.teams
+                  %li= link_to "#{team.name}", course_team_path(:course_id => team.course.id, :id => team.id)
+                -if !current_user.has_role? :student
+                  %li.divider
+                  %li= link_to "All Teams", course_teams_path(:course_id => current_user.courses[0].id)
+                  %li.divider
+                  %li.active= link_to "All Students", users_path
+
+
+            %li.dropdown{:role => "presentation"}
+              %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                -if current_user.has_role? :student
+                  Assignments
+                -else
+                  Manage Assignments
+                -if !current_user.has_role? :student
+                  -count_assignment = 0
+                  -for course in current_user.courses
+                    -count_assignment += Assignment.where(:course_id => course.id).count
+                  %span.badge= count_assignment
+                %span.caret
+              %ul.dropdown-menu{:role => "menu"}
+                -for course in current_user.courses
+                  %li.disabled{:role => "presentation"}= link_to "#{course.course_name}"
+                  -if current_user.has_role? :student
+                    -for assignment in course.assignments
+                      -teams = Team.where(:course_id => course.id)
+                      -for team in teams
+                        -if team.users.include? current_user
+                          %li{align: :left}= link_to "#{assignment.assignment_name}", course_team_assignment_path(:course_id => course.id, :team_id => team.id, :id => assignment.id)
+                  -else
+                    -for assignment in course.assignments
+                      %li{align: :left}= link_to "#{assignment.assignment_name}", edit_course_assignment_path(:course_id => course.id, :id => assignment.id)
+                    %li.active= link_to "Add Assignment", new_course_assignment_path(:course_id => course.id)
+
+        -if user_signed_in?
+          %ul.nav.navbar-nav.navbar-right
+            %li= link_to "Account", edit_user_registration_path
+            %li= link_to "Sign Out", destroy_user_session_path, method: :delete
+        -else
+          %ul.nav.navbar-nav.navbar-right
+            %li= link_to "Sign Up", new_user_registration_path
+            %li= link_to "Sign In", new_user_session_path
 
 
     .container
@@ -81,6 +81,7 @@
     = yield
 
 :css
+
   .navbar-brand
   {
     margin-left:50px !important;

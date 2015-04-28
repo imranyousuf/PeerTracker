@@ -1,17 +1,20 @@
 %head
   %link{:href => "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", :rel => "stylesheet"}
 
-%h1{:align => "Center"}= "Feedbacks for " + @assignment.assignment_name
+%h1{:align => "Center"}
+  %strong{:align => "Center"}= "Feedbacks for " + @assignment.assignment_name
 
 %br
-
+%br
+%br
+%br
 .container
   .row
     .col-md-offset-2.col-md-8.text-center
       %h3 Feedbacks You've Given
   .row
     .col-md-offset-2.col-md-8
-      #quote-carousel.carousel.slide{"data-ride" => "carousel"}
+      #quote-carousel1.carousel.slide{"data-ride" => "carousel"}
 
         / Carousel Slides / Quotes
         .carousel-inner
@@ -40,9 +43,9 @@
                       %a.btn.btn-primary.btn-round-xs.btn-xs{:href => edit_course_team_assignment_feedback_path(:course_id => params[:course_id], :team_id => params[:team_id], :assignment_id => params[:assignment_id], :id => feedback.id)} Edit this feedback
    
         / Carousel Buttons Next/Prev
-        %a.left.carousel-control{"data-slide" => "prev", :href => "#quote-carousel"}
+        %a.left.carousel-control{"data-slide" => "prev", :href => "#quote-carousel1"}
           %i.fa.fa-chevron-left
-        %a.right.carousel-control{"data-slide" => "next", :href => "#quote-carousel"}
+        %a.right.carousel-control{"data-slide" => "next", :href => "#quote-carousel1"}
           %i.fa.fa-chevron-right
 
 %br
@@ -199,5 +202,122 @@
           height: 20px;
       }
   }
+
+
+  #quote-carousel1 
+  {
+    padding: 0 10px 30px 10px;
+    margin-top: 30px;
+  }
+
+  /* Control buttons  */
+  #quote-carousel1 .carousel-control
+  {
+    background: none;
+    color: #222;
+    font-size: 2.3em;
+    text-shadow: none;
+    margin-top: 30px;
+  }
+  /* Previous button  */
+  #quote-carousel1 .carousel-control.left 
+  {
+    left: -12px;
+  }
+  /* Next button  */
+  #quote-carousel1 .carousel-control.right 
+  {
+    right: -12px !important;
+  }
+  /* Changes the position of the indicators */
+  #quote-carousel1 .carousel-indicators 
+  {
+    right: 50%;
+    top: auto;
+    bottom: 0px;
+    margin-right: -19px;
+  }
+  /* Changes the color of the indicators */
+  #quote-carousel1 .carousel-indicators li 
+  {
+    background: #c0c0c0;
+  }
+  #quote-carousel1 .carousel-indicators .active 
+  {
+    background: #333333;
+  }
+  #quote-carousel1 img
+  {
+    width: 250px;
+    height: 100px
+  }
+  /* End carousel */
+
+  .item blockquote {
+      border-left: none; 
+      margin: 0;
+  }
+
+  .item blockquote img {
+      margin-bottom: 10px;
+  }
+
+  .item blockquote p:before {
+      content: "\f10d";
+      font-family: 'Fontawesome';
+      float: left;
+      margin-right: 10px;
+  }
+
+  .btn-round-xs{
+      border-radius: 11px;
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+
+  .btn-round{
+    border-radius: 17px;
+  }
+
+
+
+
+  /**
+    MEDIA QUERIES
+  */
+
+  /* Small devices (tablets, 768px and up) */
+  @media (min-width: 768px) { 
+      #quote-carousel1
+      {
+        margin-bottom: 0;
+        padding: 0 40px 30px 40px;
+      }
+      
+  }
+
+  /* Small devices (tablets, up to 768px) */
+  @media (max-width: 768px) { 
+      
+      /* Make the indicators larger for easier clicking with fingers/thumb on mobile */
+      
+      #quote-carousel1 .carousel-indicators {
+          bottom: -20px !important;  
+      }
+      #quote-carousel1 .carousel-indicators li {
+          display: inline-block;
+          margin: 0px 5px;
+          width: 15px;
+          height: 15px;
+      }
+      #quote-carousel1 .carousel-indicators li.active {
+          margin: 0px 5px;
+          width: 20px;
+          height: 20px;
+      }
+  }
+
+
+
 
 

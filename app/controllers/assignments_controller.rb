@@ -6,6 +6,14 @@ class AssignmentsController < ApplicationController
   def index
     @course = Course.find(params[:course_id])
     @assignments = @course.assignments.all
+    @permission = current_user.has_role?(:instructor) || current_user.has_role?(:professor)
+    @team = Team.find(params[:team_id])
+    @names = []
+    for user in @team.users
+      if user.has_role? :student
+        @names << user
+      end
+    end
   end
 
   def professorindex

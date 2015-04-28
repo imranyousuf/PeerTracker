@@ -19,8 +19,8 @@ class TeamsController < ApplicationController
     if current_user.has_role? :student
       redirect_to course_team_assignments_path(:team_id => @team.id), :assignments => @assignments
     elsif current_user.has_role? :instructor
-      flash[:notice] = "not implemented for instructor yet!"
-      redirect_to course_teams_path  #TODO
+      # flash[:notice] = "not implemented for instructor yet!"
+      redirect_to course_team_assignments_path(:team_id => @team.id), :assignments => @assignments
       return
     else
     end  

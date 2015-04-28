@@ -17,6 +17,21 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+  def average_rating(team_id)
+    team = self.teams.find(team_id)
+    feedback = team.feedbacks.all.where(:receiver_id => self.user_id)
+    average = 0
+    for f in feedback
+      average += f.rating
+    end
+    if feedback.length != 0
+      average = average/feedback.length
+      average.to_s
+    else
+      'No feedback provided'
+    end
+  end
+
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

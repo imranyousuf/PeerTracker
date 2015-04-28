@@ -1,25 +1,35 @@
 %h1{:align => "center"} Your Assignments
 
-%table.table-bordered{:width => "90%", :align => "center"}
-  %thead
-    %tr
-      %th{:align => "center"} Assignment Name
-      %th{:align => "center"} Course
-      %th{:align => "center"} Deadline
-      %th
-      %th
-      %th
+/ %table.table-bordered{:width => "90%", :align => "center"}
+/   %thead
+/     %tr
+/       %th{:align => "center"} Assignment Name
+/       %th{:align => "center"} Course
+/       %th{:align => "center"} Deadline
 
-  %tbody
-    - @assignments.each do |assignment|
-      %tr
-        %td= link_to assignment.assignment_name, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
-        %td= assignment.course.course_name
-        %td= assignment.deadline
-        //%td= link_to 'Show', course_team_assignment
-        //%td= link_to 'Edit', edit_course_team_assignment_path(assignment)
-        //%td= link_to 'Destroy', course_team_assignment, :method => :delete, :data => { :confirm => 'Are you sure?' }
+/   %tbody
+/     - @assignments.each do |assignment|
+/       %tr
+/         %td= link_to assignment.assignment_name, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
+/         %td= assignment.course.course_name
+/         %td= assignment.deadline
+/         %td= link_to 'Show', course_team_assignment
+/         %td= link_to 'Edit', edit_course_team_assignment_path(assignment)
+/         %td= link_to 'Destroy', course_team_assignment, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+/ %br
+
+%div
+  - @assignments.each do |assignment|
+    - if @permission
+      %h2= assignment.assignment_name
+      %h5 Average Ratings:
+      - @names.each do |user|
+        %h6= user.full_name + ": " + user.average_rating(@team.id)
+    - else
+      %h2= link_to assignment.assignment_name, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
 
 %br
+
 
 //= link_to 'New Assignment', new_course_team_assignment_path

@@ -60,7 +60,7 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1.json
   def update
     if @assignment.assignment_name == ""
-      flash[:error] = "Assignment Name cannot be nil"
+      flash[:error] = "Assignment must have a name"
       return redirect_to :action => "edit"
     end
     if @assignment.deadline < Time.now

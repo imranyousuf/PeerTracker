@@ -36,9 +36,9 @@
 #Creating Instructor Users
 @mastakevin = User.create! :first_name => 'MUDDAFUDGING', :last_name => 'KEVIN', :email => 'kevin@test.com', :password => 'kevinpassword', :password_confirmation => 'kevinpassword', :user_id => '77777777'
 @mastakevin.add_role :instructor
-@phyllis = User.create! :first_name => 'MASTA', :last_name => 'PHIL', :email => 'littleboy@test.com', :password => 'iamsmall', :password_confirmation => 'iamsmall', :user_id => '22222222'
+@phyllis = User.create! :first_name => 'Kevin', :last_name => 'Casey', :email => 'littleboy@test.com', :password => 'iamsmall', :password_confirmation => 'iamsmall', :user_id => '22222222'
 @phyllis.add_role :instructor
-@mastaricky = User.create! :first_name => 'MASTA', :last_name => 'RICKY', :email => 'bigboy@test.com', :password => 'iamswole', :password_confirmation => 'iamswole', :user_id => '88888888'
+@mastaricky = User.create! :first_name => 'William', :last_name => 'li', :email => 'bigboy@test.com', :password => 'iamswole', :password_confirmation => 'iamswole', :user_id => '88888888'
 @mastaricky.add_role :professor
 
 #User Courses Relations

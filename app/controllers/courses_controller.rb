@@ -4,6 +4,10 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
+    if current_user.nil?
+      redirect_to user_session_path
+      return
+    end
     @courses = current_user.courses
     @permission = current_user
   end
@@ -12,7 +16,6 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     puts params[:id]
-    puts "HEREEEEEEEE"
     @course = Course.find(params[:id])
     if current_user.has_role? :student or current_user.has_role? :instructor
       redirect_to course_teams_path(:course_id => @course.id)
@@ -35,7 +38,7 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
-    @course = current_user.courses.new(course_params)
+    @course = Course.new(course_params)
     @course.user_id = @current_user.user_id
     respond_to do |format|
       #instructor_exists

@@ -67,6 +67,15 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1
   # PATCH/PUT /assignments/1.json
   def update
+    if @assignment.assignment_name == ""
+      flash[:error] = "Assignment must have a name"
+      return redirect_to :action => "edit"
+    end
+    if @assignment.deadline < Time.now
+      flash[:error] = "Assignment cannot be due in the past"
+      return redirect_to :action => "edit"
+    end
+
     respond_to do |format|
       if @assignment.update(assignment_params)
         format.html { redirect_to all_assignments_path, notice: 'Assignment was successfully updated.' }

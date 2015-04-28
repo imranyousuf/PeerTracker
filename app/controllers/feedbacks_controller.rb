@@ -6,6 +6,7 @@ class FeedbacksController < ApplicationController
   def index
     @course = Course.find(params[:course_id])
     @team = @course.teams.find(params[:team_id])
+    @assignment = Assignment.find(params[:assignment_id])
     @feedbacksgiven = @team.feedbacks.all.where(:giver_id => current_user.user_id)
     @feedbacksreceived = @team.feedbacks.all.where(:receiver_id => current_user.user_id)
   end
@@ -46,7 +47,7 @@ class FeedbacksController < ApplicationController
   def create
     @team = Team.find(params[:team_id])
     if @team == nil
-        flash[:notice] = "Could not find team"
+        flash[:error] = "Could not find team"
         return redirect_to course_path(params[:course_id])
     end
     @feedback = @team.feedbacks.new(feedback_params)

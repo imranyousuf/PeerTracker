@@ -1,12 +1,20 @@
-%container{:align => "center", :width => "70%"}
+%container{:align => "left", :width => "900px", :margin => "0 auto"}
 
-  %h1 New feedback
+  %container
+    %h1{:align => "left", :style=>"width: 60%; margin: 0 auto"} New feedback
+    %br
+    %p{:align => "left", :style=>"width: 60%;  margin: 0 auto"} This form is an opportunity for you to rate the performance of your team members on this iteration.  Please fill this form out to the best of your abilities.  Letting us know of issues within your team (e.g. unequal distribution of work, people not cooperating with the rest of the team, etc) allows the staff to be aware of them and help you fix them. You have 20*X points to distribute, where X is the total number of members in your group (most teams are size 6, so most of you reading this have 120 points to distribute).  The idea is that if someone did an average amount of work, they would get 20 points.  The sum of all points you give to yourself and your teammates need to sum to 20*X. All of the numbers and comments you give are private and only viewable by the CS169 staff.
+    %br
 
-
-  = simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/", :html => {:style => "width: 40%; margin: 0 auto"}) do |f|
+  = simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/", :html => {:style => "width: 45%; margin: 0 auto; align: left"}) do |f|
     .form-inputs{:width => "90%"}
       = collection_select(:user, :user_id, @users, :user_id, :full_name, {:include_blank => "Select a Team Member"})
+      %br
+      %br
+      = "\nWhat feedback do you have on this person's performance?"
       = f.input :comments, :as => :text, input_html: {id: "comments"}
+      %br
+      = "\nHow many points would you give this person?"
       = f.input :rating, input_html: {id: "rating"}
       = f.hidden_field :giver_id, :value => @user.user_id
     .form-actions

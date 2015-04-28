@@ -21,5 +21,18 @@
             %li= link_to "Sign In", new_user_session_path
     .container
     - flash.each do |name,msg|
-      = content_tag :div, msg, class:"alert alert-info"
+      = content_tag :div, msg, :class => "#{bootstrap_class_for(name)}"
     = yield
+
+:css
+  .alert, .error, .notice, .success { padding:.8em 0; margin:0 0 2px 0; border:2px solid #ddd; font-size:1.6em; text-align:center;}
+
+  .error { background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4; }
+  .notice { background:#FFF6BF;color:#514721;border-color:#FFD324; }
+  .success { background:#DDFCD5;color:#000;border-color:#44A815; }
+  .alert { background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4; }
+
+  .error a {color:#8a1f11;}
+  .notice a {color:#514721;}
+  .success a {color:#264409;}
+  .alert a {color:#8a1f11;}

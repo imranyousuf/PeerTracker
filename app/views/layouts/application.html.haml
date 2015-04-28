@@ -6,12 +6,67 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+
   %body
     %nav.navbar.navbar-default
-      .container
+
+      %ul.nav.navbar-nav
         .navbar-brand= link_to "PeerTracker", root_path
         -if user_signed_in?
-          .navbar-brand= link_to "Courses", courses_path
+          %li.dropdown{:role => "presentation"}
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              Courses
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              -for course in current_user.courses
+                %li= link_to "#{course.course_name}", course_path(course.id)
+
+          %li.dropdown{:role => "presentation"}
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              Teams
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              -for team in current_user.teams
+                %li= link_to "#{team.name}", course_team_path(:course_id => team.course.id, :id => team.id)
+              
+              -if !current_user.has_role? :student
+                %li.divider
+                %li.active= link_to "All Students", users_path
+
+          %li.dropdown{:role => "presentation"}
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              -if current_user.has_role? :student
+                Assignments
+              -else
+                Manage Assignments
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              -for course in current_user.courses
+                %li.disabled{:role => "presentation"}= link_to "#{course.course_name}"
+                -if current_user.has_role? :student
+                  -for assignment in course.assignments
+                    -teams = Team.where(:course_id => course.id)
+                    -for team in teams
+                      -if team.users.include? current_user
+                        %li{align: :left}= link_to "#{assignment.assignment_name}", course_team_assignment_path(:course_id => course.id, :team_id => team.id, :id => assignment.id)
+                -else
+                  -for assignment in course.assignments
+                    %li{align: :left}= link_to "#{assignment.assignment_name}", edit_course_assignment_path(:course_id => course.id, :id => assignment.id)
+                  %li.active= link_to "Add Assignment", new_course_assignment_path(:course_id => course.id)
+
+      -if user_signed_in?
+        %ul.nav.navbar-nav.navbar-right
+          %li= link_to "Account", edit_user_registration_path
+          %li= link_to "Sign Out", destroy_user_session_path, method: :delete
+      -else
+        %ul.nav.navbar-nav.navbar-right
+          %li= link_to "Sign Up", new_user_registration_path
+          %li= link_to "Sign In", new_user_session_path
+
+    -#  .container
+        .navbar-brand= link_to "PeerTracker", root_path
+        -if user_signed_in?
+          -#.navbar-brand= link_to "Courses", courses_path
         -if user_signed_in? and !current_user.has_role? :student
           .navbar-brand= link_to "Students", users_path
         -if user_signed_in?

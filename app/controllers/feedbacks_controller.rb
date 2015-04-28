@@ -6,6 +6,7 @@ class FeedbacksController < ApplicationController
   def index
     @course = Course.find(params[:course_id])
     @team = @course.teams.find(params[:team_id])
+    @assignment = Assignment.find(params[:assignment_id])
     @feedbacksgiven = @team.feedbacks.all.where(:giver_id => current_user.user_id)
     @feedbacksreceived = @team.feedbacks.all.where(:receiver_id => current_user.user_id)
   end

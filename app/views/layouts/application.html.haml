@@ -24,7 +24,10 @@
           %li.dropdown{:role => "presentation"}
             %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               Teams
+              -if !current_user.has_role? :student
+                %span.badge= current_user.teams.count
               %span.caret
+
             %ul.dropdown-menu{:role => "menu"}
               -for team in current_user.teams
                 %li= link_to "#{team.name}", course_team_path(:course_id => team.course.id, :id => team.id)
@@ -39,6 +42,11 @@
                 Assignments
               -else
                 Manage Assignments
+              -if !current_user.has_role? :student
+                -count_assignment = 0
+                -for course in current_user.courses
+                  -count_assignment += Assignment.where(:course_id => course.id).count
+                %span.badge= count_assignment
               %span.caret
             %ul.dropdown-menu{:role => "menu"}
               -for course in current_user.courses
@@ -63,20 +71,7 @@
           %li= link_to "Sign Up", new_user_registration_path
           %li= link_to "Sign In", new_user_session_path
 
-    -#  .container
-        .navbar-brand= link_to "PeerTracker", root_path
-        -if user_signed_in?
-          -#.navbar-brand= link_to "Courses", courses_path
-        -if user_signed_in? and !current_user.has_role? :student
-          .navbar-brand= link_to "Students", users_path
-        -if user_signed_in?
-          %ul.nav.navbar-nav.navbar-right
-            %li= link_to "Account", edit_user_registration_path
-            %li= link_to "Sign Out", destroy_user_session_path, method: :delete
-        -else
-          %ul.nav.navbar-nav.navbar-right
-            %li= link_to "Sign Up", new_user_registration_path
-            %li= link_to "Sign In", new_user_session_path
+
     .container
     - flash.each do |name,msg|
       = content_tag :div, msg, class:"alert alert-info"

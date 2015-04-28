@@ -1,5 +1,8 @@
 %center
-  %h1 List of Users
+  - if current_user.has_role? :instructor
+    %h1= "List of Students under #{current_user.full_name}"
+  - elsif current_user.has_role? :professor
+    %h1= "List of Students in #{Course.where(user_id: current_user.user_id).first.course_name}"
 .media
   .media-body
     .container
@@ -7,11 +10,10 @@
         %thead
           %tr
             %th Name 
-            %th UID 
+            %th SID 
             %th Email 
-            %th
-            %th
-            %th
+            %th Role
+            %th Team(s) 
 
           %tbody
             - @users.each do |user|
@@ -19,13 +21,19 @@
                 %td= user.full_name
                 %td= user.user_id
                 %td= user.email
-                %td= link_to 'Show', user
-                %td= link_to 'Edit', edit_user_path(user)
-                %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                %td= user.roles[0].name.split.map(&:capitalize)*' '
+                %td= user.teams.map(&:name).join(", ")
+                -#%td= link_to 'Show', user
+                -#%td= link_to 'Edit', edit_user_path(user)
+                -#%td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
   %br
   %br
-= link_to 'Add New User(s)', new_user_path
+
+
+%div{:align => "center"}
+  - if current_user.has_role? :instructor
+    = link_to "Add Student under #{current_user.full_name}", new_user_path
 
 %br
 %br

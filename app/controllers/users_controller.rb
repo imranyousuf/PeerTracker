@@ -27,7 +27,12 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    #if current_user.has_role? :instructor
+   #   @user = 
+   # end
+   # @user = User.new
+    flash[:notice] = "Cannot add new student yet!"
+    redirect_to users_path
   end
 
   # GET /users/1/edit

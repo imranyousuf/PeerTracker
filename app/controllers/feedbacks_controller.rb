@@ -38,7 +38,7 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks/1/edit
   def edit
     @feedback = Feedback.find(params[:id])
-    @receiver = User.where(@feedback.receiver_id).first
+    @receiver = User.where(:user_id => @feedback.receiver_id).first
   end
 
   # POST /feedbacks

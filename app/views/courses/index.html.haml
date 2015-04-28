@@ -16,7 +16,7 @@
         - if @permission.has_role? :professor
           %td= link_to "Edit this course", edit_course_path(:id => course.id)
         - if @permission.has_role? :instructor
-          %td= link_to "See all assignments", all_assignments_path(:id => course.id)
+          %td= link_to "See all assignments", all_assignments_path(:course_id => course.id)
 
 %div{:align => "center"}
   - if @permission.has_role? :professor

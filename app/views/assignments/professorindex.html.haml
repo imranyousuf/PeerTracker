@@ -13,7 +13,7 @@
       %tr
         %td= assignment.assignment_name
         %td= assignment.deadline
-        %td= link_to "Edit this assignment", edit_course_assignment_path(:assignment_id => assignment.id, :id => @course.id)
+        %td= link_to "Edit this assignment", edit_course_assignment_path(:id => assignment.id, :course_id => @course.id)
 
 %br
 %div{:align => "center"}

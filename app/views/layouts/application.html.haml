@@ -10,7 +10,10 @@
     %nav.navbar.navbar-default
       .container
         .navbar-brand= link_to "PeerTracker", root_path
-        .navbar-brand= link_to "Courses", courses_path
+        -if user_signed_in?
+          .navbar-brand= link_to "Courses", courses_path
+        -if user_signed_in? and !current_user.has_role? :student
+          .navbar-brand= link_to "Students", users_path
         -if user_signed_in?
           %ul.nav.navbar-nav.navbar-right
             %li= link_to "Account", edit_user_registration_path

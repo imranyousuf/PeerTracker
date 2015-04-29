@@ -33,7 +33,9 @@ end
 
 Given /the following courses exist:/ do |courses_table|
   courses_table.hashes.each do |course|
-  	Course.create!(course)
+  	user = User.where(:user_id => course[:user_id]).first
+    course = Course.create!(course)
+    user.courses << course
   end
 end
 
@@ -41,7 +43,6 @@ Given /the following courses_users exist:/ do |courses_users_table|
   courses_users_table.hashes.each do |course_user|
     @course = Course.find(course_user[:course_id])
     @user = User.where(:user_id => course_user[:user_id]).first
-    @user.courses << @course
     @course.users << @user
     puts @user.courses.inspect
   end
@@ -58,7 +59,6 @@ Given /the following users_teams exist:/ do |users_teams_table|
     @user = User.where(:user_id => user_team[:user_id]).first
     @team = Team.where(:id => user_team[:team_id]).first
     @team.users << @user
-    @user.teams << @team
   end
 end
 

@@ -8,7 +8,7 @@
     = f.label :leave_empty , "Remove student by leaving it empty or (Optional)"
     <br />
     <br />
-    - (1..6).each do |n|
+    - (1..7).each do |n|
       = f.label :student_id, "Student #{n} SID"
       = text_field_tag "student_sid_#{n}", (@student_sids[n] or ""), :placeholder => "(Optional)"
       <br />

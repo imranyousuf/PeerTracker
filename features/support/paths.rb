@@ -15,9 +15,10 @@ module NavigationHelpers
 
     when /^the sign in page$/
       new_user_session_path
-      #'/users/sign_in'
     when /^the home\s?page$/
       '/'
+    when /^the sign up page$/
+      new_user_registration_path
     when /^view course page for "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       course_path(@course.id)

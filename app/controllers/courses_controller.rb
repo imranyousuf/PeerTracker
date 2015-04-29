@@ -44,7 +44,7 @@ class CoursesController < ApplicationController
       #instructor_exists
       if !course_name_exists? and professor_exist? and @course.save
         current_user.courses << @course
-        format.html { redirect_to @course, notice: 'Course was successfully created.' }
+        format.html { redirect_to @course, notice: "Successfully added course #{@course.course_name}" }
         format.json { render :show, status: :created, location: @course }
       else
         if @course.errors[:message].empty?
@@ -75,7 +75,7 @@ class CoursesController < ApplicationController
   def destroy
     @course.destroy
     respond_to do |format|
-      format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
+      format.html { redirect_to courses_url, notice: 'Course was successfully removed.' }
       format.json { head :no_content }
     end
   end

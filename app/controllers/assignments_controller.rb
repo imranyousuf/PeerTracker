@@ -40,7 +40,7 @@ class AssignmentsController < ApplicationController
       flash[:error] = "Assignment Name cannot be nil"
       return redirect_to :action => "new"
     end
-    if @assignment.deadline < Time.now
+    if @assignment.deadline < Time.zone.now
       flash[:error] = "Assignment cannot be due in the past"
       return redirect_to :action => "new"
     end
@@ -63,7 +63,7 @@ class AssignmentsController < ApplicationController
       flash[:error] = "Assignment must have a name"
       return redirect_to :action => "edit"
     end
-    if @assignment.deadline < Time.now
+    if @assignment.deadline < Time.zone.now
       flash[:error] = "Assignment cannot be due in the past"
       return redirect_to :action => "edit"
     end

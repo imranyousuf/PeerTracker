@@ -1,6 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_filter :configure_sign_up_params, only: [:create]
-# before_filter :configure_account_update_params, only: [:update]
+  before_filter :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   def new
@@ -9,6 +9,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+
+    if params["user"]["user_id"].blank? or params["user"]["user_id"].nil?   
+      flash[:error] = "Must have a Student ID/Employee ID!"
+      redirect_to new_user_registration_path
+      return
+    elsif User.all.map(&:user_id).include? params["user"]["user_id"].to_i
+       flash[:error] = "An account with this Student ID/Employee ID already exists!"
+      redirect_to new_user_session_path
+      return
+    end
     super
     @user.add_role params["user"]["role"].split.last
   end
@@ -37,7 +47,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # You can put the params you want to permit in the empty array.
   def configure_sign_up_params
@@ -45,9 +55,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # You can put the params you want to permit in the empty array.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.for(:account_update) << :attribute
-  # end
+  def configure_account_update_params
+     devise_parameter_sanitizer.for(:account_update) << [:first_name, :last_name, :user_id]
+  end
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)

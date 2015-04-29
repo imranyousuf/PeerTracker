@@ -1,9 +1,11 @@
-%h1 Add New Student(s)
+%h1{align: :center}= "Add New Student or Instructor"
 
-
-= render 'form'
 %br
-.container
+
+%div{align: :center}
+  = render 'form'
+%br
+-#.container
   %h4 Import User Data
   = form_tag import_users_path, multipart: true do 
     =file_field_tag :file
@@ -11,6 +13,5 @@
 %br
 
 
-
-
-= link_to 'Back', users_path
+%div{align: :center}
+  = link_to 'Back', users_path

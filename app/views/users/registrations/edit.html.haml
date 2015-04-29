@@ -1,18 +1,27 @@
-%h2
+%h2{align: :center}
   Edit #{resource_name.to_s.humanize}
+
+%br
+%br
 = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
   = f.error_notification
-  .form-inputs
-    = f.input :email, required: true, autofocus: true
+  .form-inputs{align: :center}
+    = f.input :first_name, autofocus: true, :input_html => {:style => "width:250px;"}
+    = f.input :last_name, autofocus: true, :input_html => {:style => "width:250px;"}
+    = f.input :user_id, label: "SID/Employee ID", autofocus: true, :input_html => {:style => "width:250px;"}
+    = f.input :email, required: true, autofocus: true, :input_html => {:style => "width:250px;"}
     - if devise_mapping.confirmable? && resource.pending_reconfirmation?
       %p
         Currently waiting confirmation for: #{resource.unconfirmed_email}
-    = f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false
-    = f.input :password_confirmation, required: false
-    = f.input :current_password, hint: "we need your current password to confirm your changes", required: true
-  .form-actions
+    = f.input :password, label: "New Password", autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false, :input_html => {:style => "width:250px;"}
+    = f.input :password_confirmation, required: false, :input_html => {:style => "width:250px;"}
+    %br
+    = f.label "we need your current password to confirm your changes"
+    %br
+    = f.input :current_password, label: false, required: true, :input_html => {:style => "width:250px;"}, placeholder: "Current Password"
+  .form-actions{align: :center}
     = f.button :submit, "Update"
-%h3 Cancel my account
-%p
+%h3{align: :center} Cancel my account
+%p{align: :center}
   Unhappy? #{link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}
 = link_to "Back", :back

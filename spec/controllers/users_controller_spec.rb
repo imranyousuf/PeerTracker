@@ -27,6 +27,10 @@ RSpec.describe UsersController, type: :controller do
     DatabaseCleaner.clean
     @professor = create(:professor)
     @professor.add_role :professor
+    @student = create(:student)
+    @student.add_role :student
+    @course = create(:course)
+    @course.users << @student
     sign_in @professor
   end
   # This should return the minimal set of attributes required to create a valid
@@ -34,7 +38,8 @@ RSpec.describe UsersController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_attributes) {
     {first_name: "masta", last_name: "ruiqi", user_id: 12345678, email: "t@t.com", 
-      password: "password", sign_in_count: 3}
+      password: "password", sign_in_count: 3, created_at: DateTime.now - 7.days, 
+      updated_at: DateTime.now - 3.days}
   }
 
   let(:invalid_attributes) {

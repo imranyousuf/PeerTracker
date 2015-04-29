@@ -22,4 +22,8 @@ FactoryGirl.define do
     last_name "Munar"
     email "bkmunar@berkeley.edu"
   end
+
+  factory :course, class: Course do 
+    course_name "CS 169"
+  end
 end

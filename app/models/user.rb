@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   require 'csv'
   has_and_belongs_to_many :courses 
   has_and_belongs_to_many :teams
+  attr_accessor :role
 
 
 

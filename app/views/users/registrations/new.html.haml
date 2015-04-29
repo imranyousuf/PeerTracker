@@ -6,7 +6,8 @@
   .form-inputs{:align => :center}
     = f.input :first_name, label: false, required: true, autofocus: true, :input_html => {:style => "width:250px;"}, placeholder: "First Name"
     = f.input :last_name, label: false, required: true, autofocus: true, :input_html => {:style => "width:250px;"}, placeholder: "Last Name"
-    = f.input :user_id, label: false, required: true, autofocus: true, :input_html => {:style => "width:250px;"}, placeholder: "SID"
+    = f.input :role, label: false, collection: ["I am a student", "I am an instructor", "I am a professor"], :selected => "I am a student", :input_html => {:style => "width:250px;"}
+    = f.input :user_id, label: false, required: true, autofocus: true, :input_html => {:style => "width:250px;"}, placeholder: "SID/Employee ID"
     = f.input :email, label: false, required: true, autofocus: true, :input_html => {:style => "width:250px;"}, placeholder: "Email"
     = f.input :password, label: false, required: true, :input_html => {:style => "width:250px;"}, placeholder: "Password"
     = f.input :password_confirmation, label: false, required: true, :input_html => {:style => "width:250px;"}, placeholder: "Confirm Password"

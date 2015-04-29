@@ -21,12 +21,12 @@
                 %td= user.full_name
                 %td= user.user_id
                 %td= user.email
-                %td= user.roles[0].name.split.map(&:capitalize)*' '
+                -if !user.roles[0].nil?
+                  %td= user.roles[0].name.split.map(&:capitalize)*' '
                 %td= user.teams.map(&:name).join(", ")
                 -#%td= link_to 'Show', user
                 -#%td= link_to 'Edit', edit_user_path(user)
                 -#%td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
   %br
   %br
 

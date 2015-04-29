@@ -29,6 +29,7 @@ RSpec.describe TeamsController, type: :controller do
     @student = create(:student)
     @professor = create(:professor)
     @student.add_role :student
+    @professor.add_role :professor
     @course = create(:course)
     sign_in @student
   end

@@ -28,6 +28,7 @@ RSpec.describe TeamsController, type: :controller do
     DatabaseCleaner.clean
     @student = create(:student)
     @professor = create(:professor)
+    @student.add_role :student
     @course = create(:course)
     sign_in @student
   end

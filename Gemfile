@@ -42,6 +42,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.2.1'
   gem 'simplecov', '~> 0.9.2'
   gem 'launchy'
+  gem "codeclimate-test-reporter"
 end
 
 group :production do

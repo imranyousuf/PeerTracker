@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :student, class: User do
-    name "Lucas Ness"
+    first_name "Lucas"
+    last_name "Ness"
     email "lucas@brawl.com"
     password "nomorebrawl"
     encrypted_password "nomorebrawl"
@@ -8,7 +9,8 @@ FactoryGirl.define do
   end
 
   factory :professor, class: User do
-    name "Kevin Casey"
+    first_name "Kevin"
+    last_name "Casey"
     email "casey@berkeley.edu"
     password "nomore169"
     encrypted_password "nomore169"
@@ -16,7 +18,8 @@ FactoryGirl.define do
   end
   
   factory :instructor, class: User do
-    name "Bryan Munar"
+    first_name "Bryan"
+    last_name "Munar"
     email "bkmunar@berkeley.edu"
   end
 end

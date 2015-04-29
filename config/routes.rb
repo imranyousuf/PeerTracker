@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :courses do
     resources :teams do
       collection { post :import }
-      resources :assignments, :except => ['new', 'create', 'edit', 'update', 'patch'] do
+      resources :assignments, :except => ['new', 'create', 'edit', 'update', 'patch', 'destroy'] do
         resources :feedbacks
       end
     end
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   patch 'courses/:course_id/assignments/:id', to: 'assignments#update'
   put 'courses/:course_id/assignments/:id', to: 'assignments#update'
   get 'courses/:course_id/assignments/', to: 'assignments#professorindex', :as => 'all_assignments'
+  delete 'courses/:course_id/assignments/:id', to: 'assignments#destroy'
 
 
 

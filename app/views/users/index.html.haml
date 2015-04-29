@@ -1,4 +1,4 @@
--if @courses[0].nil?
+-if current_user.has_role? :professor and @courses[0].nil?
   %center
     .media
       %br

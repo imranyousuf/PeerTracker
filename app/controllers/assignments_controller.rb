@@ -39,11 +39,14 @@ class AssignmentsController < ApplicationController
     if @assignment.assignment_name == ""
       flash[:error] = "Assignment Name cannot be nil"
       return redirect_to :action => "new"
-    end
-    if @assignment.deadline < Time.zone.now
+    elsif @course.assignments.map(&:assignment_name).include? @assignment.assignment_name
+       flash[:error] = "Assignment Name exists"
+       return redirect_to :action => "new"
+    elsif @assignment.deadline < Time.zone.now
       flash[:error] = "Assignment cannot be due in the past"
       return redirect_to :action => "new"
     end
+
     respond_to do |format|
       if @assignment.save
         @course.assignments << @assignment
@@ -59,11 +62,11 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1
   # PATCH/PUT /assignments/1.json
   def update
-    if @assignment.assignment_name == ""
+    if assignment_params[:assignment_name] == ""
       flash[:error] = "Assignment must have a name"
       return redirect_to :action => "edit"
     end
-    if @assignment.deadline < Time.zone.now
+    if assignment_params[:deadline] and (assignment_params[:deadline] < Time.zone.now)
       flash[:error] = "Assignment cannot be due in the past"
       return redirect_to :action => "edit"
     end

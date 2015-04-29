@@ -33,7 +33,7 @@
                 -for team in current_user.teams
                   %li= link_to "#{team.name}", course_team_path(:course_id => team.course.id, :id => team.id)
                 -if !current_user.has_role? :student
-                  %li.divide
+                  %li.divider
                   -if !current_user.courses[0].nil? and !current_user.has_role? :student
                     -for course in current_user.courses
                       %li= link_to "#{course.course_name} Teams", course_teams_path(:course_id => course.id)

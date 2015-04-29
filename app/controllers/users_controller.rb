@@ -12,9 +12,8 @@ class UsersController < ApplicationController
         @courses = Course.where(:user_id => current_user.user_id)
       elsif current_user.has_role? :instructor
         @users = find_students_for_instructor 
-      else
-        @users = User.all
-      end 
+        @courses = current_user.courses
+      end
     else
       redirect_to new_user_session_path
     end
@@ -30,9 +29,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    #if current_user.has_role? :instructor
-   #   @user = 
-   # end
+
    @courses = Course.where(:user_id => current_user.user_id)
    #user = User.new
    
@@ -72,15 +69,15 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    #respond_to do |format|
+    #  if @user.update(user_params)
+    #    format.html { redirect_to @user, notice: 'User was successfully updated.' }
+    #    format.json { render :show, status: :ok, location: @user }
+    #  else
+    #    format.html { render :edit }
+    #    format.json { render json: @user.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # DELETE /users/1
@@ -94,14 +91,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def import
-    begin
-      User.import(params[:file])
-      redirect_to users_path, notice: "User Data successfully uploaded"
-    rescue
-      redirect_to users_path, notice: "Invalid CSV file format" 
-    end 
-  end
+  #def import
+  #  begin
+  #    User.import(params[:file])
+  #    redirect_to users_path, notice: "User Data successfully uploaded"
+  #  rescue
+  #    redirect_to users_path, notice: "Invalid CSV file format" 
+  #  end 
+  #end
 
 
   private
@@ -116,19 +113,6 @@ class UsersController < ApplicationController
       params.require(:user).permit(:first_name, :last_name, :user_id, :email, :password, :sign_in_count)
     end
 
-    def find_students_for_professor
-      users = []
-      @professor = current_user
-      @courses = @professor.courses
-      for course in @courses
-        for user in course.users
-          if user.has_role? :student
-            users << user
-          end
-        end
-      end
-      users
-    end
 
     def find_students_for_instructor
       users = []
@@ -141,6 +125,6 @@ class UsersController < ApplicationController
           end
         end
       end
-    users
+      users
     end
 end

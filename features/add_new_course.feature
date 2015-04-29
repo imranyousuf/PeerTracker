@@ -32,5 +32,18 @@ Scenario: try to create a course with existing name
 	And I press "Create Course"
 	Then I should see "Course name exists"
 
+Scenario: Edit/Destroy an existing course
+	Given I am signed on with uid: 00000001
+	And I follow "Add a New Course"
+	When I fill in "course[course_name]" with "CS 170"
+	And I press "Create Course"
+	And I am on the home page
+	And I follow "Add a New Course"
+	When I fill in "course[course_name]" with "CS 170"
+	And I press "Create Course"
+	Then I should see "Course name exists"
+	And I am on the home page
+	And I follow "Remove CS 170"
+	Then I should see "Course was successfully removed."
 
-	
+

@@ -20,7 +20,7 @@
         - if @permission.has_role? :professor
           %td= link_to "Edit this course", edit_course_path(:id => course.id)
           %td= link_to "See all students and instructors", users_path
-          %td= link_to "Remove from #{course.course_name}", course, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          %td= link_to "Remove #{course.course_name}", course, :method => :delete, :data => { :confirm => 'Are you sure?' }
         - if @permission.has_role? :instructor
           %td= link_to "See all assignments", all_assignments_path(:course_id => course.id)
 

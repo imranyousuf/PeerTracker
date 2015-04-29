@@ -32,6 +32,25 @@ Feature: add/remove students
     Then I should see "User was successfully added"
     Then I should see "Masta Ruiqi"
 
+  Scenario: Try to add student who does not exist
+    Given I am signed on with uid: 00000001
+    And I follow "See all students and instructors"
+    And I follow "Add Student or Instructor for CS 169"
+    And I fill in "user[user_id]" with "12345679"
+    And I press "Add Student or Instructor"
+    Then I should see "User with ID: 12345679 does not exist!"
+
+  Scenario: Try to add student who is already enrolled
+    Given I am signed on with uid: 00000001
+    And I follow "See all students and instructors"
+    And I follow "Add Student or Instructor for CS 169"
+    And I fill in "user[user_id]" with "12345678"
+    And I press "Add Student or Instructor"
+    And I follow "Add Student or Instructor for CS 169"
+    And I fill in "user[user_id]" with "12345678"
+    And I press "Add Student or Instructor"
+    Then I should see "User with ID: 12345678 already enrolled in this class!"
+
   Scenario: Remove student(s)
     Given I am signed on with uid: 00000001
     And I follow "See all students and instructors"

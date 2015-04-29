@@ -31,6 +31,7 @@ Scenario: Fail Sign up as student
 	Then I should see "Login"
 	Then I should see "An account with this Student ID/Employee ID already exists!"
 
+
 Scenario: Sign up as instructor 
 	Given I am on the sign up page
 	When I fill in "user[first_name]" with "Instructor"

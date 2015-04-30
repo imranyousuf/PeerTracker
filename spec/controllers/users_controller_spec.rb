@@ -29,21 +29,21 @@ RSpec.describe UsersController, type: :controller do
     @professor.add_role :professor
     @student = create(:student)
     @student.add_role :student
+    @instructor = create(:instructor)
+    @instructor.add_role :instructor
     @course = create(:course)
-    @course.users << @student
+    @team = create (:team)
     sign_in @professor
   end
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {first_name: "masta", last_name: "ruiqi", user_id: 12345678, email: "t@t.com", 
-      password: "password", sign_in_count: 3, created_at: DateTime.now - 7.days, 
-      updated_at: DateTime.now - 3.days}
+    {user_id: 30000001, course: "CS 169"}
   }
 
   let(:invalid_attributes) {
-    {:email => "testattest.com", :password => "p"}
+    {user_id: 30000006, course: "CS 169"}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -51,107 +51,76 @@ RSpec.describe UsersController, type: :controller do
   # UsersController. Be sure to keep this updated too.
   let(:valid_session) { {current_user: @professor} }
 
-  describe "GET #show" do
-    it "assigns the requested user as @user" do
-      user = User.create! valid_attributes
-      get :show, {:id => user.to_param}, valid_session
-      expect(assigns(:user)).to eq(user)
+  describe "GET #index" do
+    context "for different roles" do
+      let(:course) {
+        stub_model(Course) {|course| course.id = 1; course.course_name = "WOW"; course.user_id = 20000001; }
+      }
+      it "as a student" do
+        sign_in @student
+        get :index
+        expect(response).to redirect_to(courses_url)
+      end
+      it "as a professor" do
+        get :index, {}, valid_session
+        expect(assigns(:courses)).to eq([course]) 
+      end
+      it "as an instructor" do
+        sign_in @instructor
+        course.users << @student
+        course.users << @instructor
+        @team.users << @student
+        @team.users << @instructor
+        get :index, {}, valid_session
+        expect(assigns(:courses)).to eq([course]) 
+        expect(assigns(:users)).to eq([@student])
+      end
     end
   end
-
-  describe "GET #edit" do
-    it "assigns the requested user as @user" do
-      user = User.create! valid_attributes
-      get :edit, {:id => user.to_param}, valid_session
-      expect(assigns(:user)).to eq(user)
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new User" do
+      it "add a student to a course" do
         expect {
           post :create, {:user => valid_attributes}, valid_session
-        }.to change(User, :count).by(1)
+        }.to change(@student.courses, :count).by(1)
       end
 
-      it "assigns a newly created user as @user" do
-        post :create, {:user => valid_attributes}, valid_session
-        expect(assigns(:user)).to be_a(User)
-        expect(assigns(:user)).to be_persisted
-      end
-
-      it "redirects to the created user" do
-        post :create, {:user => valid_attributes}, valid_session
-        expect(response).to redirect_to(User.last)
+      it "add a course to a student" do
+        expect {
+          post :create, {:user => valid_attributes}, valid_session
+        }.to change(@course.users, :count).by(1) 
       end
     end
 
     context "with invalid params" do
-      it "assigns a newly created but unsaved user as @user" do
-        post :create, {:user => invalid_attributes}, valid_session
-        expect(assigns(:user)).to be_a_new(User)
+      it "not add a nonexisting student to a course" do
+        expect {
+          post :create, {:user => invalid_attributes}, valid_session
+        }.to change(@course.users, :count).by(0) 
+      end
+      it "not add an already enrolled student to a course" do
+        expect {
+          post :create, {:user => valid_attributes}, valid_session
+          post :create, {:user => valid_attributes}, valid_session
+        }.to change(@course.users, :count).by(1) 
       end
 
-      it "re-renders the 'new' template" do
-        post :create, {:user => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        {last_name: "phil"}
-      }
-
-      it "updates the requested user" do
-        user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => new_attributes}, valid_session
-        user.reload
-        expect(user.last_name).to eq("phil")
-      end
-
-      it "assigns the requested user as @user" do
-        user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => valid_attributes}, valid_session
-        expect(assigns(:user)).to eq(user)
-      end
-
-      it "redirects to the user" do
-        user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => valid_attributes}, valid_session
-        expect(response).to redirect_to(user)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns the user as @user" do
-        user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => invalid_attributes}, valid_session
-        expect(assigns(:user)).to eq(user)
-      end
-
-      it "re-renders the 'edit' template" do
-        user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
-  end
-
+ 
   describe "DELETE #destroy" do
-    it "destroys the requested user" do
-      user = User.create! valid_attributes
+    before(:each) do
+      post :create, {:user => valid_attributes}, valid_session
+    end
+    it "removes the student to a class" do
       expect {
-        delete :destroy, {:id => user.to_param}, valid_session
-      }.to change(User, :count).by(-1)
+        delete :destroy, {:id => @student.id, :course_id => @course.id}, valid_session
+      }.to change(@course.users, :count).by(-1)
     end
 
     it "redirects to the users list" do
-      user = User.create! valid_attributes
-      delete :destroy, {:id => user.to_param}, valid_session
+      delete :destroy, {:id => @student.id, :course_id => @course.id}, valid_session
       expect(response).to redirect_to(users_url)
     end
   end

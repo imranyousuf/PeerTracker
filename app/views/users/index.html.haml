@@ -40,7 +40,7 @@
                     -#%td= link_to 'Show', user
                     -#%td= link_to 'Edit', edit_user_path(user)
                     -if current_user.has_role? :professor
-                      %td= link_to "Remove from course #{course.course_name}", user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                      %td= link_to "Remove from course #{course.course_name}", user_path(:id => user.id, :course_id => course.id), method: :delete, :data => { :confirm => 'Are you sure?' }
     %br
     %br
 

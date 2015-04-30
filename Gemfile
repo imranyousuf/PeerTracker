@@ -43,6 +43,7 @@ group :development, :test do
   gem 'simplecov', '~> 0.9.2'
   gem 'launchy'
   gem "codeclimate-test-reporter"
+  gem 'rspec-activemodel-mocks'
 end
 
 group :production do

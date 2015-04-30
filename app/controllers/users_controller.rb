@@ -83,7 +83,8 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    course = Course.where(:user_id => current_user.user_id).first
+    @user = User.find(params[:id])
+    course = Course.find(params[:course_id])
     course.users.delete(@user)
     respond_to do |format|
       format.html { redirect_to users_url, notice: "#{@user.full_name} was successfully removed from this course." }

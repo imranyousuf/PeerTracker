@@ -100,9 +100,11 @@ class AssignmentsController < ApplicationController
     if current_user.has_role?(:instructor) || current_user.has_role?(:professor)
       set_assignment
       @assignment.destroy
+
       respond_to do |format|
+        flash[:notice] = 'Assignment was successfully destroyed.'
         format.html { redirect_to :action => "professorindex", notice: 'Assignment was successfully destroyed.' }
-        format.json { head :no_content }
+        #format.json { head :no_content }
       end
     end
   end

@@ -97,26 +97,20 @@
 
 #Creating Assignments for course
 @proj1 = @carry.assignments.create! :assignment_name => 'proj1', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 30)
-@carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 29)
+@proj2 = @carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 29)
 
 #Creating Feedbacks
 
-@feed1 = Feedback.create! :comments => 'Nice job on the project! You have a good grasp of the concepts we learned in class and are a great partner as well!', :rating => '95', :giver_id => @k.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
-@feed2 = Feedback.create! :comments => 'Great job! You finished your portion of the project and also helped the rest of the team with theirs. Thanks for your help!', :rating => '100', :giver_id => @k.user_id, :receiver_id => @d.user_id, :team_id => @team2.id
-@feed3 = Feedback.create! :comments => 'Try to particpate more next time. You seem to be lost in some concepts that we have learned during lectures. Although you gave your best effort, your lack of understanding in certain areas slowed down the team as a whole', :rating => '50', :giver_id => @e.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
-@feed4 = Feedback.create! :comments => 'It seems that you did not know what was going on. I understand that you are taking many classes this semester, but I do not think that is an excuse for slacking off on this project', :rating => '40', :giver_id => @d.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
+@feed1 = Feedback.create! :comments => 'Nice job on the project! You have a good grasp of the concepts we learned in class and are a great partner as well!', :rating => '20', :giver_id => @k.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
+@feed2 = Feedback.create! :comments => 'Great job! You finished your portion of the project and also helped the rest of the team with theirs. Thanks for your help!', :rating => '20', :giver_id => @k.user_id, :receiver_id => @d.user_id, :team_id => @team2.id
+@feed3 = Feedback.create! :comments => 'Try to particpate more next time. You seem to be lost in some concepts that we have learned during lectures. Although you gave your best effort, your lack of understanding in certain areas slowed down the team as a whole', :rating => '15', :giver_id => @e.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
+@feed4 = Feedback.create! :comments => 'It seems that you did not know what was going on. I understand that you are taking many classes this semester, but I do not think that is an excuse for slacking off on this project', :rating => '12', :giver_id => @d.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
+@feed5 = Feedback.create! :comments => 'You did an awesome job and you really put in a lot of effort in everything you did.', :rating => '20', :giver_id => @d.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
 
 @proj1.feedbacks << @feed1
 @proj1.feedbacks << @feed2
 @proj1.feedbacks << @feed3
 @proj1.feedbacks << @feed4
-
-@fr1 = Feedback.create(:comments => 'good job!', :rating => '1', :giver_id => @a.id, :receiver_id => @d.id)
-@fr2 = Feedback.create(:comments => 'bad job!', :rating => '2', :giver_id => @a.id, :receiver_id => @d.id)
-@fr3 = Feedback.create(:comments => 'wow, so good', :rating => '3', :giver_id => @a.id, :receiver_id => @e.id)
-@fr4 = Feedback.create(:comments => 'good job E!', :rating => '4', :giver_id => @a.id, :receiver_id => @e.id)
-@fr5 = Feedback.create(:comments => 'Needs improvement', :rating => '5', :giver_id => @a.id, :receiver_id => @k.id)
-@fr6 = Feedback.create(:comments => 'Doesnt help at all', :rating => '6', :giver_id => @a.id, :receiver_id => @k.id)
-
+@proj2.feedbacks << @feed5
 
 

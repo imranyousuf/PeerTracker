@@ -17,9 +17,11 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
-  def average_rating(team_id)
-    team = self.teams.find(team_id)
-    feedback = team.feedbacks.all.where(:receiver_id => self.user_id)
+  # Get the Average Rating of the user for that assignment
+  def average_rating(assignment)
+    # team = self.teams.find(team_id)
+    # feedback = team.feedbacks.all.where(:receiver_id => self.user_id)
+    feedback = assignment.feedbacks.where(:receiver_id => self.user_id)
     average = 0
     for f in feedback
       average += f.rating
@@ -28,8 +30,13 @@ class User < ActiveRecord::Base
       average = average/feedback.length
       average.to_s
     else
-      'No feedback provided'
+      'No feedback received'
     end
+  end
+
+  # Get the feedbacks received by this user for a particular assignment
+  def feedback_received(assignment)
+    feedback = assignment.feedbacks.where(:receiver_id => self.user_id)
   end
 
   rolify

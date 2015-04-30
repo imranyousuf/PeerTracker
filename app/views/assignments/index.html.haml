@@ -19,17 +19,26 @@
 
 / %br
 
-%div
-  - @assignments.each do |assignment|
+
+- @assignments.each do |assignment|
+  .container
     - if @permission
-      %h2= assignment.assignment_name
-      %h5 Average Ratings:
-      - @names.each do |user|
-        %h6= user.full_name + ": " + user.average_rating(@team.id)
+      .row
+        %h2= assignment.assignment_name
+      .row
+        / %h4 Average Ratings:
+        - @names.each do |user|
+          %h4= user.full_name + ": " + user.average_rating(assignment)
+          .col-sm-offset-1
+            - user.feedback_received(assignment).each do |feedback|
+              %h5= User.find_by_user_id(feedback.giver_id).full_name
+              %h6= "Rating: " + feedback.rating.to_s
+              %h6= "Comment: " + feedback.comments
+
     - else
       %h2= link_to assignment.assignment_name, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
 
 %br
-
-
+%br
+%br
 //= link_to 'New Assignment', new_course_team_assignment_path

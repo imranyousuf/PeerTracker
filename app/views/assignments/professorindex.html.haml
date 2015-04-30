@@ -13,7 +13,7 @@
       %tr
         %td= assignment.assignment_name
         %td= assignment.deadline
-        - if assignment.deadline < Time.now
+        - if assignment.deadline > Time.zone.now
           %td= link_to "Edit this assignment", edit_course_assignment_path(:id => assignment.id, :course_id => @course.id)
         - else
           %th{:align => 'left'} Deadline Passed

@@ -47,11 +47,14 @@ class AssignmentsController < ApplicationController
     if @assignment.assignment_name == ""
       flash[:error] = "Assignment Name cannot be nil"
       return redirect_to :action => "new"
-    end
-    if @assignment.deadline < Time.now
+    elsif @course.assignments.map(&:assignment_name).include? @assignment.assignment_name
+       flash[:error] = "Assignment Name exists"
+       return redirect_to :action => "new"
+    elsif @assignment.deadline < Time.zone.now
       flash[:error] = "Assignment cannot be due in the past"
       return redirect_to :action => "new"
     end
+
     respond_to do |format|
       if @assignment.save
         @course.assignments << @assignment
@@ -67,11 +70,11 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1
   # PATCH/PUT /assignments/1.json
   def update
-    if @assignment.assignment_name == ""
+    if assignment_params[:assignment_name] == ""
       flash[:error] = "Assignment must have a name"
       return redirect_to :action => "edit"
     end
-    if @assignment.deadline < Time.now
+    if assignment_params[:deadline] and (assignment_params[:deadline] < Time.zone.now)
       flash[:error] = "Assignment cannot be due in the past"
       return redirect_to :action => "edit"
     end
@@ -90,10 +93,13 @@ class AssignmentsController < ApplicationController
   # DELETE /assignments/1
   # DELETE /assignments/1.json
   def destroy
-    @assignment.destroy
-    respond_to do |format|
-      format.html { redirect_to assignments_url, notice: 'Assignment was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.has_role?(:instructor) || current_user.has_role?(:professor)
+      set_assignment
+      @assignment.destroy
+      respond_to do |format|
+        format.html { redirect_to :action => professorindex, notice: 'Assignment was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 

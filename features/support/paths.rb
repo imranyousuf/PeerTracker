@@ -13,11 +13,14 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
+    when /^view users page$/
+      users_path
     when /^the sign in page$/
       new_user_session_path
-      #'/users/sign_in'
     when /^the home\s?page$/
       '/'
+    when /^the sign up page$/
+      new_user_registration_path
     when /^view course page for "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       course_path(@course.id)
@@ -32,6 +35,10 @@ module NavigationHelpers
       @course = Course.where(course_name: "#{$1}").first
       @team = Team.where(name: "#{$2}", course_id: @course.id).first
       "/courses/#{@course.id}/teams/#{@team.id}"
+    when /^view assignments page for course "(.*)", team "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      @team = Team.where(name: "#{$2}", course_id: @course.id).first
+      "/courses/#{@course.id}/teams/#{@team.id}/assignments"
     when /^new feedback page for course "(.*)", team "(.*)", assignment "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       @team = Team.where(name: "#{$2}", course_id: @course.id).first

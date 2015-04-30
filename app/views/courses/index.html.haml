@@ -5,7 +5,11 @@
     %tr
       %th{:align => "center"} Course Name
       %th{:align => "center"} Professor
-      - if @permission.has_role?(:professor) || @permission.has_role?(:instructor)
+      - if @permission.has_role?(:professor)
+        %th{:align => "center"}
+        %th{:align => "center"}
+        %th{:align => "center"}
+      - if @permission.has_role?(:instructor)
         %th{:align => "center"}
 
   %tbody
@@ -15,9 +19,14 @@
         %td= User.where(:user_id => course.user_id).first.full_name
         - if @permission.has_role? :professor
           %td= link_to "Edit this course", edit_course_path(:id => course.id)
+          %td= link_to "See all students and instructors", users_path
+          %td= link_to "Remove #{course.course_name}", course, :method => :delete, :data => { :confirm => 'Are you sure?' }
         - if @permission.has_role? :instructor
           %td= link_to "See all assignments", all_assignments_path(:course_id => course.id)
 
+
+
+%br
 %div{:align => "center"}
   - if @permission.has_role? :professor
     = link_to "Add a New Course", new_course_path

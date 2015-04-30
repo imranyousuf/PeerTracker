@@ -7,8 +7,8 @@ class FeedbacksController < ApplicationController
     @course = Course.find(params[:course_id])
     @team = @course.teams.find(params[:team_id])
     @assignment = Assignment.find(params[:assignment_id])
-    @feedbacksgiven = @team.feedbacks.all.where(:giver_id => current_user.user_id)
-    @feedbacksreceived = @team.feedbacks.all.where(:receiver_id => current_user.user_id)
+    @feedbacksgiven = @assignment.feedbacks.all.where(:giver_id => current_user.user_id)
+    @feedbacksreceived = @assignment.feedbacks.all.where(:receiver_id => current_user.user_id)
   end
 
   # GET /feedbacks/1
@@ -33,12 +33,21 @@ class FeedbacksController < ApplicationController
         @users << m
       end
     end
+    assignment = Assignment.find(params[:assignment_id])
+    if assignment.deadline < Time.zone.now
+      flash[:error] = "Cannot give new feedback after assignment deadline"
+      redirect_to :action => "index"
+    end
     @feedback = Feedback.new
   end
 
   # GET /feedbacks/1/edit
   def edit
     @feedback = Feedback.find(params[:id])
+    if @feedback.assignment.deadline < Time.zone.now
+      flash[:error] = "Cannot edit feedback after assignment deadline"
+      redirect_to :action => "index"
+    end
     @receiver = User.where(:user_id => @feedback.receiver_id).first
   end
 
@@ -60,6 +69,8 @@ class FeedbacksController < ApplicationController
  
     respond_to do |format|
       if @feedback.save
+        assignment = Assignment.find(params[:assignment_id])
+        assignment.feedbacks << @feedback
         format.html { redirect_to course_team_assignment_feedbacks_path(params[:course_id], params[:team_id], params[:assignment_id], params[:id]), notice: 'Feedback was successfully created.' }
       else
         format.html { render :new }

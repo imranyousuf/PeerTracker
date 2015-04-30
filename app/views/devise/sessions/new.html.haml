@@ -4,9 +4,9 @@
 %br
 = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
 	.form-inputs{:align => :center}
-		= f.input :email, label: false,required: false, autofocus: true, :class=> "form-inline", :input_html => {:style => "width:250px;"}, placeholder: "Email"
+		= f.input :email, label: false,required: false, autofocus: true, :input_html => {:style => "width:250px;"}, placeholder: "Email"
 
-		= f.input :password, label: false,required: false, class: 'why', :input_html => {:style => "width:250px;"}, placeholder: "Password"
+		= f.input :password, label: false,required: false, :input_html => {:style => "width:250px;"}, placeholder: "Password"
 
 		= f.input :remember_me, as: :boolean if devise_mapping.rememberable?
 	.form-actions{:align => :center}

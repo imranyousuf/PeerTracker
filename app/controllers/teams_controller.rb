@@ -5,7 +5,7 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = current_user.teams.where(:course_id => params[:course_id]).uniq
+    @teams = current_user.teams.where(:course_id => params[:course_id])
     @course = Course.find(params[:course_id])
     @course_id = @course.id
     @teams_params = getTeamNameInstructorandMembers
@@ -54,8 +54,7 @@ class TeamsController < ApplicationController
       if @team.save and error.blank?
         format.html { redirect_to course_teams_path , notice: 'Team was successfully created.' }
         #format.json { render :show, status: :created, location: @team }
-      else
-         
+      else         
         if !error.blank?
           @team.errors.add(:validate, error)
           flash[:error] = error
@@ -97,20 +96,21 @@ class TeamsController < ApplicationController
   # DELETE /teams/1
   # DELETE /teams/1.json
   def destroy
+    @team = Team.find(params[:id])
     @team.destroy
     respond_to do |format|
       format.html { redirect_to course_teams_path, notice: 'Team was successfully removed.' }
     end
   end
 
-  def import
-    begin
-      Team.import(params[:file])
-      redirect_to teams_path, notice: "Team Data successfully uploaded"
-    rescue
-      redirect_to teams_path, notice: "Invalid CSV file format" 
-    end 
-  end
+  #def import
+  #  begin
+  #    Team.import(params[:file])
+  #    redirect_to teams_path, notice: "Team Data successfully uploaded"
+  #  rescue
+  #    redirect_to teams_path, notice: "Invalid CSV file format" 
+  #  end 
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

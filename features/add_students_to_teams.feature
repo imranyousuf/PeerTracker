@@ -41,6 +41,29 @@ Feature: add/remove students to teams
     Then I should see "Team Best"
     Then I should see "Masta Ruiqi"
   
+  Scenario: Try to add an unenrolled student to team
+    Given I am signed on with uid: 00000002
+    And I am on view teams page for course "CS 169"
+    Then I should see "Your Teams"
+    And I follow "Add a New Team"
+    When I fill in "team[name]" with "Team Best"
+    And I fill in "student_sid_1" with "12345679"
+    And I vague click "save_team"
+    Then I should see "Student with SID: 12345679 is not enrolled in this class"
+
+  Scenario: Try to add team with an existing name
+    Given I am signed on with uid: 00000002
+    And I am on view teams page for course "CS 169"
+    Then I should see "Your Teams"
+    And I follow "Add a New Team"
+    When I fill in "team[name]" with "Team Noob"
+    And I vague click "save_team"
+    And I am on view teams page for course "CS 169"
+    And I follow "Add a New Team"
+    When I fill in "team[name]" with "Team Noob"
+    And I vague click "save_team"
+    Then I should see "Team name exists"
+
   Scenario: Remove a student from a team
     Given I am signed on with uid: 00000002
     And I am on view teams page for course "CS 169"

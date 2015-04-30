@@ -1,40 +1,56 @@
-%center
-  - if current_user.has_role? :instructor
-    %h1= "List of Students under #{current_user.full_name}"
-  - elsif current_user.has_role? :professor
-    %h1= "List of Students in #{Course.where(user_id: current_user.user_id).first.course_name}"
-.media
-  .media-body
-    .container
-      %table.table.table-hover
-        %thead
-          %tr
-            %th Name 
-            %th SID 
-            %th Email 
-            %th Role
-            %th Team(s) 
+-if current_user.has_role? :professor and @courses[0].nil?
+  %center
+    .media
+      %br
+      %br
+      %ul= link_to "Add a course to add students or instructors!", new_course_path
 
-          %tbody
-            - @users.each do |user|
-              %tr
-                %td= user.full_name
-                %td= user.user_id
-                %td= user.email
-                %td= user.roles[0].name.split.map(&:capitalize)*' '
-                %td= user.teams.map(&:name).join(", ")
-                -#%td= link_to 'Show', user
-                -#%td= link_to 'Edit', edit_user_path(user)
-                -#%td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+-for course in @courses
+  %center
+    - if current_user.has_role? :instructor
+      %h1= "Students under #{current_user.full_name}"
+    - elsif current_user.has_role? :professor
+      %h1= "Students in #{course.course_name}"
+    - else
+      %h1= "No Course Added Yet"
+  .media
+    .media-body
+      .container
+        %table.table.table-hover
+          %thead
+            %tr
+              %th Name 
+              %th SID 
+              %th Email 
+              %th Role
+              %th Team(s) 
+              -if current_user.has_role? :professor
+                %th
+
+            %tbody
+              - course.users.each do |user|
+                -if user.has_role? :student
+                  %tr
+                    %td= user.full_name
+                    %td= user.user_id
+                    %td= user.email
+                    -if !user.roles[0].nil?
+                      %td= user.roles[0].name.split.map(&:capitalize)*' '
+                    %td= user.teams.map(&:name).join(", ")
+                    -#%td= link_to 'Show', user
+                    -#%td= link_to 'Edit', edit_user_path(user)
+                    -if current_user.has_role? :professor
+                      %td= link_to "Remove from course #{course.course_name}", user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    %br
+    %br
+
+
+  %div{:align => "center"}
+    - if current_user.has_role? :professor 
+      -if !course.nil?
+        = link_to "Add Student or Instructor for #{course.course_name}", new_user_path, :course => course
+
 
   %br
   %br
-
-
-%div{:align => "center"}
-  - if current_user.has_role? :instructor
-    = link_to "Add Student under #{current_user.full_name}", new_user_path
-
-%br
-%br
-%br
+  %br

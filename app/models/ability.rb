@@ -32,6 +32,8 @@ class Ability
     if user.has_role? :admin
       can :manage, :all
     elsif  user.has_role? :professor
+      can :manage, User
+      cannot :new, User
       can :manage, Course
       can :manage, Assignment
       can :manage, Team

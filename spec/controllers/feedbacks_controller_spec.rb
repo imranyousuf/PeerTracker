@@ -21,6 +21,7 @@ DatabaseCleaner.strategy = :truncation
 # that an instance is receiving a specific message.
 
 RSpec.describe FeedbacksController, type: :controller do
+  include Devise::TestHelpers
 
   before(:each) do
     DatabaseCleaner.clean
@@ -30,26 +31,36 @@ RSpec.describe FeedbacksController, type: :controller do
     @course = create(:course)
     @team = create(:team)
     @assignment = create(:assignment)
-
+    @course.assignments << @assignment
     @professor.add_role :professor
     @student.add_role :student
     @student2.add_role :student
-
+    @team.users << @student
+    @team.users << @student2
     @course.teams << @team
-    sign_in @professor
+    @course.users << @student
+    @course.users << @student2
+    @assignment2 = create(:assignment2)
+    @course.assignments << @assignment2
   end
 
   # This should return the minimal set of attributes required to create a valid
   # Feedback. As you add validations to Feedback, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {comments: "you are not very good at this", rating: 10, giver_id: @student.id, 
-      receiver_id: @student2.id, assignment_id: @assignment.id, team_id: @team.id}
+    {comments: "you are not very good at this", rating: 10, giver_id: @student.user_id, 
+      receiver_id: @student2.user_id, assignment_id: @assignment.id, team_id: @team.id}
   }
 
   let(:invalid_attributes) {
     {comment: "you suck"}
   }
+
+  let(:valid_attributes2) {
+    {comments: "you are not verry good at this", rating: 10, giver_id: @student.user_id,
+      receiver_id: @student2.user_id, assignment_id: @assignment2.id, team_id: @team.id}
+  }
+
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -57,25 +68,29 @@ RSpec.describe FeedbacksController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns all feedbacks as @feedbacks" do
-      feedback = Feedback.create! valid_attributes
-      get :index, {:course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
-      expect(assigns(:feedbacks)).to eq([feedback])
+    before(:each) do
+      sign_in @student
     end
-  end
 
-  describe "GET #show" do
-    it "assigns the requested feedback as @feedback" do
+    it "assigns all feedbacks as @feedbacksgiven" do
       feedback = Feedback.create! valid_attributes
-      get :show, {:id => feedback.to_param, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
-      expect(assigns(:feedback)).to eq(feedback)
+      @team.feedbacks << feedback
+      @assignment.feedbacks << feedback
+      get :index, {:course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
+      expect(assigns(:feedbacksgiven)).to eq([feedback])
     end
   end
 
   describe "GET #new" do
     it "assigns a new feedback as @feedback" do
+      sign_in @student
       get :new, {:course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
       expect(assigns(:feedback)).to be_a_new(Feedback)
+    end
+    it "redirects if feedback deadline has passed" do
+      sign_in @student
+      get :new, {:course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment2.id}, valid_session
+      expect(response).to redirect_to :action => "index"
     end
   end
 
@@ -85,37 +100,51 @@ RSpec.describe FeedbacksController, type: :controller do
       get :edit, {:id => feedback.to_param, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
       expect(assigns(:feedback)).to eq(feedback)
     end
+
+    it "redirects if deadline has passed" do
+      feedback = Feedback.create! valid_attributes2
+      get :edit, {:id => feedback.to_param, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment2.id}, valid_session
+      expect(flash[:error]).to be_present
+      expect(response).to redirect_to :action => "index"
+
+    end
   end
 
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Feedback" do
         expect {
-          post :create, {:feedback => valid_attributes, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
+          post :create, {:feedback => valid_attributes, :user => {:user_id => @student2.user_id}, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
         }.to change(Feedback, :count).by(1)
+      end
+      
+      it "redirects if team not found" do
+        post :create, {:feedback => valid_attributes, :user => {:user_id => @student2.user_id}, :course_id => @course.id, :team_id => 20, :assignment_id => @assignment.id}, valid_session
+      expect(response).to redirect_to :action => "index"
+
       end
 
       it "assigns a newly created feedback as @feedback" do
-        post :create, {:feedback => valid_attributes, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
+        post :create, {:feedback => valid_attributes, :user => {:user_id => @student2.user_id}, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
         expect(assigns(:feedback)).to be_a(Feedback)
         expect(assigns(:feedback)).to be_persisted
       end
 
       it "redirects to the created feedback" do
-        post :create, {:feedback => valid_attributes, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
-        expect(response).to redirect_to(Feedback.last)
+        post :create, {:feedback => valid_attributes, :user => {:user_id => @student2.user_id}, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
+        expect(response).to redirect_to :action => "index"
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved feedback as @feedback" do
-        post :create, {:feedback => invalid_attributes, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
+        post :create, {:feedback => invalid_attributes, :user => {:user_id => @student2.user_id}, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
         expect(assigns(:feedback)).to be_a_new(Feedback)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:feedback => invalid_attributes, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
-        expect(response).to render_template("new")
+        post :create, {:feedback => invalid_attributes, :user => {:user_id => @student2.user_id}, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
+        expect(response).to redirect_to :action => "new"
       end
     end
   end
@@ -123,14 +152,16 @@ RSpec.describe FeedbacksController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {comments: "you are good at this", rating: 90, giver_id: @student.user_id, 
+        receiver_id: @student2.user_id, assignment_id: @assignment.id, team_id: @team.id} 
+
       }
 
       it "updates the requested feedback" do
         feedback = Feedback.create! valid_attributes
         put :update, {:id => feedback.to_param, :feedback => new_attributes, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
         feedback.reload
-        skip("Add assertions for updated state")
+        expect(feedback.rating).to eq(new_attributes[:rating])
       end
 
       it "assigns the requested feedback as @feedback" do
@@ -142,7 +173,7 @@ RSpec.describe FeedbacksController, type: :controller do
       it "redirects to the feedback" do
         feedback = Feedback.create! valid_attributes
         put :update, {:id => feedback.to_param, :feedback => valid_attributes, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
-        expect(response).to redirect_to(feedback)
+        expect(response).to redirect_to :action => "index"
       end
     end
 
@@ -156,23 +187,8 @@ RSpec.describe FeedbacksController, type: :controller do
       it "re-renders the 'edit' template" do
         feedback = Feedback.create! valid_attributes
         put :update, {:id => feedback.to_param, :feedback => invalid_attributes, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
-        expect(response).to render_template("edit")
+        expect(response).to redirect_to :action => "edit"
       end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested feedback" do
-      feedback = Feedback.create! valid_attributes
-      expect {
-        delete :destroy, {:id => feedback.to_param}, valid_session
-      }.to change(Feedback, :count).by(-1)
-    end
-
-    it "redirects to the feedbacks list" do
-      feedback = Feedback.create! valid_attributes
-      delete :destroy, {:id => feedback.to_param}, valid_session
-      expect(response).to redirect_to(feedbacks_url)
     end
   end
 

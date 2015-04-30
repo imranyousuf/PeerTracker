@@ -42,5 +42,13 @@ FactoryGirl.define do
 
   factory :assignment, class: Assignment do
     assignment_name "project1-1"
+    deadline DateTime.new(2015, 5, 29)
+
+  end
+
+  factory :assignment2, class: Assignment do
+    assignment_name "project1-2"
+    deadline DateTime.new(2000, 5, 29)
+
   end
 end

@@ -11,13 +11,9 @@ class FeedbacksController < ApplicationController
     @feedbacksreceived = @assignment.feedbacks.all.where(:receiver_id => current_user.user_id)
   end
 
-  # GET /feedbacks/1
-  # GET /feedbacks/1.json
-  def show
-  end
-
   # GET /feedbacks/new
   def new
+    @feedback = Feedback.new
     @feedbacks = []
     @course = Course.find(params[:course_id])
     team = @course.teams.find(params[:team_id])
@@ -38,7 +34,6 @@ class FeedbacksController < ApplicationController
       flash[:error] = "Cannot give new feedback after assignment deadline"
       redirect_to :action => "index"
     end
-    @feedback = Feedback.new
   end
 
   # GET /feedbacks/1/edit
@@ -54,10 +49,10 @@ class FeedbacksController < ApplicationController
   # POST /feedbacks
   # POST /feedbacks.json
   def create
-    @team = Team.find(params[:team_id])
+    @team = Team.where(:id => params[:team_id]).first
     if @team == nil
         flash[:error] = "Could not find team"
-        return redirect_to course_path(params[:course_id])
+        return redirect_to :action => "index"
     end
     @feedback = @team.feedbacks.new(feedback_params)
     @receiver_id= params[:user][:user_id]
@@ -103,16 +98,6 @@ class FeedbacksController < ApplicationController
         format.html { render :edit }
         #format.json { render json: @feedback.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /feedbacks/1
-  # DELETE /feedbacks/1.json
-  def destroy
-    @feedback.destroy
-    respond_to do |format|
-      format.html { redirect_to feedbacks_url, notice: 'Feedback was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

@@ -24,7 +24,7 @@
   .container
     - if @permission
       .row
-        %h2= assignment.assignment_name
+        %h2= assignment.assignment_name + " - Due Date: " + assignment.deadline.to_s
       .row
         / %h4 Average Ratings:
         - @names.each do |user|
@@ -36,7 +36,7 @@
               %h6= "Comment: " + feedback.comments
 
     - else
-      %h2= link_to assignment.assignment_name, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
+      %h2= link_to assignment.assignment_name + " - Due Date: " + assignment.deadline.to_s, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
 
 %br
 %br

@@ -7,6 +7,7 @@
       %th Deadline
       - if @permission
         %th
+        %th
 
   %tbody
     - @assignments.each do |assignment|
@@ -16,7 +17,9 @@
         - if assignment.deadline > Time.zone.now
           %td= link_to "Edit this assignment", edit_course_assignment_path(:id => assignment.id, :course_id => @course.id)
         - else
-          %th{:align => 'left'} Deadline Passed
+          %td{:align => 'left'} Deadline Passed
+        %td= link_to "Delete this assignment", delete_course_assignment_path(:course_id => @course.id, :id => assignment.id), :method => 'delete'
+
 
 %br
 %div{:align => "center"}

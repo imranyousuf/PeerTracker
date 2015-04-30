@@ -28,6 +28,10 @@ class AssignmentsController < ApplicationController
     redirect_to course_team_assignment_feedbacks_path(:course_id => params[:course_id], :team_id => params[:team_id], :assignment_id => params[:id])
   end
 
+  def professorshow
+
+  end
+
   # GET /assignments/new
   def new
     @assignment = Assignment.new
@@ -97,7 +101,7 @@ class AssignmentsController < ApplicationController
       set_assignment
       @assignment.destroy
       respond_to do |format|
-        format.html { redirect_to :action => professorindex, notice: 'Assignment was successfully destroyed.' }
+        format.html { redirect_to :action => "professorindex", notice: 'Assignment was successfully destroyed.' }
         format.json { head :no_content }
       end
     end

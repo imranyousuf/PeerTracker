@@ -30,7 +30,8 @@ Rails.application.routes.draw do
   patch 'courses/:course_id/assignments/:id', to: 'assignments#update'
   put 'courses/:course_id/assignments/:id', to: 'assignments#update'
   get 'courses/:course_id/assignments/', to: 'assignments#professorindex', :as => 'all_assignments'
-  delete 'courses/:course_id/assignments/:id', to: 'assignments#destroy'
+  delete 'courses/:course_id/assignments/:id', to: 'assignments#destroy', :as => 'delete_course_assignment'
+  get 'courses/:course_id/assignments/', to: 'assignments#professorshow', :as => 'show_assignment'
 
 
 

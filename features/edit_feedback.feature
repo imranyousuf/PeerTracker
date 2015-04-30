@@ -37,12 +37,11 @@ Background:
       | 00000002   | 1       |
     Given the following assignments exist:
       | assignment_name | course_id | deadline    | created_at  | updated_at  |
-      | Project 1       | 1         | 11-Apr-2015 | 04-Apr-2015 | 04-Apr-2015 |
-      | Project 2       | 1         | 16-Apr-2300 | 13-Apr-2015 | 13-Apr-2015 |
+      | Project 1       | 1         | 11-Jun-2015 | 04-Apr-2015 | 04-Apr-2015 |
+      | Project 2       | 1         | 16-Jun-2300 | 13-Apr-2015 | 13-Apr-2015 |
     Given the following feedbacks exist:
-      | comments         | rating | giver_id   | receiver_id | team_id |
-      | i suck balls     | 4      | 12345678   | 12345678    | 1       |
-      | u good brah      | 16     | 12345678   | 23421232    | 1       |
+      | comments         | rating | giver_id   | receiver_id | team_id | assignment_id |
+      | you suck balls   | 4      | 12345678   | 23421232    | 1       | 2             |
 
   Scenario: Edit  a new feedback
     Given I am signed on with uid: 12345678
@@ -52,7 +51,6 @@ Background:
     And I vague click "submit"
     Then I should be on all feedbacks page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
     Then I should see "Feedback was successfully updated"
-    Given I am on all feedbacks page for course "CS 169", team "Kevin Dogs", assignment "Project 2"
     Then I should not see "i suck balls"
     Then I should see "1000"
     Then I should see "nvm tried so hard"

@@ -96,10 +96,10 @@
 
 
 #Creating Assignments for course
-@proj1 = @carry.assignments.create! :assignment_name => 'proj1', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 30)
-@proj2 = @carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 29)
+@proj1 = @carry.assignments.create! :assignment_name => 'proj1', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 30)
+@proj2 = @carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 29)
 
-@carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 4, 29)
+@carry.assignments.create! :assignment_name => 'proj3', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 31)
 @expired_proj = @carry.assignments.create! :assignment_name => 'expired_project', :course_id => @carry.id, :deadline => DateTime.new(2000, 1, 1)
 
 #Creating Feedbacks

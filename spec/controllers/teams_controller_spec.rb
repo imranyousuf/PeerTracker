@@ -31,7 +31,7 @@ RSpec.describe TeamsController, type: :controller do
     @student.add_role :student
     @professor.add_role :professor
     @course = create(:course)
-    sign_in @student
+    sign_in @professor
   end
   
   let(:valid_attributes) {
@@ -39,7 +39,7 @@ RSpec.describe TeamsController, type: :controller do
   }
 
   let(:invalid_attributes) {
-    {stuff: "invalid"}
+    {name: "boy$whobrode", course_id: 1, id: 2}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -49,6 +49,7 @@ RSpec.describe TeamsController, type: :controller do
 
   describe "GET #index" do
     it "assigns all teams as @teams" do
+      sign_in @student
       team = Team.create! valid_attributes
       @student.teams << team
       get :index, {:course_id => @course.id}, valid_session
@@ -95,14 +96,7 @@ RSpec.describe TeamsController, type: :controller do
 
       it "redirects to the created team" do
         post :create, {:course_id => @course.id, :team => valid_attributes}, valid_session
-        expect(response).to redirect_to(Team.last)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns a newly created but unsaved team as @team" do
-        post :create, {:course_id => @course.id, :team => invalid_attributes}, valid_session
-        expect(assigns(:team)).to be_a_new(Team)
+        expect(response).to redirect_to :action => "index"
       end
     end
   end
@@ -110,14 +104,14 @@ RSpec.describe TeamsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {name: "kevin's dogs who code", course_id: @course.id, id: 1}
       }
 
       it "updates the requested team" do
         team = Team.create! valid_attributes
         put :update, {:course_id => @course.id, :id => team.to_param, :team => new_attributes}, valid_session
         team.reload
-        skip("Add assertions for updated state")
+        expect(team.name).to eq("kevin's dogs who code")
       end
 
       it "assigns the requested team as @team" do

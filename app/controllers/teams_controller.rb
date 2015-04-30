@@ -54,8 +54,7 @@ class TeamsController < ApplicationController
       if @team.save and error.blank?
         format.html { redirect_to course_teams_path , notice: 'Team was successfully created.' }
         #format.json { render :show, status: :created, location: @team }
-      else
-         
+      else         
         if !error.blank?
           @team.errors.add(:validate, error)
           flash[:error] = error

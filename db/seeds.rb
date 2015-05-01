@@ -96,11 +96,19 @@
 
 
 #Creating Assignments for course
-@proj1 = @carry.assignments.create! :assignment_name => 'proj1', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 30)
-@proj2 = @carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 29)
+@proj1 = @carry.assignments.create! :assignment_name => 'proj1', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 30), :description => "Project 1: This is a Test Description"
+@proj2 = @carry.assignments.create! :assignment_name => 'proj2', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 29), :description => "Project 2: This is a Test Description"
 
-@carry.assignments.create! :assignment_name => 'proj3', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 31)
-@expired_proj = @carry.assignments.create! :assignment_name => 'expired_project', :course_id => @carry.id, :deadline => DateTime.new(2000, 1, 1)
+@carry.assignments.create! :assignment_name => 'proj3', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 31), :description => "Project 3: This is a Test Description"
+@expired_proj = @carry.assignments.create! :assignment_name => 'expired_project', :course_id => @carry.id, :deadline => DateTime.new(2000, 1, 1), :description => "Expired Project: This is a Test Description"
+
+@proj4 = @carry.assignments.create! :assignment_name => 'proj4', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 30), :description => "Project 3: This is a Test Description"
+@proj5 = @carry.assignments.create! :assignment_name => 'proj5', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 29), :description => "Project 4: This is a Test Description"
+
+@carry.assignments.create! :assignment_name => 'proj6', :course_id => @carry.id, :deadline => DateTime.new(2015, 5, 31), :description => "Project 5: This is a Test Description"
+@expired_proj = @carry.assignments.create! :assignment_name => 'expired_project2', :course_id => @carry.id, :deadline => DateTime.new(2000, 1, 1), :description => "Expired Project2: This is a Test Description"
+
+#
 
 #Creating Feedbacks
 

@@ -1,28 +1,112 @@
 %h1{:align => "center"}= "All Assignments for " + @course.course_name
+.container
+  .well.well-sm
+    .btn-group
+      %a#list.btn.btn-default.btn-sm{:href => "#"}
+        %span.glyphicon.glyphicon-th-list>
+        List
+      %a#grid.btn.btn-default.btn-sm{:href => "#", :style => "margin 10 10 10 10px"}
+        %span.glyphicon.glyphicon-th>
+        Grid
 
-%table.table-bordered{:width => '90%', :align => 'center'}
-  %thead
-    %tr
-      %th{:align => 'center'} Assignment Name
-      %th Deadline
-      - if @permission
-        %th
-        %th
+      %a.btn.btn-primary.btn-round{:href => new_course_assignment_path}
+        %span.glyphicon.glyphicon-folder-open>
+          New Assignment
 
-  %tbody
+  #products.row.list-group
     - @assignments.each do |assignment|
-      %tr
-        %td= assignment.assignment_name
-        %td= assignment.deadline
-        - if assignment.deadline > Time.zone.now
-          %td= link_to "Edit this assignment", edit_course_assignment_path(:id => assignment.id, :course_id => @course.id)
-        - else
-          %td{:align => 'left'} Deadline Passed
-        %td= link_to "Delete this assignment", delete_course_assignment_path(:course_id => @course.id, :id => assignment.id), :method => 'delete'
+      .item.col-xs-4.col-lg-4
+        .thumbnail
+          %img.group.list-group-image{:alt => "", :src => "http://placehold.it/400x250/000/fff"}/
+          .caption
+            %h4.group.inner.list-group-item-heading
+              = assignment.assignment_name
+            %p.group.inner.list-group-item-text
+              = assignment.description
+            .row
+              .col-xs-12.col-md-6
+                %p
+                  = "Due Date: " + assignment.deadline.to_s
+              .col-xs-4.col-md-6
+                %a.btn.btn-primary{:href => edit_course_assignment_path(:id => assignment.id)} 
+                  %span.glyphicon.glyphicon-edit>
+                    Edit
+                %a.btn.btn-danger{:href => delete_course_assignment_path(:id => assignment.id)}
+                  %span.glyphicon.glyphicon-trash>
+                    Delete
 
 
-%br
-%div{:align => "center"}
-  - if @permission
-    = link_to 'New Assignment', new_course_assignment_path
-%br
+:javascript
+  $(document).ready(function() {
+    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+  });
+
+:css
+  .glyphicon { margin-right:5px; }
+  .thumbnail
+  {
+      margin-bottom: 20px;
+      padding: 0px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+  }
+
+  .item.list-group-item
+  {
+      float: none;
+      width: 100%;
+      background-color: #fff;
+      margin-bottom: 10px;
+  }
+  .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+  {
+      background: #428bca;
+  }
+
+  .item.list-group-item .list-group-image
+  {
+      margin-right: 10px;
+  }
+  .item.list-group-item .thumbnail
+  {
+      margin-bottom: 0px;
+  }
+  .item.list-group-item .caption
+  {
+      padding: 9px 9px 0px 9px;
+  }
+  .item.list-group-item:nth-of-type(odd)
+  {
+      background: #eeeeee;
+  }
+
+  .item.list-group-item:before, .item.list-group-item:after
+  {
+      display: table;
+      content: " ";
+  }
+
+  .item.list-group-item img
+  {
+      float: left;
+  }
+  .item.list-group-item:after
+  {
+      clear: both;
+  }
+  .list-group-item-text
+  {
+      margin: 0 0 11px;
+  }
+
+  .btn-group .btn + .btn,
+  .btn-group .btn + .btn-group,
+  .btn-group .btn-group + .btn,
+  .btn-group .btn-group + .btn-group {
+    margin-left: 10px;
+  }
+
+
+

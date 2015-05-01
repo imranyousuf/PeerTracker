@@ -5,8 +5,9 @@
   <br/>
   = f.error_notification
 
-  .form-input{:width => "70%"}
+  .form-input{:align => :center, :width => "70%"}
     = f.input :course_name, :required => true, placeholder: "Course Name Here"
-
+    = f.input :team_size, label: "Max Team Size", :input_html => {:style => "width:50px;"}
+    %br
   .form-actions
     = f.button :submit

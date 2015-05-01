@@ -30,6 +30,7 @@ class FeedbacksController < ApplicationController
       end
     end
     assignment = Assignment.find(params[:assignment_id])
+    @instructions = assignment.instructions
     if assignment.deadline < Time.zone.now
       flash[:error] = "Cannot give new feedback after assignment deadline"
       redirect_to :action => "index"
@@ -39,6 +40,8 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks/1/edit
   def edit
     @feedback = Feedback.find(params[:id])
+    assignment = Assignment.find(params[:assignment_id])
+    @instructions = assignment.instructions
     if @feedback.assignment.deadline < Time.zone.now
       flash[:error] = "Cannot edit feedback after assignment deadline"
       redirect_to :action => "index"
@@ -61,10 +64,10 @@ class FeedbacksController < ApplicationController
       flash[:error] = "Wrong arguments"
       return redirect_to :action => "new"
     end
- 
+    assignment = Assignment.find(params[:assignment_id])
+    @instructions = assignment.instructions
     respond_to do |format|
       if @feedback.save
-        assignment = Assignment.find(params[:assignment_id])
         assignment.feedbacks << @feedback
         format.html { redirect_to course_team_assignment_feedbacks_path(params[:course_id], params[:team_id], params[:assignment_id], params[:id]), notice: 'Feedback was successfully created.' }
       else
@@ -85,6 +88,8 @@ class FeedbacksController < ApplicationController
   # PATCH/PUT /feedbacks/1
   # PATCH/PUT /feedbacks/1.json
   def update
+    assignment = Assignment.find(params[:assignment_id])
+    @instructions = assignment.instructions
     @team = Team.find(params[:team_id])
     @feedbackcheck = Feedback.create(feedback_params)
     if check_params(@feedbackcheck, @team)

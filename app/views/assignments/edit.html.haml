@@ -7,6 +7,8 @@
     .form-input{:width => "70%"}
       = f.input :assignment_name, :required => true, placeholder: "Assignment Name Here"
     .form-input{:width => "70%"}
+      = f.input :instructions, :required => true, :input_html => {:rows => 12 }
+    .form-input{:width => "70%"}
       = f.input :deadline, :required => true, placeholder: "Deadline Here"
     .form-actions
       = f.button :submit

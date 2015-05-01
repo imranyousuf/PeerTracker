@@ -11,19 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150427101157) do
+ActiveRecord::Schema.define(version: 20150501000305) do
 
   create_table "assignments", force: :cascade do |t|
     t.string   "assignment_name"
     t.integer  "course_id"
     t.datetime "deadline"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           null: false
+    t.datetime "updated_at",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           null: false
+    t.text     "instructions",    default: "This form is an opportunity for you to rate the performance of your team members on this iteration.  Please fill this form out to the best of your abilities.  Letting us know of issues within your team (e.g. unequal distribution of work, people not cooperating with the rest of the team, etc) allows the staff to be aware of them and help you fix them. You have 20*X points to distribute, where X is the total number of members in your group. The idea is that if someone did an average amount of work, they would get 20 points.  The sum of all points you give to yourself and your teammates need to sum to 20*X. All of the numbers and comments you give are private and only viewable by the staff."
   end
 
   create_table "courses", force: :cascade do |t|
     t.string  "course_name"
     t.integer "user_id"
+    t.integer "team_size",   default: 4
   end
 
   create_table "courses_users", id: false, force: :cascade do |t|
@@ -40,7 +42,7 @@ ActiveRecord::Schema.define(version: 20150427101157) do
   end
 
   create_table "feedbacks", force: :cascade do |t|
-    t.string  "comments"
+    t.text    "comments"
     t.integer "rating"
     t.integer "giver_id"
     t.integer "receiver_id"

@@ -21,6 +21,8 @@
               %ul.dropdown-menu{:role => "menu"}
                 -for course in current_user.courses
                   %li= link_to "#{course.course_name}", course_path(course.id)
+                %li.divider
+                  %li.active= link_to "All Courses", courses_path
 
             %li.dropdown{:role => "presentation"}
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}

@@ -29,12 +29,16 @@ class TeamsController < ApplicationController
   # GET /teams/new
   def new
     @team = Team.new
+    @team_size = Course.find(params[:course_id]).team_size.to_i
     @student_sids = put_empty_members
+    puts "WTFFFF"
+    puts @team_size
   end
 
   # GET /teams/1/edit
   def edit
     @student_sids = put_curr_members
+    @team_size = Course.find(params[:course_id]).team_size
     @team = Team.find(params[:id])
   end
 
@@ -45,6 +49,7 @@ class TeamsController < ApplicationController
     @team.users << current_user
     @student_sids = put_empty_members
     error = ""
+    @team_size = Course.find(params[:course_id]).team_size.to_i
     begin
       validate_team_members
     rescue Exception => e
@@ -74,6 +79,7 @@ class TeamsController < ApplicationController
   def update
     @student_sids = put_curr_members
     @team.users.clear
+    @team_size = Course.find(params[:course_id]).team_size.to_i
     @team.users << current_user
     begin
       validate_team_members

@@ -1,10 +1,13 @@
-= simple_form_for(@assignment, :url => all_assignments_path, :html => {:class => "form-horizontal", :style => "margin: 0 auto; width: 40%;"}) do |f|
+= simple_form_for(@assignment, :url => all_assignments_path, :html => {:class => "form-horizontal", :style => "margin: 0 auto; width: 50%;"}) do |f|
 
   = f.error_notification
 
-  .form-input{:width => "70%"}
+  .form-input{:width => "30%"}
     = f.input :assignment_name, :required => true, placeholder: "Assignment Name Here"
+  .form-input{:width => "70%", :style => "vertical-align: middle;"}
+    = f.input :instructions, :required => true, :input_html => {:rows => 12 }
   .form-input{:width => "70%"}
     = f.input :deadline, :required => true, placeholder: "Deadline Here"
+
   .form-actions
     = f.button :submit

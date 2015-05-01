@@ -1,29 +1,28 @@
 %h1{:align => "center"} Your Courses
-
-%table.table-bordered{:width => "90%", :align => "center"}
-  %thead
-    %tr
-      %th{:align => "center"} Course Name
-      %th{:align => "center"} Professor
-      - if @permission.has_role?(:professor)
-        %th{:align => "center"}
-        %th{:align => "center"}
-        %th{:align => "center"}
-      - if @permission.has_role?(:instructor)
-        %th{:align => "center"}
-
-  %tbody
-    - @courses.each do |course|
-      %tr
-        %td= link_to course.course_name, course_path(:id => course.id)
-        %td= User.where(:user_id => course.user_id).first.full_name
+%br
+%br
+%div{:align => "left", :style =>"margin: 0 auto; width: 60%;"}
+  - @courses.each do |course|
+    %div{style: "border: 2px solid SteelBlue; border-radius: 6px;text-align:justify;cursor: pointer;", :align => :center} 
+      %div.name{:onclick => "location.href=\"/courses/#{course.id}\";"}
+        %h1{:align => "left", :style => "margin-left: 30px;color: SteelBlue; display:inline-block;"}= course.course_name
+        %h1{:align => "right", :style => "margin-right: 15px; position: relative;top: -15px; color: SteelBlue; font-size: 15px; display:inline-block;"}= "Professor: #{User.where(:user_id => course.user_id).first.full_name}"
+      %div.name{:style => "background-color: White;border-top: 1px solid SteelBlue;"}
         - if @permission.has_role? :professor
-          %td= link_to "Edit this course", edit_course_path(:id => course.id)
-          %td= link_to "See all students and instructors", users_path
-          %td= link_to "Remove #{course.course_name}", course, :method => :delete, :data => { :confirm => 'Are you sure?' }
-        - if @permission.has_role? :instructor
-          %td= link_to "See all assignments", all_assignments_path(:course_id => course.id)
+          %h1{:style => "display:inline-block;font-size: 13px;margin-left: 300px;"}= link_to "Go to All Students/Instructors", users_path
+          %h1{:style => "display:inline-block;font-size: 13px;margin-right: 20px;"}= link_to "Go to All Assignments", all_assignments_path(:course_id => course.id)
+        - if @permission.has_role? :instructor 
+          %h1{ :style => "margin-left:  350px; color: SteelBlue; font-size: 13px;display:inline-block;"}= link_to "Go to All Teams", course_path(:id => course.id)
+          %h1{:style => "display:inline-block;font-size: 13px;margin-right: 20px;"}= link_to "Go to All Assignments", all_assignments_path(:course_id => course.id)
+        - if @permission.has_role? :student
+          %h1{ :style => "margin-left: 450px; color: SteelBlue; font-size: 13px"}= link_to "Go to All Teams", course_path(:id => course.id)
 
+    - if @permission.has_role? :professor
+      %div.name
+        %h1{:style => "display:inline-block;font-size: 13px;margin-left: 15px;"}= link_to "Edit this course", edit_course_path(:id => course.id)
+        %h1{:style => "display:inline-block;font-size: 13px;margin-right: 15px;"}= link_to "Remove #{course.course_name}", course, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    %br
+    %br
 
 
 %br
@@ -33,3 +32,16 @@
 
 %br
 
+:css
+  .name {
+    text-align: justify; 
+  }
+  
+  .name:after{
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 0;
+    font-size:0;
+    line-height:0;
+  }

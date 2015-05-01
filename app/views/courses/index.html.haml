@@ -7,6 +7,7 @@
       %div.name{:onclick => "location.href=\"/courses/#{course.id}\";"}
         %h1{:align => "left", :style => "margin-left: 30px;color: SteelBlue; display:inline-block;"}= course.course_name
         %h1{:align => "right", :style => "margin-right: 15px; position: relative;top: -15px; color: SteelBlue; font-size: 15px; display:inline-block;"}= "Professor: #{User.where(:user_id => course.user_id).first.full_name}"
+      %h1{:style => "font-size: 13px; margin-left: 20px;margin-right: 20px"}= "#{course.description}"
       %div.name{:style => "background-color: White;border-top: 1px solid SteelBlue;"}
         - if @permission.has_role? :professor
           %h1{:style => "display:inline-block;font-size: 13px;margin-left: 300px;"}= link_to "Go to All Students/Instructors", users_path

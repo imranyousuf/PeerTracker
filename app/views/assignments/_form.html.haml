@@ -4,6 +4,7 @@
 
   .form-input{:width => "30%"}
     = f.input :assignment_name, :required => true, placeholder: "Assignment Name Here"
+    = f.input :description, placeholder: "Description of Assignment Here"
   .form-input{:width => "70%", :style => "vertical-align: middle;"}
     = f.input :instructions, :required => true, :input_html => {:rows => 12 }
   .form-input{:width => "70%"}

@@ -21,7 +21,7 @@ class FeedbacksController < ApplicationController
     @user = current_user
     @users = []
     for m in @members
-      if m.user_id != current_user.user_id and m.has_role? :student
+      if m.has_role? :student
         f = Feedback.new
         f.giver_id = current_user.user_id
         f.receiver_id = m.user_id

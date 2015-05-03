@@ -1,16 +1,19 @@
-%h1{align: :center}= "Add New Student or Instructor"
+%h1{align: :center}= "Add New Student or Instructor for #{@course.course_name}"
 
 %br
 
 %div{align: :center}
   = render 'form'
 %br
--#.container
-  %h4 Import User Data
-  = form_tag import_users_path, multipart: true do 
-    =file_field_tag :file
-    =submit_tag "Upload Data"
-%br
+
+
+%h4 Import User Data
+=form_tag import_users_path, multipart: true do
+  =file_field_tag :file
+  = @course.course_name
+  =submit_tag "Upload Data"
+
+
 
 
 %div{align: :center}

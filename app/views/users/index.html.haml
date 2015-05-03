@@ -29,7 +29,7 @@
 
             %tbody
               - course.users.each do |user|
-                -if user.has_role? :student
+                -if user.has_role? :student or user.has_role? :instructor
                   %tr
                     %td= user.full_name
                     %td= user.user_id
@@ -48,7 +48,7 @@
   %div{:align => "center"}
     - if current_user.has_role? :professor 
       -if !course.nil?
-        = link_to "Add Student or Instructor for #{course.course_name}", new_user_path, :course => course
+        = link_to "Add Student or Instructor for #{course.course_name}", new_user_path(:course_id => course.id)
 
 
   %br

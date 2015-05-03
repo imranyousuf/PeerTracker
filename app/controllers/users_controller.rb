@@ -31,6 +31,8 @@ class UsersController < ApplicationController
   def new
 
    @courses = Course.where(:user_id => current_user.user_id)
+   #flash[:notice] = params.inspect
+   @course =  Course.find(params["course_id"])
    #user = User.new
    
   end
@@ -43,19 +45,18 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.where(:user_id => user_params[:user_id]).first
-    course = Course.where(:course_name => params["user"]["course"]).first
+    @course = Course.find(params["user"]["course_id"])
     respond_to do |format|
-      if @user and !course.users.include? @user
+      if @user and !@course.users.include? @user
         #if current_user.has_role? :professor
         #course = Course.where(:user_id => current_user.user_id).first
-        course.users << @user
+        @course.users << @user
         #end
         format.html { redirect_to @user, notice: 'User was successfully added.' }
         #format.json { render :show, status: :created, location: @user }
       else
         #@user = User.new
-        @courses = Course.where(:user_id => current_user.user_id)
-        if course.users.include? @user
+        if @course.users.include? @user
           flash[:error] = "User with ID: #{user_params[:user_id]} already enrolled in this class!"
         else
           flash[:error] = "User with ID: #{user_params[:user_id]} does not exist!"
@@ -92,14 +93,22 @@ class UsersController < ApplicationController
     end
   end
 
-  #def import
-  #  begin
-  #    User.import(params[:file])
-  #    redirect_to users_path, notice: "User Data successfully uploaded"
-  #  rescue
-  #    redirect_to users_path, notice: "Invalid CSV file format" 
-  #  end 
-  #end
+  def import
+    begin
+      course = Course.where(:user_id => current_user.user_id).first
+      puts course.inspect
+      failed = User.import(params[:file], course)
+      if !failed[0].empty?
+        flash[:alert] = "Students/Instructors with these ID(s) not found: #{failed[0].join(', ')}"
+      end
+      if !failed[1].empty?
+        flash[:error] = "Students/Instructors with these ID(s) already enrolled: #{failed[1].join(", ")}"
+      end
+      redirect_to users_path, notice: "User Data successfully uploaded"
+    rescue
+      redirect_to users_path, notice: "Invalid CSV file format" 
+   end 
+  end
 
 
   private

@@ -2,7 +2,7 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :course, label: false, collection: @courses.map(&:course_name), :selected => @courses.first.course_name, :input_html => {:style => "width:150px;"}
+    = f.input :course_id, :as => :hidden, :input_html => {:value => @course.id}
     = f.input :user_id, label: false, :input_html => {:style => "width:150px;"}, placeholder: "SID/Employee ID"
     %br
   .form-actions

@@ -40,7 +40,7 @@ Feature:
  
  Scenario: Add a new feedback
     Given I am signed on with uid: 00000002
-    And I follow "See all assignments"
+    And I follow "Go to All Assignments"
     And I follow "New Assignment"
     When I fill in "assignment[assignment_name]" with "HOORAH"
     When I select "2017" from "Deadline"
@@ -51,7 +51,7 @@ Feature:
 
   Scenario: Try to add an assignment due in the past
     Given I am signed on with uid: 00000002
-    And I follow "See all assignments"
+    And I follow "Go to All Assignments"
     And I follow "New Assignment"
     When I fill in "assignment[assignment_name]" with "HOORAH"
     And I press "Create Assignment"
@@ -59,7 +59,7 @@ Feature:
   
   Scenario: Try to add an assignment with same name or no name
     Given I am signed on with uid: 00000002
-    And I follow "See all assignments"
+    And I follow "Go to All Assignments"
     And I follow "New Assignment"
     When I fill in "assignment[assignment_name]" with "HOORAH"
     When I select "2017" from "Deadline"

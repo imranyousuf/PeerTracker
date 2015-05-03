@@ -8,10 +8,22 @@ class User < ActiveRecord::Base
   has_many :giver_feedbacks, :class_name => "Feedback", :foreign_key => 'giver_user_id'
   has_many :receiver_feedbacks, :class_name => "Feedback", :foreign_key => 'receiver_user_id'
 
-  def self.import(file)
+  def self.import(file, course)
+     already_enrolled = []
+     no_user = []
      CSV.foreach(file.path, headers: true) do |row|
-         User.create! row.to_hash
+         #User.create! row.to_hash
+        @user = User.where(row.to_hash).first
+        puts @user.inspect
+        if !@user 
+          no_user << row.to_hash["user_id"]
+        elsif course.users.include? @user
+          already_enrolled << row.to_hash["user_id"]
+        else
+          course.users << @user
+        end
      end
+     [ no_user, already_enrolled ]
   end
   
   def full_name

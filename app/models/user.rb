@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
       average = average/feedback.length
       average.to_s
     else
-      'No feedback received'
+      'N/A'
     end
   end
 

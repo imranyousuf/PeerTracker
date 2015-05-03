@@ -1,4 +1,4 @@
-%h1{:align => "center"}= "Your Assignments for " + @course.course_name
+%h1{:align => "center"}= "Assignments for " + @course.course_name
 
 / %table.table-bordered{:width => "90%", :align => "center"}
 /   %thead
@@ -54,18 +54,34 @@
 
   #products.row.list-group
     - @assignments.each do |assignment|
-      .item.col-xs-4.col-lg-4
+      .item.col-xs-4.col-lg-4.list-group-item
         .thumbnail
           %img.group.list-group-image{:alt => "", :src => "http://placehold.it/400x250/000/fff"}/
           .caption
             %h4.group.inner.list-group-item-heading
-              = link_to assignment.assignment_name, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
-            %p.group.inner.list-group-item-text
-              = assignment.description
+              - if @permission
+                = assignment.assignment_name
+                %hr
+                %p.h5.group.inner.list-group-item-text
+                  = assignment.description
+                %hr
+                - @names.each do |user|
+                  %li.h5= "Average rating for " + user.full_name + ": " + user.average_rating(assignment)
+                  .col-sm-offset-1
+                    - user.feedback_received(assignment).each do |feedback|
+                      %h5= "Giver: " + User.find_by_user_id(feedback.giver_id).full_name
+                      %h6= "Rating: " + feedback.rating.to_s
+                      %h6= "Comment: " + feedback.comments
+              - else
+                = link_to assignment.assignment_name, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
+                %hr
+                %p.h5.group.inner.list-group-item-text
+                  = assignment.description
+                %hr
             .row
               .col-xs-12.col-md-6
-                %p
-                  = "Due Date: " + assignment.deadline.to_s
+                %p.small
+                  %b= "Feedback Due Date: " + assignment.deadline.to_s
 
 
 

@@ -1,0 +1,25 @@
+%h1{:align => "center"}= "All Team Averages for " + @assignment.assignment_name
+- @teams.each do |team|
+  .container
+    - if @permission
+      .row
+        %h2= team.name
+      .row
+        %h4 Average Ratings:
+        - team.users.each do |user|
+          - if user.has_role? :student
+            - average_rating = user.average_rating(@assignment)
+            - if average_rating != "No Feedback Received" and average_rating.to_i < (20*(1-0.15))
+              %h5= user.full_name + ": "
+              %span{:style => "color: Red;"}= average_rating
+            - else
+              %span= user.full_name + ": "  #{%span{:style => "color: Green;"}= average_rating}
+              %span{:style => "color: Green;"}= average_rating
+            -#.col-sm-offset-1
+              - user.feedback_received(@assignment).each do |feedback|
+                %h5= User.find_by_user_id(feedback.giver_id).full_name
+                %h6= "Rating: " + feedback.rating.to_s
+                %h6= "Comment: " + feedback.comments
+
+    - else
+      %h2= link_to assignment.assignment_name + " - Due Date: " + assignment.deadline.to_s, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)

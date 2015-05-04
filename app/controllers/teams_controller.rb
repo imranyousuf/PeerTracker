@@ -107,14 +107,15 @@ class TeamsController < ApplicationController
     end
   end
 
-  #def import
-  #  begin
-  #    Team.import(params[:file])
-  #    redirect_to teams_path, notice: "Team Data successfully uploaded"
-  #  rescue
-  #    redirect_to teams_path, notice: "Invalid CSV file format" 
-  #  end 
-  #end
+  def import
+    all_errors = Team.import(params[:file], params[:course_id], current_user)
+    if all_errors.empty?
+      redirect_to course_teams_path, notice: "Team Data successfully uploaded"
+    else
+      flash[:error] = all_errors.join(", ")
+      redirect_to course_teams_path, alert: "Invalid CSV file format. Added Valid Data!" 
+    end 
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

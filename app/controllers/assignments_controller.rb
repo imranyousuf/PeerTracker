@@ -28,8 +28,34 @@ class AssignmentsController < ApplicationController
     redirect_to course_team_assignment_feedbacks_path(:course_id => params[:course_id], :team_id => params[:team_id], :assignment_id => params[:id])
   end
 
-  def professorshow
-
+ def professorshow
+    @permission = current_user.has_role?(:instructor) || current_user.has_role?(:professor)
+    @assignment = Assignment.find(params[:id])
+    @teams = current_user.teams.where(:course_id => params[:course_id])
+    @teams_info = []
+    for team in @teams
+      problem = false
+      students = {}
+      for student in team
+        flag = 2
+        if student.has_role? :student
+          average_rating = student.average_rating(@assignment)
+          if average_rating != "No Feedback Received"
+            if average_rating < 20*(1-0.15)
+              flag -= 1
+            end
+            if average_rating < 20*(1-0.35)
+              flag -= 1
+            end
+            if flag < 2
+              problem = true
+            end
+          end
+          students[student.full_name] = average_rating
+        end
+      end
+      @teams_info << [team, problem, students]
+    end
   end
 
   # GET /assignments/new

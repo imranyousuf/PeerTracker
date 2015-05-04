@@ -4,9 +4,12 @@
   = render 'form', :team => @team
   %br
 
--#.container
+%br
+%br
+%h1 Add New Teams using CSV
+.container
   %h3 Import Team Data
-  = form_tag import_teams_path, multipart: true do 
+  = form_tag import_course_teams_path, multipart: true do 
     =file_field_tag :file
     =submit_tag "Upload Data"
   %br

@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   put 'courses/:course_id/assignments/:id', to: 'assignments#update'
   get 'courses/:course_id/assignments/', to: 'assignments#professorindex', :as => 'all_assignments'
   delete 'courses/:course_id/assignments/:id', to: 'assignments#destroy', :as => 'delete_course_assignment'
-  get 'courses/:course_id/assignments/', to: 'assignments#professorshow', :as => 'show_assignment'
+  get 'courses/:course_id/assignments/:id', to: 'assignments#professorshow', :as => 'show_assignment'
 
 
 

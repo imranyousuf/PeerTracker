@@ -7,7 +7,10 @@ class FeedbacksController < ApplicationController
     @course = Course.find(params[:course_id])
     @team = @course.teams.find(params[:team_id])
     @assignment = Assignment.find(params[:assignment_id])
+    puts "PLS..."
+    puts @assignment.inspect
     @feedbacksgiven = @assignment.feedbacks.all.where(:giver_id => current_user.user_id)
+    puts @feedbacksgiven.inspect
     @feedbacksreceived = @assignment.feedbacks.all.where(:receiver_id => current_user.user_id)
   end
 

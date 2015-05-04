@@ -3,6 +3,7 @@
   = f.error_notification
   .form-inputs{:width => "90%"}
     %h4= f.input :name, required: true, autofocus: true, label: 'Team Name'
+    %h4= f.input :group_number, as: :integer, label: 'Group Number (if applicable)'
     %br
     %h4= f.label :leave_empty , "Remove student by leaving it empty or (Optional)"
     %br

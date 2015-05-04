@@ -22,6 +22,7 @@
           .caption
             %h4.group.inner.list-group-item-heading
               = link_to team[0].name, course_team_path(id: team[3])
+            = "Group Number: #{team[0].group_number}"
             %hr
               = "Team Members: " + team[2].join(", ")
             %p.h5.group.inner.list-group-item-text
@@ -33,7 +34,7 @@
                   %a.btn.btn-primary{:href => edit_course_team_path(:id => team[3])} 
                     %span.glyphicon.glyphicon-edit>
                       Edit
-                  %a.btn.btn-danger{:href => course_team_path(:id => team[3], :method => :delete, :data => { :confirm => "Are you sure?"})}
+                  %a.btn.btn-danger{:href => course_team_path(:id => team[3]), :method => :delete, :data => { :confirm => "Are you sure?"}}
                     %span.glyphicon.glyphicon-trash>
                       Delete
 

@@ -43,7 +43,8 @@ class TeamsController < ApplicationController
   # POST /teams
   # POST /teams.json
   def create
-    @team = Team.new(name: team_params[:name], course_id: params[:course_id])
+    puts params
+    @team = Team.new(name: team_params[:name], course_id: params[:course_id], group_number: team_params[:group_number])
     @team.users << current_user
     @student_sids = put_empty_members
     error = ""
@@ -87,7 +88,7 @@ class TeamsController < ApplicationController
       return
     end
     respond_to do |format|
-      if @team.update(name: team_params[:name], course_id: params[:course_id])
+      if @team.update(name: team_params[:name], course_id: params[:course_id], group_number: team_params[:group_number])
         format.html { redirect_to course_teams_path, notice: 'Team was successfully updated.' }
         #format.json { render :show, status: :ok, location: @team }
       else
@@ -125,7 +126,7 @@ class TeamsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def team_params
-      params.require(:team).permit(:name, :course_id)
+      params.require(:team).permit(:name, :course_id, :group_number)
     end
 
     def getTeamNameInstructorandMembers

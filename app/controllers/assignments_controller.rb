@@ -34,28 +34,41 @@ class AssignmentsController < ApplicationController
     @teams = current_user.teams.where(:course_id => params[:course_id])
     @teams_info = []
     for team in @teams
-      problem = false
+      problem = 2
       students = {}
-      for student in team
+      min_score = 1000
+      num_members = 0
+      feedbacks_received = 0
+      for student in team.users
         flag = 2
         if student.has_role? :student
+          num_members += 1
           average_rating = student.average_rating(@assignment)
-          if average_rating != "No Feedback Received"
-            if average_rating < 20*(1-0.15)
+          if average_rating != "N/A"
+            feedbacks_received += 1
+            if average_rating.to_i < 20*(1-0.15)
               flag -= 1
             end
-            if average_rating < 20*(1-0.35)
+            if average_rating.to_i < 20*(1-0.35)
               flag -= 1
             end
             if flag < 2
-              problem = true
+              problem = flag
+            end
+            if average_rating.to_i < min_score
+              min_score = average_rating.to_i
             end
           end
-          students[student.full_name] = average_rating
+          students[student] = [ average_rating, flag ]
         end
       end
-      @teams_info << [team, problem, students]
+      @teams_info << [team, problem, min_score, students, feedbacks_received/(num_members.to_f * num_members.to_f)]
     end
+    @teams_info = @teams_info.sort_by { |e| e[0].name }  if params[:sort_by].present? and params[:sort_by] == "team name"
+    @teams_info = @teams_info.sort_by { |e| e[0].group_number }  if params[:sort_by].present? and params[:sort_by] == "group number"
+    @teams_info = @teams_info.sort_by { |e| e[2] }  if params[:sort_by].present? and params[:sort_by] == "min score"
+    return @teams_info
+
   end
 
   # GET /assignments/new

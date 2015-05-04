@@ -1,5 +1,8 @@
 %h1{:align => "center"}= "Assignments for " + @course.course_name
 
+%h4{:align => "center"}= "Team Members: #{@names.map(&:full_name).join(", ")}"
+%br
+
 / %table.table-bordered{:width => "90%", :align => "center"}
 /   %thead
 /     %tr

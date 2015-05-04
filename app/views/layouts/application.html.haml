@@ -21,7 +21,7 @@
               %ul.dropdown-menu{:role => "menu"}
                 -for course in current_user.courses
                   -if current_user.has_role? :professor or current_user.has_role? :instructor
-                    %li= link_to "#{course.course_name}", all_assignments_path(course.id)
+                    -#%li= link_to "#{course.course_name} Assignments", all_assignments_path(course.id)
                   - else
                     %li= link_to "#{course.course_name}", course_path(course.id)
                 %li.divider
@@ -29,9 +29,14 @@
 
             %li.dropdown{:role => "presentation"}
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-                Teams
-                -if !current_user.has_role? :student
+                - if current_user.has_role? :student
+                  Assignments
+                - else
+                  Teams
+                -if current_user.has_role? :instructor
                   %span.badge= current_user.teams.count
+                -if current_user.has_role? :professor
+                  %span.badge= current_user.courses.count
                 %span.caret
 
               %ul.dropdown-menu{:role => "menu"}
@@ -49,9 +54,9 @@
             %li.dropdown{:role => "presentation"}
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 -if current_user.has_role? :student
-                  Assignments
+                  Feedbacks
                 -else
-                  Manage Assignments
+                  View Team Feedbacks
                 -if !current_user.has_role? :student
                   -count_assignment = 0
                 %span.caret
@@ -60,17 +65,18 @@
                   %li.disabled{:role => "presentation"}= link_to "#{course.course_name}"
                   -if current_user.has_role? :student
                     -for assignment in course.assignments
-                      -teams = Team.where(:course_id => course.id)
-                      -for team in teams
-                        -if team.users.include? current_user
-                          %li{align: :left}= link_to "#{assignment.assignment_name}", course_team_assignment_path(:course_id => course.id, :team_id => team.id, :id => assignment.id)
+                      - if assignment.deadline > Time.zone.now 
+                        -teams = Team.where(:course_id => course.id)
+                        -for team in teams
+                          -if team.users.include? current_user
+                            %li{align: :left}= link_to "#{assignment.assignment_name}", course_team_assignment_path(:course_id => course.id, :team_id => team.id, :id => assignment.id)
                   -else
                     -for assignment in course.assignments
                       %li{align: :left}= link_to "#{assignment.assignment_name}", show_assignment_path(:course_id => course.id, :id => assignment.id)
                       -#if assignment.deadline > Time.zone.now
                         %li{align: :left}= link_to "#{assignment.assignment_name}", edit_course_assignment_path(:course_id => course.id, :id => assignment.id)
-                    %li{style: "color:blue;"}= link_to "All #{course.course_name} Assignments", all_assignments_path(:course_id => course.id)
-                    %li.active= link_to "Add Assignment", new_course_assignment_path(:course_id => course.id)
+                    %li.active= link_to "All #{course.course_name} Assignments", all_assignments_path(:course_id => course.id)
+                    -#%li.active= link_to "Add Assignment", new_course_assignment_path(:course_id => course.id)
 
         -if user_signed_in?
           %ul.nav.navbar-nav.navbar-right

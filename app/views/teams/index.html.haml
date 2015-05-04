@@ -26,7 +26,7 @@
             %hr
               = "Team Members: " + team[2].join(", ")
             %p.h5.group.inner.list-group-item-text
-              - if current_user.has_role? :student
+              - if current_user.has_role? :student or current_user.has_role? :professor
                 = "Instructor: " + team[1]
             - if current_user.has_role? :instructor
               .row

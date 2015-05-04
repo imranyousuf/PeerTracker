@@ -5,7 +5,8 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = current_user.teams.where(:course_id => params[:course_id])
+    @teams = current_user.teams.where(:course_id => params[:course_id]) if !current_user.has_role? :professor
+    @teams = Course.find(params[:course_id]).teams if current_user.has_role? :professor
     @course = Course.find(params[:course_id])
     @course_id = @course.id
     @teams_params = getTeamNameInstructorandMembers
@@ -18,7 +19,7 @@ class TeamsController < ApplicationController
     #@assignments = Assignment.where("course_id = ? and deadline > ?", @team.course_id, Time.zone.now) 
     if current_user.has_role? :student
       redirect_to course_team_assignments_path(:team_id => @team.id), :assignments => @assignments
-    elsif current_user.has_role? :instructor
+    elsif current_user.has_role? :instructor or current_user.has_role? :professor 
       # flash[:notice] = "not implemented for instructor yet!"
       redirect_to course_team_assignments_path(:team_id => @team.id), :assignments => @assignments
       return

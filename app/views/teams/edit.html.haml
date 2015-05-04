@@ -1,26 +1,24 @@
-%h1 Editing team
+%h1{:align => "center"} Editing team
 
 -#= render 'form', :team => @team
 
 
 %container{:align => "center", :width => "90%"}
-  = simple_form_for(:team, url: course_team_path, :method => :put, :html => {:class => "form-horizontal"}) do |f|
+  = simple_form_for(:team, url: course_team_path, :method => :put, :html => {:style => "margin: 0 auto; width: 60%; align: left"}) do |f|
     = f.error_notification
 
-    .form-inputs
-      = f.input :name, required: true, autofocus: true, label: 'Team Name'
-      <br />
-      = f.label :leave_empty , "Remove student by leaving it empty or (Optional)"      
-      <br />
-      <br />
+    .form-inputs{:width => "90%"}
+      %h4= f.input :name, required: true, autofocus: true, label: 'Team Name'
+      %br
+      %h4= f.label :leave_empty , "Remove student by leaving it empty or (Optional)"      
+      %br
       - (1..@team_size).each do |n|
         = f.label :student_id, "Student #{n} SID"
         = text_field_tag "student_sid_#{n}", (@student_sids[n] or ""), :placeholder => "(Optional)"
-        <br />
-        <br />
-      <br />
+        %br
+      %hr
     .form-actions
       = f.button :submit, "Save Team", :id => "save_team"
-  -#= link_to 'Show', @team
-  \|
-  = link_to 'Back', course_teams_path
+  %br
+  %div{:align => "center"}
+    = link_to 'Back', course_teams_path, :style => "width: 40%; margin: 0 auto; text-align: center"

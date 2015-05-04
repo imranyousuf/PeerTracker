@@ -31,8 +31,6 @@ class TeamsController < ApplicationController
     @team = Team.new
     @team_size = Course.find(params[:course_id]).team_size.to_i
     @student_sids = put_empty_members
-    puts "WTFFFF"
-    puts @team_size
   end
 
   # GET /teams/1/edit

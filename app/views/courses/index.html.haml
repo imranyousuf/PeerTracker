@@ -1,37 +1,158 @@
-%h1{:align => "center"} Your Courses
-%br
-%br
-%div{:align => "left", :style =>"margin: 0 auto; width: 60%;"}
-  - @courses.each do |course|
-    %div{style: "border: 2px solid SteelBlue; border-radius: 6px;text-align:justify;cursor: pointer;", :align => :center} 
-      %div.name{:onclick => "location.href=\"/courses/#{course.id}\";"}
-        %h1{:align => "left", :style => "margin-left: 30px;color: SteelBlue; display:inline-block;"}= course.course_name
-        %h1{:align => "right", :style => "margin-right: 15px; position: relative;top: -15px; color: SteelBlue; font-size: 15px; display:inline-block;"}= "Professor: #{User.where(:user_id => course.user_id).first.full_name}"
-      %h1{:style => "font-size: 13px; margin-left: 20px;margin-right: 20px"}= "#{course.description}"
-      %div.name{:style => "background-color: White;border-top: 1px solid SteelBlue;"}
-        - if @permission.has_role? :professor
-          %h1{:style => "display:inline-block;font-size: 13px;margin-left: 300px;"}= link_to "Go to All Students/Instructors", users_path
-          %h1{:style => "display:inline-block;font-size: 13px;margin-right: 20px;"}= link_to "Go to All Assignments", all_assignments_path(:course_id => course.id)
-        - if @permission.has_role? :instructor 
-          %h1{ :style => "margin-left:  350px; color: SteelBlue; font-size: 13px;display:inline-block;"}= link_to "Go to All Teams", course_path(:id => course.id)
-          %h1{:style => "display:inline-block;font-size: 13px;margin-right: 20px;"}= link_to "Go to All Assignments", all_assignments_path(:course_id => course.id)
-        - if @permission.has_role? :student
-          %h1{ :style => "margin-left: 450px; color: SteelBlue; font-size: 13px"}= link_to "Go to All Teams", course_path(:id => course.id)
+%h1{:align => "center"}Courses
 
-    - if @permission.has_role? :professor
-      %div.name
-        %h1{:style => "display:inline-block;font-size: 13px;margin-left: 15px;"}= link_to "Edit this course", edit_course_path(:id => course.id)
-        %h1{:style => "display:inline-block;font-size: 13px;margin-right: 15px;"}= link_to "Remove #{course.course_name}", course, :method => :delete, :data => { :confirm => 'Are you sure?' }
-    %br
-    %br
+/%div{:align => "left", :style =>"margin: 0 auto; width: 60%;"}
+/  - @courses.each do |course|
+/    %div{style: "border: 2px solid SteelBlue; border-radius: 6px;text-align:justify;cursor: pointer;", :align => :center} 
+/      %div.name{:onclick => "location.href=\"/courses/#{course.id}\";"}
+/        %h1{:align => "left", :style => "margin-left: 30px;color: SteelBlue; display:inline-block;"}= course.course_name
+/        %h1{:align => "right", :style => "margin-right: 15px; position: relative;top: -15px; color: SteelBlue; font-size: 15px; /display:inline-block;"}= "Professor: #{User.where(:user_id => course.user_id).first.full_name}"
+/      %h1{:style => "font-size: 13px; margin-left: 20px;margin-right: 20px"}= "#{course.description}"
+/      %div.name{:style => "background-color: White;border-top: 1px solid SteelBlue;"}
+/        - if @permission.has_role? :professor
+/          %h1{:style => "display:inline-block;font-size: 13px;margin-left: 300px;"}= link_to "Go to All Students/Instructors", users_path
+/          %h1{:style => "display:inline-block;font-size: 13px;margin-right: 20px;"}= link_to "Go to All Assignments", all_assignments_path(:course_id => course.id)
+/        - if @permission.has_role? :instructor 
+/          %h1{ :style => "margin-left:  350px; color: SteelBlue; font-size: 13px;display:inline-block;"}= link_to "Go to All Teams", course_path(:id => course.id)
+/          %h1{:style => "display:inline-block;font-size: 13px;margin-right: 20px;"}= link_to "Go to All Assignments", all_assignments_path(:course_id => course.id)
+/        - if @permission.has_role? :student
+/          %h1{ :style => "margin-left: 450px; color: SteelBlue; font-size: 13px"}= link_to "Go to All Teams", course_path(:id => course.id)
+
+/    - if @permission.has_role? :professor
+/      %div.name
+/        %h1{:style => "display:inline-block;font-size: 13px;margin-left: 15px;"}= link_to "Edit this course", edit_course_path(:id => course.id)
+/        %h1{:style => "display:inline-block;font-size: 13px;margin-right: 15px;"}= link_to "Remove #{course.course_name}", course, :method => :delete, :data => { :confirm => 'Are you sure?' }
+/    %br
+/    %br
 
 
-%br
-%div{:align => "center"}
-  - if @permission.has_role? :professor
-    = link_to "Add a New Course", new_course_path
+/%br
+/%div{:align => "center"}
+/  - if @permission.has_role? :professor
+/    = link_to "Add a New Course", new_course_path
 
-%br
+/%br
+
+
+
+
+.container
+  .well.well-sm
+    .btn-group
+      %a#list.btn.btn-default.btn-sm{:href => "#"}
+        %span.glyphicon.glyphicon-th-list>
+        List
+      %a#grid.btn.btn-default.btn-sm{:href => "#"}
+        %span.glyphicon.glyphicon-th>
+        Grid
+      - if current_user.has_role? :professor
+        %a.btn.btn-primary.btn-round{:href => new_course_path}
+          %span.glyphicon.glyphicon-folder-open>
+            New Course
+
+  #products.row.list-group
+    - @courses.each do |course|
+      .item.col-xs-4.col-lg-4.list-group-item
+        .thumbnail
+          %img.group.list-group-image{:alt => "", :src => "http://placehold.it/400x250/000/fff"}/
+          .caption
+            %h4.group.inner.list-group-item-heading
+              = course.course_name + ' - ' + "Prof. #{User.where(:user_id => course.user_id).first.full_name}" 
+              %hr
+              %h5= course.description
+              %hr
+            %p.h5.group.inner.list-group-item-text
+              - if @permission.has_role? :professor
+                %h5= link_to "Go to All Students/Instructors", users_path
+                %h5= link_to "Go to All Assignments", all_assignments_path(:course_id => course.id)
+              - if @permission.has_role? :instructor 
+                %h5= link_to "Go to All Teams", course_path(:id => course.id)
+                %h5= link_to "Go to All Assignments", all_assignments_path(:course_id => course.id)
+              - if @permission.has_role? :student
+                %h5= link_to "Go to All Teams", course_path(:id => course.id)
+              - if current_user.has_role? :professor
+                .row
+                  .col-xs-4.col-md-6
+                    %a.btn.btn-primary{:href => edit_course_path(:id => course.id)}
+                      %span.glyphicon.glyphicon-edit>
+                        Edit
+                    %a.btn.btn-danger{:href => course_path(:id => course.id , :method => :delete, :data => { :confirm => "Are you sure?"})}
+                      %span.glyphicon.glyphicon-trash>
+                        Delete
+
+
+
+
+:javascript
+  $(document).ready(function() {
+    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+  });
+
+:css
+  .glyphicon { margin-right:5px; }
+  .thumbnail
+  {
+      margin-bottom: 20px;
+      padding: 0px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+  }
+
+  .item.list-group-item
+  {
+      float: none;
+      width: 100%;
+      background-color: #fff;
+      margin-bottom: 10px;
+  }
+  .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+  {
+      background: #428bca;
+  }
+
+  .item.list-group-item .list-group-image
+  {
+      margin-right: 10px;
+  }
+  .item.list-group-item .thumbnail
+  {
+      margin-bottom: 0px;
+  }
+  .item.list-group-item .caption
+  {
+      padding: 9px 9px 0px 9px;
+  }
+  .item.list-group-item:nth-of-type(odd)
+  {
+      background: #eeeeee;
+  }
+
+  .item.list-group-item:before, .item.list-group-item:after
+  {
+      display: table;
+      content: " ";
+  }
+
+  .item.list-group-item img
+  {
+      float: left;
+  }
+  .item.list-group-item:after
+  {
+      clear: both;
+  }
+  .list-group-item-text
+  {
+      margin: 0 0 11px;
+  }
+
+  .btn-group .btn + .btn,
+  .btn-group .btn + .btn-group,
+  .btn-group .btn-group + .btn,
+  .btn-group .btn-group + .btn-group {
+    margin-left: 10px;
+  }
 
 :css
   .name {

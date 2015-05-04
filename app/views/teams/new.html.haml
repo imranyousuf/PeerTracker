@@ -1,4 +1,4 @@
-%h1 Add New Team
+%h1{:align => "center"} Add New Team
 
 %container{:align => "center", :width => "90%"}
   = render 'form', :team => @team
@@ -11,4 +11,5 @@
     =submit_tag "Upload Data"
   %br
 
--#= link_to 'Back', teams_path
+%div{:align => "center"}
+  = link_to 'Back', course_teams_path, :style => "width: 40%; margin: 0 auto; text-align: center"

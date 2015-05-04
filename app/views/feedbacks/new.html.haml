@@ -1,25 +1,25 @@
-%container{:align => "left", :width => "900px", :margin => "0 auto"}
+%h1{:align => "center"} New Feedback
 
-  %container
-    %h1{:align => "left", :style=>"width: 60%; margin: 0 auto"} New feedback
+%container{:align => "center", :width => "90%"}
+  %p{:align => "left", :style=>"width: 60%;  margin: 0 auto"}= @instructions
+  %br
+= simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/", :html => {:style => "width: 60%; margin: 0 auto; align: left"}) do |f|
+  .form-inputs{:width => "90%"}
+    = collection_select(:user, :user_id, @users, :user_id, :full_name, {:include_blank => "Select a Team Member"})
     %br
-    %p{:align => "left", :style=>"width: 60%;  margin: 0 auto"}= @instructions
     %br
+    = "\nWhat feedback do you have on this person's performance?"
+    %h4= f.input :comments, :as => :text, input_html: {id: "comments"}
+    %br
+    = "\nHow many points would you give this person?"
+    %h4= f.input :rating, input_html: {id: "rating", :style => 'width: 20%; align: left'}
+    = f.hidden_field :giver_id, :value => @user.user_id
+  %hr
+  .form-actions
+    %h4{:align => "center"}= f.button :submit, "Submit", id: "submit"
 
-  = simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/", :html => {:style => "width: 45%; margin: 0 auto; align: left"}) do |f|
-    .form-inputs{:width => "90%"}
-      = collection_select(:user, :user_id, @users, :user_id, :full_name, {:include_blank => "Select a Team Member"})
-      %br
-      %br
-      = "\nWhat feedback do you have on this person's performance?"
-      = f.input :comments, :as => :text, input_html: {id: "comments"}
-      %br
-      = "\nHow many points would you give this person?"
-      = f.input :rating, input_html: {id: "rating"}
-      = f.hidden_field :giver_id, :value => @user.user_id
-    .form-actions
-      = f.button :submit, "Submit", id: "submit"
-
-    //= render 'form', :feedback => feedback
+%div{:align => "center"}
+  = link_to 'Back', course_team_assignment_feedbacks_path, :style => "width: 40%; margin: 0 auto; text-align: center"
+  //= render 'form', :feedback => feedback
 
 

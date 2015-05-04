@@ -24,7 +24,8 @@
               %blockquote
                 .row
                   .col-sm-9
-                    %h5= @team.users.all.where(:user_id => @feedbacksgiven[0].receiver_id).first.full_name
+                    %h5= "Recipient: " + @team.users.all.where(:user_id => @feedbacksgiven[0].receiver_id).first.full_name
+                    %hr
                     %p= @feedbacksgiven[0].comments
                     %small= "Rating: " + @feedbacksgiven[0].rating.to_s
                     %br
@@ -35,7 +36,8 @@
                 %blockquote
                   .row
                     .col-sm-9
-                      %h5= @team.users.all.where(:user_id => feedback.receiver_id).first.full_name
+                      %h5= "Recipient: " + @team.users.all.where(:user_id => feedback.receiver_id).first.full_name
+                      %hr
                       %p= feedback.comments
                       %small= "Rating: " + feedback.rating.to_s
                       %br

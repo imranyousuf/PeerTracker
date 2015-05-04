@@ -1,8 +1,10 @@
-= simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/#{params[:id]}", :html => {:class => "form-horizontal", :style => "margin: 0 auto; width: 40%;"}) do |f|
-  .form-inputs
-    = f.input :comments, autofocus: true, required: false, input_html: {id: "comments"}, :as => :text
-    = f.input :rating, autofocus: true, required: false, input_html: {id: "rating"}
-    = f.hidden_field :receiver_id, :value => @feedback.receiver_id
+= simple_form_for(@feedback, url: "/courses/#{params[:course_id]}/teams/#{params[:team_id]}/assignments/#{params[:assignment_id]}/feedbacks/#{params[:id]}", :html => {:style => "margin: 0 auto; width: 60%; align: left"}) do |f|
+  .form-inputs{:width => "90%"}
+    %h4= f.input :comments, autofocus: true, required: false, input_html: {id: "comments"}, :as => :text
+    %br
+    %h4= f.input :rating, autofocus: true, required: false, input_html: {id: "rating"}
+    = f.hidden_field :receiver_id, :value => @feedback.receiver_id, :style => 'width: 20%; align: left'
+  %hr{:width => "100%"}
   .form-actions
-    = f.button :submit, "Submit", id: "submit"
+    %h4{:align => "center"}= f.button :submit, "Submit", id: "submit"
 

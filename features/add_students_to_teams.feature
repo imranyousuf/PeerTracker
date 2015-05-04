@@ -32,7 +32,7 @@ Feature: add/remove students to teams
     Given I am signed on with uid: 00000002
     And I am on view teams page for course "CS 169"
     Then I should see "Your Teams"
-    And I follow "Add a New Team"
+    And I follow "New Team"
     When I fill in "team[name]" with "Team Best"
     And I fill in "student_sid_1" with "12345678"
     And I vague click "save_team"
@@ -45,7 +45,7 @@ Feature: add/remove students to teams
     Given I am signed on with uid: 00000002
     And I am on view teams page for course "CS 169"
     Then I should see "Your Teams"
-    And I follow "Add a New Team"
+    And I follow "New Team"
     When I fill in "team[name]" with "Team Best"
     And I fill in "student_sid_1" with "12345679"
     And I vague click "save_team"
@@ -55,11 +55,11 @@ Feature: add/remove students to teams
     Given I am signed on with uid: 00000002
     And I am on view teams page for course "CS 169"
     Then I should see "Your Teams"
-    And I follow "Add a New Team"
+    And I follow "New Team"
     When I fill in "team[name]" with "Team Noob"
     And I vague click "save_team"
     And I am on view teams page for course "CS 169"
-    And I follow "Add a New Team"
+    And I follow "New Team"
     When I fill in "team[name]" with "Team Noob"
     And I vague click "save_team"
     Then I should see "Team name exists"
@@ -67,7 +67,7 @@ Feature: add/remove students to teams
   Scenario: Remove a student from a team
     Given I am signed on with uid: 00000002
     And I am on view teams page for course "CS 169"
-    And I follow "Add a New Team"
+    And I follow "New Team"
     When I fill in "team[name]" with "Team Best"
     And I fill in "student_sid_1" with ""
     And I vague click "save_team"

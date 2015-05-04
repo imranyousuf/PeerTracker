@@ -25,7 +25,7 @@ Feature: add/remove students
 
   Scenario: Add student(s)
     Given I am signed on with uid: 00000001
-    And I follow "See all students and instructors"
+    And I follow "Go to All Students/Instructors"
     And I follow "Add Student or Instructor for CS 169"
     And I fill in "user[user_id]" with "12345678"
     And I press "Add Student or Instructor"
@@ -34,7 +34,7 @@ Feature: add/remove students
 
   Scenario: Try to add student who does not exist
     Given I am signed on with uid: 00000001
-    And I follow "See all students and instructors"
+    And I follow "Go to All Students/Instructors"
     And I follow "Add Student or Instructor for CS 169"
     And I fill in "user[user_id]" with "12345679"
     And I press "Add Student or Instructor"
@@ -42,7 +42,7 @@ Feature: add/remove students
 
   Scenario: Try to add student who is already enrolled
     Given I am signed on with uid: 00000001
-    And I follow "See all students and instructors"
+    And I follow "Go to All Students/Instructors"
     And I follow "Add Student or Instructor for CS 169"
     And I fill in "user[user_id]" with "12345678"
     And I press "Add Student or Instructor"
@@ -53,7 +53,7 @@ Feature: add/remove students
 
   Scenario: Remove student(s)
     Given I am signed on with uid: 00000001
-    And I follow "See all students and instructors"
+    And I follow "Go to All Students/Instructors"
     And I follow "Add Student or Instructor for CS 169"
     And I fill in "user[user_id]" with "12345678"
     And I press "Add Student or Instructor"

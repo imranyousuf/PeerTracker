@@ -16,34 +16,34 @@ Background:
 
 Scenario: create a new course
 	Given I am signed on with uid: 00000001
-	And I follow "Add a New Course"
+	And I follow "New Course"
 	When I fill in "course[course_name]" with "CS 170"
 	And I press "Create Course"
 	Then I should see "Successfully added course CS 170"
 
 Scenario: try to create a course with existing name
 	Given I am signed on with uid: 00000001
-	And I follow "Add a New Course"
+	And I follow "New Course"
 	When I fill in "course[course_name]" with "CS 170"
 	And I press "Create Course"
 	And I am on the home page
-	And I follow "Add a New Course"
+	And I follow "New Course"
 	When I fill in "course[course_name]" with "CS 170"
 	And I press "Create Course"
 	Then I should see "Course name exists"
 
 Scenario: Edit/Destroy an existing course
 	Given I am signed on with uid: 00000001
-	And I follow "Add a New Course"
+	And I follow "New Course"
 	When I fill in "course[course_name]" with "CS 170"
 	And I press "Create Course"
 	And I am on the home page
-	And I follow "Add a New Course"
+	And I follow "New Course"
 	When I fill in "course[course_name]" with "CS 170"
 	And I press "Create Course"
 	Then I should see "Course name exists"
 	And I am on the home page
-	And I follow "Remove CS 170"
+	And I follow "Delete"
 	Then I should see "Course was successfully removed."
 
 

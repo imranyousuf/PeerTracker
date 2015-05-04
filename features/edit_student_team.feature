@@ -34,7 +34,7 @@ Feature: change students on teams
   Scenario: Edit a student to a team
     Given I am signed on with uid: 00000002
     And I am on view teams page for course "CS 169"
-    And I follow "Add a New Team"
+    And I follow "New Team"
     When I fill in "team[name]" with "Team Best"
     And I fill in "student_sid_1" with "12345678"
     And I fill in "student_sid_2" with "23421232"

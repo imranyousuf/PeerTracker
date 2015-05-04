@@ -20,7 +20,7 @@
           %img.group.list-group-image{:alt => "", :src => "http://placehold.it/400x250/000/fff"}/
           .caption
             %h4.group.inner.list-group-item-heading
-              = assignment.assignment_name
+              = link_to assignment.assignment_name, show_assignment_path(:course_id => params[:course_id], :id => assignment.id)
             %hr
             %p.group.inner.list-group-item-text
               = assignment.description

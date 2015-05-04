@@ -40,6 +40,9 @@ Sort Teams By:
           - elsif flag < 2
             %span= student.full_name+ ": "
             %span{:style => "color: Gold;"}= average_rating
+          - elsif average_rating == "N/A"
+            %span= student.full_name+ ": "  #{%span{:style => "color: Green;"}= average_rating}
+            %span= average_rating
           - else
             %span= student.full_name+ ": "  #{%span{:style => "color: Green;"}= average_rating}
             %span{:style => "color: Green;"}= average_rating

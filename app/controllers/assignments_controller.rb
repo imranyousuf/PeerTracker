@@ -31,7 +31,8 @@ class AssignmentsController < ApplicationController
  def professorshow
     @permission = current_user.has_role?(:instructor) || current_user.has_role?(:professor)
     @assignment = Assignment.find(params[:id])
-    @teams = current_user.teams.where(:course_id => params[:course_id])
+    @teams = current_user.teams.where(:course_id => params[:course_id]) if current_user.has_role? (:instructor)
+    @teams = Course.find(params[:course_id]).teams if current_user.has_role? (:professor)
     @teams_info = []
     for team in @teams
       problem = 2

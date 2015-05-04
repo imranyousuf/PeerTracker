@@ -61,10 +61,10 @@ class TeamsController < ApplicationController
       else         
         if !error.blank?
           @team.errors.add(:validate, error)
-          flash[:error] = error
+          flash.now[:error] = error
         end
         if @team.errors[:message].empty? and error.blank?
-          flash[:error] = "Team name exists"
+          flash.now[:error] = "Team name exists"
         end
         format.html { render :new }
         #format.html { redirect_to new_course_team_path, notice: @team.errors[:name][0]}
@@ -83,7 +83,7 @@ class TeamsController < ApplicationController
     begin
       validate_team_members
     rescue Exception => e
-      flash[:error] = e.message
+      flash.now[:error] = e.message
       render :edit
       return
     end

@@ -57,12 +57,12 @@ class UsersController < ApplicationController
       else
         #@user = User.new
         if @course.users.include? @user
-          flash[:error] = "User with ID: #{user_params[:user_id]} already enrolled in this class!"
+          flash.now[:error] = "User with ID: #{user_params[:user_id]} already enrolled in this class!"
         else
-          flash[:error] = "User with ID: #{user_params[:user_id]} does not exist!"
+          flash.now[:error] = "User with ID: #{user_params[:user_id]} does not exist!"
         end
         format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        #format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end

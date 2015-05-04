@@ -44,8 +44,8 @@ Feature:
     Given the following assignments exist:
       | assignment_name | course_id | deadline    | created_at  | updated_at  |
       | Project 1       | 1         | 11-Apr-2020 | 04-Apr-2015 | 04-Apr-2015 |
-    And I follow "See all assignments"
-    And I follow "Edit this assignment"
+    And I follow "Go to All Assignments"
+    And I follow "Edit"
     When I fill in "assignment[assignment_name]" with "Never"
     And I press "Update Assignment"
     Then I should see "All Assignments for CS 162"
@@ -58,8 +58,8 @@ Feature:
     Given the following assignments exist:
       | assignment_name | course_id | deadline    | created_at  | updated_at  |
       | Project 1       | 1         | 11-Apr-2020 | 04-Apr-2015 | 04-Apr-2015 |
-    And I follow "See all assignments"
-    And I follow "Edit this assignment"
+    And I follow "Go to All Assignments"
+    And I follow "Edit"
     When I fill in "assignment[assignment_name]" with ""    
     And I press "Update Assignment"
     Then I should see "Assignment must have a name"
@@ -71,7 +71,7 @@ Feature:
     Given the following assignments exist:
       | assignment_name | course_id | deadline    | created_at  | updated_at  |
       | Project 1       | 1         | 19-Apr-2012 | 04-Apr-2015 | 04-Apr-2015 |
-    And I follow "See all assignments"
+    And I follow "Go to All Assignments"
     Then I should not see "Edit this assignment"
     Then I should see "Project 1"
   
@@ -81,6 +81,6 @@ Feature:
       | assignment_name | course_id | deadline    | created_at  | updated_at  |
       | Project 1       | 1         | 19-Apr-2020 | 04-Apr-2015 | 04-Apr-2015 |
     And I am on view assignments page for course "CS 162", team "Kevin Dogs"
-    Then I should see "Your Assignments for CS 162"
+    Then I should see "Assignments for CS 162"
 
 

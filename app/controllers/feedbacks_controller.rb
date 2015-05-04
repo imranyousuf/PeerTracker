@@ -6,9 +6,13 @@ class FeedbacksController < ApplicationController
     @course = Course.find(params[:course_id])
     @team = @course.teams.find(params[:team_id])
     @assignment = Assignment.find(params[:assignment_id])
-    puts "PLS..."
-    puts @assignment.inspect
     @feedbacksgiven = @assignment.feedbacks.all.where(:giver_id => current_user.user_id)
+    @points_allowed = (@team.users.count - 1) * 20
+    @points = @feedbacksgiven.map(&:rating).inject{|sum,x| sum + x }
+    if @points.nil?
+      @points = 0
+    end
+
     puts @feedbacksgiven.inspect
     @feedbacksreceived = @assignment.feedbacks.all.where(:receiver_id => current_user.user_id)
   end
@@ -23,7 +27,7 @@ class FeedbacksController < ApplicationController
     @user = current_user
     @users = []
     for m in @members
-      if m.has_role? :student
+      if m.has_role? :student and team.feedbacks.where(:giver_id => current_user.user_id, :receiver_id => m.user_id).empty?
         f = Feedback.new
         f.giver_id = current_user.user_id
         f.receiver_id = m.user_id

@@ -11,6 +11,17 @@
   .row
     .col-md-offset-2.col-md-8.text-center
       %h3 Feedbacks You've Given
+      %br
+      %h5= "Total Points to Allocate : " + @points_allowed.to_s
+      - if @points_allowed < @points 
+        %h5{:style => "color: Red;"}= "Total Points Given: " + @points.to_s
+        %h6{:style => "color: Red;"}="Extra Points: " + (@points-@points_allowed).to_s 
+      - elsif @points_allowed > @points 
+        %h5{:style => "color: Red;"}= "Total Points Given: " + @points.to_s
+        %h6{:style => "color: Red;"}="Remaining Points: " + (@points_allowed - @points).to_s 
+
+      - else
+        %h5{:style => "color: Green;"}= "Total Points Given: " + @points.to_s 
   .row
     .col-md-offset-2.col-md-8
       #quote-carousel1.carousel.slide{"data-ride" => "carousel"}

@@ -35,6 +35,15 @@ Feature: add/remove students to teams with csv upload
     Then I should see "Dogs Who Code"
     Then I should see "Masta Ruiqi"
     Then I should see "Masta Phyllis"
+
+  Scenario: Upload a csv file with a missing students
+    Given I am signed on with uid: 00000002
+    And I am on create new team page for course "CS 169"
+    When I upload the file "missing_student.csv"
+    Then I should see "Cats Who Code"
+    Then I should see "Masta Ruiqi"
+    Then I should see "Student with SID: 00000000 does not exist"
+    Then I should not see "Masta Phyllis"
   
 
 

@@ -96,12 +96,14 @@ RSpec.describe FeedbacksController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested feedback as @feedback" do
+      sign_in @student
       feedback = Feedback.create! valid_attributes
       get :edit, {:id => feedback.to_param, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment.id}, valid_session
       expect(assigns(:feedback)).to eq(feedback)
     end
 
     it "redirects if deadline has passed" do
+      sign_in @student
       feedback = Feedback.create! valid_attributes2
       get :edit, {:id => feedback.to_param, :course_id => @course.id, :team_id => @team.id, :assignment_id => @assignment2.id}, valid_session
       expect(flash[:error]).to be_present
@@ -111,6 +113,9 @@ RSpec.describe FeedbacksController, type: :controller do
   end
 
   describe "POST #create" do
+    before(:each) do
+      sign_in @student
+    end
     context "with valid params" do
       it "creates a new Feedback" do
         expect {
@@ -150,6 +155,9 @@ RSpec.describe FeedbacksController, type: :controller do
   end
 
   describe "PUT #update" do
+    before(:each) do
+      sign_in @student
+    end
     context "with valid params" do
       let(:new_attributes) {
         {comments: "you are good at this", rating: 90, giver_id: @student.user_id, 

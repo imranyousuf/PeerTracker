@@ -5,21 +5,26 @@
 %div{align: :center}
   = render 'form'
 %h1{align: :center}= "Add Students/Instructors to #{@course.course_name} using CSV"
-%h5{style: "width: 40%; margin-left: 48%; margin-right: auto;"} Format:
-%div{style: "width: 40%; margin-left: 48%; margin-right: auto;"}
-  %h6{style: "text_align: left;"} user_id
-  %h6{style: "text_align: left;"} 10000010
-  %h6{style: "text_align: left;"} 10000023
-  %h6{style: "text_align: left;"} 10231123
 %br
+.container
+  .panel.panel-info
+    .panel-heading
+      %h4.strong Upload Files
+      %p Instructions: Please upload your CSV files according to the format below:
+      %br
+      %p user_id
+      %p 10000010
+      %p 10000023
+      %p 10231123
 
-
-.container{align: :center} 
-  =form_tag import_users_path, multipart: true do
-    =file_field_tag :file
-    =submit_tag "Upload Data"
-%br
-
-
+    .panel-body
+      / Standar Form
+      %h4 Select files from your computer
+      =form_tag import_users_path, :multipart => true do
+        .form-inline
+          .form-group
+            =file_field_tag :file
+          =hidden_field_tag(:course_id, @course.id)
+          =submit_tag "Upload File", :class => "btn.btn-primary"
 %div{align: :center}
   = link_to 'Back', users_path

@@ -46,6 +46,7 @@ class UsersController < ApplicationController
   def create
     @user = User.where(:user_id => user_params[:user_id]).first
     @course = Course.find(params["user"]["course_id"])
+
     respond_to do |format|
       if @user and !@course.users.include? @user
         #if current_user.has_role? :professor
@@ -95,7 +96,8 @@ class UsersController < ApplicationController
 
   def import
     begin
-      course = Course.where(:user_id => current_user.user_id).first
+      puts params[:course_id]
+      course = Course.where(:user_id => current_user.user_id).where(:id => params[:course_id]).first
       puts course.inspect
       failed = User.import(params[:file], course)
       if !failed[0].empty?

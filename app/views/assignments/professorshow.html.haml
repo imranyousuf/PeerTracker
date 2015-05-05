@@ -1,56 +1,63 @@
 %h1{:align => "center"}= "All Team Averages for " + @assignment.assignment_name
 
 %br
-Sort Teams By:
-%h5= link_to "team name", show_assignment_path(:sort_by => "team name")
-%h5= link_to "minimum score", show_assignment_path(:sort_by => "min score")
-%h5= link_to "group number", show_assignment_path(:sort_by => "group number")
+.container{:align => "center"}
+  Sort Teams By:
+  %h5= link_to "team name", show_assignment_path(:sort_by => "team name")
+  %h5= link_to "minimum score", show_assignment_path(:sort_by => "min score")
+  %h5= link_to "group number", show_assignment_path(:sort_by => "group number")
 
--# for team in @teams_info
-  = team
-  %br
-- @teams_info.each do |team_info|
-  .container
-    - if @permission
-      - team = team_info[0]
-      - problem = team_info[1]
-      - min_score = team_info[2]
-      - students = team_info[3]
-      - progress = team_info[4] * 100
-      .row
-        - if problem < 1
-          %h2{:style => "color: Red;"}= team.name
-        - elsif problem < 2
-          %h2{:style => "color: Gold;"}= team.name
-        - else
-          %h2{:style => "color: Green;"}= team.name
-        %h5= "Group Number #{team.group_number}"
-      .progress
-        .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{progress.round}", :role => "progressbar", :style => "width: #{progress.round}%; min-width: 2em;"}
-          ="#{progress.round}%"
-          /60%
-      .row
-        %h4 Average Ratings:
-        - for student in students.keys
-          - average_rating = students[student][0]
-          - flag = students[student][1]
-          - if flag < 1
-            %span= student.full_name + ": "
-            %span{:style => "color: Red;"}= average_rating
-          - elsif flag < 2
-            %span= student.full_name+ ": "
-            %span{:style => "color: Gold;"}= average_rating
-          - elsif average_rating == "N/A"
-            %span= student.full_name+ ": "  #{%span{:style => "color: Green;"}= average_rating}
-            %span= average_rating
-          - else
-            %span= student.full_name+ ": "  #{%span{:style => "color: Green;"}= average_rating}
-            %span{:style => "color: Green;"}= average_rating
-          .col-sm-offset-1
-          - student.feedback_received(@assignment).each do |feedback|
-            %h5= User.find_by_user_id(feedback.giver_id).full_name
-            %h6= "Rating: " + feedback.rating.to_s
-            %h6= "Comment: " + feedback.comments
 
-    -#- else
-      %h2= link_to assignment.assignment_name + " - Due Date: " + assignment.deadline.to_s, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)
+.container{:width => "90%"}
+  #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+    - @teams_info.each do |team_info|
+      - if @permission
+        - team = team_info[0]
+        - problem = team_info[1]
+        - min_score = team_info[2]
+        - students = team_info[3]
+        - progress = team_info[4] * 100
+      .panel.panel-default
+        .panel-heading{:role => "tab", :id => "headingOne"}
+          %h4.panel-title
+            %a{"aria-controls" => team.name, "aria-expanded" => "true", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#" + team.name}
+              - if problem < 1
+                %h2{:style => "color: Red;"}= team.name
+              - elsif problem < 2
+                %h2{:style => "color: Gold;"}= team.name
+              - else
+                %h2{:style => "color: Green;"}= team.name
+        .panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel", :id => team.name}
+          .panel-body
+            %h5= "Group Number #{team.group_number}"
+            .progress
+              .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{progress.round}", :role => "progressbar", :style => "width: #{progress.round}%; min-width: 2em;"}
+                ="#{progress.round}%"
+            %hr
+            %h4 Average Ratings:
+            - for student in students.keys
+              - average_rating = students[student][0]
+              - flag = students[student][1]
+              - if flag < 1
+                %span= student.full_name + ": "
+                %span{:style => "color: Red;"}= average_rating
+              - elsif flag < 2
+                %span= student.full_name+ ": "
+                %span{:style => "color: Gold;"}= average_rating
+              - elsif average_rating == "N/A"
+                %span= student.full_name+ ": "  #{%span{:style => "color: Green;"}= average_rating}
+                %span= average_rating
+              - else
+                %span= student.full_name+ ": "  #{%span{:style => "color: Green;"}= average_rating}
+                %span{:style => "color: Green;"}= average_rating
+              .row
+                .col-sm-offset-1
+                  - student.feedback_received(@assignment).each do |feedback|
+                    %h5= User.find_by_user_id(feedback.giver_id).full_name
+                    %h6= "Rating: " + feedback.rating.to_s
+                    %h6= "Comment: " + feedback.comments
+      -#- else
+        %h2= link_to assignment.assignment_name + " - Due Date: " + assignment.deadline.to_s, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)  
+%br
+%br
+      

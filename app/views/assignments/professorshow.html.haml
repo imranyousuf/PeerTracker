@@ -41,8 +41,8 @@
             - for student in students.keys
               - average_rating = students[student][0]
               - flag = students[student][1]
-              .panel.panel-info
-                .panel-heading{:role => "tab", :id => student.full_name}
+              .panel.panel-info{style: "border-style: none;"}
+                .panel-heading{:role => "tab", :id => student.full_name, style: "background: white;border-style: none;"}
                   %h5.panel-title
                     %a{"aria-controls" => student.user_id.to_s, "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#" + student.user_id.to_s}
                       - if flag < 1
@@ -66,7 +66,6 @@
                           %h6= "Rating: " + feedback.rating.to_s
                           %h6= "Comment: " + feedback.comments
       -#- else
-        %h2= link_to assignment.assignment_name + " - Due Date: " + assignment.deadline.to_s, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)  
 %br
 %br
 

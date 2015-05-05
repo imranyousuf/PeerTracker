@@ -1,14 +1,17 @@
 %h1{:align => "center"} Add New Team
 
-%container{:align => "center", :width => "90%"}
+%container{:align => "center", :width => "40%"}
   = render 'form', :team => @team
-  %br
 
+%h1{align: :center} Add New Teams using CSV
+%h5{style: "width: 40%; margin-left: 40%; margin-right: auto;"} Format:
+%div{style: "width: 40%; margin-left: 40%; margin-right: auto;"}
+  %h6{style: "text_align: left;"} team_name, group_number, student_1, student_2, ...
+  %h6{style: "text_align: left;"} Dogs Who Code, 123, 10000010, 10000005
+  %h6{style: "text_align: left;"} Cats Who Code, , 10000023, 10000000
 %br
-%br
-%h1 Add New Teams using CSV
-.container
-  %h3 Import Team Data
+
+.container{align: :center} 
   = form_tag import_course_teams_path, multipart: true do 
     =file_field_tag :file
     =submit_tag "Upload Data"
@@ -16,3 +19,5 @@
 
 %div{:align => "center"}
   = link_to 'Back', course_teams_path, :style => "width: 40%; margin: 0 auto; text-align: center"
+%br
+%br

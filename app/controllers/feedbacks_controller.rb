@@ -1,5 +1,7 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
+
   # GET /feedbacks
   # GET /feedbacks.json
   def index

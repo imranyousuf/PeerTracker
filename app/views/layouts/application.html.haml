@@ -10,7 +10,7 @@
 
   %body
     %nav.navbar.navbar-default
-      .container-fluid
+      .container
         %ul.nav.navbar-nav
           .navbar-brand= link_to "PeerTracker", root_path
           -if user_signed_in?
@@ -87,6 +87,7 @@
           %ul.nav.navbar-nav.navbar-right
             %li= link_to "Sign Up", new_user_registration_path
             %li= link_to "Sign In", new_user_session_path
+    
 
 
     .container
@@ -95,22 +96,22 @@
     = yield
 
   :css
+
+    .navbar-nav
+    {
+      width: auto;
+    }
     .navbar-brand
     {
-      margin-left:50px !important;
+      margin-left:3px !important;
     }
     .navbar-right
     {
       margin-right:50px !important;
     }
-    .alert, .error, .notice, .success { padding:.8em 0; margin:0 0 2px 0; border:2px solid #ddd; font-size:1.6em; text-align:center;}
+    .alert, .error, .notice, .success { padding:.8em 0; margin:0 0 2px 0; border:2px solid #ddd; font-size:1.1em; width: 40%; text-align: center;margin-left: auto; margin-right: auto; border-radius: 5px;}
 
     .error { background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4; }
-    .notice { background:#FFF6BF;color:#514721;border-color:#FFD324; }
-    .success { background:#DDFCD5;color:#000;border-color:#44A815; }
+    .notice {background:AngelBlue;color:SteelBlue;border-color:SteelBlue; }
+    .success { font-color:#000; background:#DDFCD5;color:#000;border-color:SteelBlue; }
     .alert { background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4; }
-
-    .error a {color:#8a1f11;}
-    .notice a {color:#514721;}
-    .success a {color:#264409;}
-    .alert a {color:#8a1f11;}

@@ -11,10 +11,10 @@ class User < ActiveRecord::Base
   def self.import(file, course)
      already_enrolled = []
      no_user = []
-     CSV.foreach(file.path, headers: true) do |row|
-         #User.create! row.to_hash
+     CSV.foreach(file.path, headers: true) do |unstripped_row|
+        row = {}
+        unstripped_row.each{|k, v| row[k.strip] = (v.strip if v!= nil)}
         @user = User.where(row.to_hash).first
-        puts @user.inspect
         if !@user 
           no_user << row.to_hash["user_id"]
         elsif course.users.include? @user

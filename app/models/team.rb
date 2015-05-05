@@ -8,20 +8,26 @@ class Team < ActiveRecord::Base
 
   def self.import(file, course_id, current_user)
       all_errors = []
-       CSV.foreach(file.path, headers: true) do |row|
-          puts row
-          puts row.to_hash
-          puts row.to_hash["team_name"]
+      if file.nil?
+        all_errors << " "
+        return all_errors
+      end
+      begin
+       CSV.foreach(file.path, headers: true) do |unstripped_row|
+          row = {}
+          unstripped_row.each{|k, v| row[k.strip] = (v.strip if v!= nil)}
+          if row.to_hash["group_number"].blank?
+            row.to_hash["group_number"] = 0
+          end
           course = Course.find(course_id)
-          team = Team.create ({:name => row.to_hash["team_name"], :course_id => course_id})
+          team = Team.create ({:name => row.to_hash["team_name"], :course_id => course_id, :group_number =>row.to_hash["group_number"]})
           if !team.save
             all_errors << "Team name #{row.to_hash["team_name"]} exists"
             next
           end
           team.users << current_user
-          puts team.users
           for key in row.to_hash.keys
-            if key != "team_name" and !row.to_hash[key].blank?
+            if !["team_name", "group_number"].include? key and !row.to_hash[key].blank?
               sid = row.to_hash[key]
               student = User.where(user_id: row.to_hash[key]).first
               if student.nil?
@@ -35,8 +41,11 @@ class Team < ActiveRecord::Base
               end
             end
           end
-          #puts team.users
        end
        all_errors
+       rescue ArgumentError
+        all_errors << " "
+        return all_errors
+       end
    end
 end

@@ -37,6 +37,9 @@ class Ability
       can :manage, Course
       can :manage, Assignment
       can :manage, Team
+      can :manage, Feedback
+      cannot :create, Feedback
+      cannot :update, Feedback
     elsif user.has_role? :instructor
       can :manage, Team
       can :index, Team
@@ -45,6 +48,9 @@ class Ability
       can :index, Course
       can :show, Course
       can :manage, Assignment
+      can :manage, Feedback
+      cannot :create, Feedback
+      cannot :update, Feedback
     elsif user.has_role? :student
       can :read, Team
       can :index, Team
@@ -53,6 +59,8 @@ class Ability
       can :read, Feedback
       can :index, Course
       can :show, Course
+      can :read, Assignment
+      can :index, Assignment
     else
       can :index, Course
     end

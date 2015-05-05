@@ -1,4 +1,4 @@
-= simple_form_for(:team, url: course_teams_path, :html => {:style => "margin: 0 auto; width: 60%; align: left"}) do |f|
+= simple_form_for(:team, url: course_teams_path, :html => {:style => "margin: 0 auto; width: 40%; align: left"}) do |f|
   
   = f.error_notification
   .form-inputs{:width => "90%"}
@@ -12,6 +12,6 @@
       = text_field_tag "student_sid_#{n}", (@student_sids[n] or ""), :placeholder => "(Optional)"
       %br
       %br
-    %hr
   .form-actions
     = f.button :submit, "Save Team", :id => "save_team"
+    %hr

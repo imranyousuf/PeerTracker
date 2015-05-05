@@ -4,16 +4,21 @@
 
 %div{align: :center}
   = render 'form'
+%h1{align: :center}= "Add Students/Instructors to #{@course.course_name} using CSV"
+%h5{style: "width: 40%; margin-left: 48%; margin-right: auto;"} Format:
+%div{style: "width: 40%; margin-left: 48%; margin-right: auto;"}
+  %h6{style: "text_align: left;"} user_id
+  %h6{style: "text_align: left;"} 10000010
+  %h6{style: "text_align: left;"} 10000023
+  %h6{style: "text_align: left;"} 10231123
 %br
 
 
-%h4 Import User Data
-=form_tag import_users_path, multipart: true do
-  =file_field_tag :file
-  = @course.course_name
-  =submit_tag "Upload Data"
-
-
+.container{align: :center} 
+  =form_tag import_users_path, multipart: true do
+    =file_field_tag :file
+    =submit_tag "Upload Data"
+%br
 
 
 %div{align: :center}

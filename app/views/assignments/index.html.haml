@@ -66,10 +66,11 @@
                 = assignment.assignment_name
                 %hr
                 %p.h5.group.inner.list-group-item-text
+                  Assignment Description:
                   = assignment.description
                 %hr
                 - @names.each do |user|
-                  %li.h5= "Average rating for " + user.full_name + ": " + user.average_rating(assignment)
+                  %h5= "Average rating for " + user.full_name + ": " + user.average_rating(assignment)
                   .col-sm-offset-1
                     - user.feedback_received(assignment).each do |feedback|
                       %h5= "Giver: " + User.find_by_user_id(feedback.giver_id).full_name

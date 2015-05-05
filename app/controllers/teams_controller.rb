@@ -115,7 +115,7 @@ class TeamsController < ApplicationController
       redirect_to course_teams_path, notice: "Team Data successfully uploaded"
     else
       flash[:error] = all_errors.join(", ")
-      redirect_to course_teams_path, alert: "Invalid CSV file format. Added Valid Data!" 
+      redirect_to course_teams_path, alert: "Invalid CSV file format. Added valid data if any!" 
     end 
   end
 

@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
   validate :format_name
 
   def format_name
-    if /[A-Z]{1,} [0-9]+/.match(course_name) == nil
+    if /[A-Z]{1,} [0-9A-Z]+/.match(course_name) == nil
       errors.add(:course_name, "Incorrect format. i.e. CS 162")
     end
   end

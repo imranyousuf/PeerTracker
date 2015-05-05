@@ -13,7 +13,7 @@ Scenario: Sign up as student
 	And I fill in "user[password]" with "test1please"
 	And I fill in "user[password_confirmation]" with "test1please"
 	And I press "Sign up"
-	Then I should see "Student Account"
+	Then I should see "Phil Kwon | Student"
 
 Scenario: Fail Sign up as student
 	Given the following users exist:
@@ -42,5 +42,5 @@ Scenario: Sign up as instructor
 	And I fill in "user[password]" with "test1please"
 	And I fill in "user[password_confirmation]" with "test1please"
 	And I press "Sign up"
-	Then I should see "Instructor Account"
+	Then I should see "Instructor Kwon | Instructor"
 

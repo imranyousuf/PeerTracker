@@ -24,6 +24,9 @@ module NavigationHelpers
     when /^view course page for "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       course_path(@course.id)
+    when /^view assignment page for course "(.*)", assignment "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      show_assignment_path(course_id: @course.id, id: $2)
     when /^view teams page for course "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       "/courses/#{@course.id}/teams" 

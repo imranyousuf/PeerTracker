@@ -53,7 +53,6 @@
     - @courses.each do |course|
       .item.col-xs-4.col-lg-4.list-group-item
         .thumbnail
-          %img.group.list-group-image{:alt => "", :src => "http://placehold.it/400x250/000/fff"}/
           .caption
             %h4.group.inner.list-group-item-heading
               = course.course_name + ' - ' + "Prof. #{User.where(:user_id => course.user_id).first.full_name}" 

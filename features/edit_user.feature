@@ -13,7 +13,7 @@ Scenario: Change my name as a student
 	And I fill in "user[password]" with "test1please"
 	And I fill in "user[password_confirmation]" with "test1please"
 	And I press "Sign up"
-	When I follow "Student Account"
+	When I follow "Phil Kwon | Student"
 	And I fill in "user[first_name]" with "Changed this"
 	And I fill in "user[current_password]" with "test1please"
 	And I press "Update"

@@ -41,6 +41,7 @@ class UsersController < ApplicationController
   def create
     @user = User.where(:user_id => user_params[:user_id]).first
     @course = Course.find(params["user"]["course_id"])
+
     respond_to do |format|
       if @user and !@course.users.include? @user
         @course.users << @user
@@ -76,7 +77,7 @@ class UsersController < ApplicationController
 
   def import
     begin
-      course = Course.where(:user_id => current_user.user_id).first
+      course = Course.where(:user_id => current_user.user_id).where(:id => params[:course_id]).first
       failed = User.import(params[:file], course)
       if !failed[0].empty?
         flash[:alert] = "Students/Instructors with these ID(s) not found: #{failed[0].join(', ')}"

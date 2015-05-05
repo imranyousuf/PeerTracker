@@ -1,7 +1,9 @@
 require 'uri'
 require 'cgi'
+require 'test/unit/assertions'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "selectors"))
+World(Test::Unit::Assertions)
 
 Given /^the course is set up:$/ do
 	Course.create() 
@@ -44,7 +46,6 @@ Given /the following courses_users exist:/ do |courses_users_table|
     @course = Course.find(course_user[:course_id])
     @user = User.where(:user_id => course_user[:user_id]).first
     @course.users << @user
-    puts @user.courses.inspect
   end
 end
 
@@ -84,11 +85,14 @@ Given /^I am signed on with uid: (.+)$/ do |uid|
   visit path_to('the sign in page')
   @user = User.where(:user_id => uid.to_i).first
   fill_in("Email", :with=>@user.email)
-  puts @user.email
-  puts @user.password
-  puts @user.created_at
   fill_in("Password", :with=>"password")
   click_button("Log in")
 end
 
-
+Then /^I see "(.*)" before "(.*)"$/ do |e1, e2|
+  #  ensure that that e1 occurs before e2.
+  pos_e1 = page.body =~ /\b#{e1}/
+  pos_e2 = page.body =~ /\b#{e2}/
+  success = pos_e1 < pos_e2
+  assert success
+end

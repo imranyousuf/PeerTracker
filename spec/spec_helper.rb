@@ -18,7 +18,9 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'devise'
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start do
+  add_filter 'vendor/'
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -26,6 +28,7 @@ RSpec.configure do |config|
   # assertions if you prefer.
 
   config.include Devise::TestHelpers, :type => :controller
+  config.include ActionDispatch::TestProcess
  
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`

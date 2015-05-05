@@ -74,6 +74,11 @@ Given /the following feedbacks exist:/ do |feedbacks_table|
   end
 end
 
+When /^I upload the file "(.*)"$/ do |file_name|
+  attach_file(:file, File.join('features/upload_files', file_name))
+  click_button "Upload Data"
+end
+
 Given /^I am signed on with uid: (.+)$/ do |uid|
   include Devise::TestHelpers
   visit path_to('the sign in page')

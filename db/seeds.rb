@@ -70,7 +70,7 @@
 #Adding Student Users to Teams
 @team1.users << @a
 @team1.users << @b
-@team1.users << @c
+@team2.users << @c
 @team2.users << @d
 @team2.users << @e
 @team2.users << @k
@@ -111,23 +111,34 @@
 #
 
 #Creating Feedbacks
-
-@feed1 = Feedback.create! :comments => 'Nice job on the project! You have a good grasp of the concepts we learned in class and are a great partner as well!', :rating => '95', :giver_id => @k.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
-@feed2 = Feedback.create! :comments => 'Great job! You finished your portion of the project and also helped the rest of the team with theirs. Thanks for your help!', :rating => '100', :giver_id => @k.user_id, :receiver_id => @d.user_id, :team_id => @team2.id
-@feed3 = Feedback.create! :comments => 'Try to particpate more next time. You seem to be lost in some concepts that we have learned during lectures. Although you gave your best effort, your lack of understanding in certain areas slowed down the team as a whole', :rating => '50', :giver_id => @e.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
-@feed4 = Feedback.create! :comments => 'It seems that you did not know what was going on. I understand that you are taking many classes this semester, but I do not think that is an excuse for slacking off on this project', :rating => '40', :giver_id => @d.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
-@feed5 = Feedback.create! :comments => 'Please try harder on this project even though its been due', :rating => '70', :giver_id => @k.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
-@feed6 = Feedback.create! :comments => 'You did an awesome job and you really put in a lot of effort in everything you did.', :rating => '20', :giver_id => @d.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
-
+@feed1 = Feedback.create! :comments => 'Nice job on the project! You have a good grasp of the concepts we learned in class and are a great partner as well!', :rating => '25', :giver_id => @k.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
+@feed2 = Feedback.create! :comments => 'You finished your portion of the project, but refused to do more work', :rating => '15', :giver_id => @k.user_id, :receiver_id => @d.user_id, :team_id => @team2.id
+@feed3 = Feedback.create! :comments => 'Nice job! You helped out a lot', :rating => '20', :giver_id => @k.user_id, :receiver_id => @c.user_id, :team_id => @team2.id
+@feed4 = Feedback.create! :comments => 'Try to particpate more next time. You seem to be lost in some concepts that we have learned during lectures. Although you gave your best effort, your lack of understanding in certain areas slowed down the team as a whole', :rating => '15', :giver_id => @e.user_id, :receiver_id => @d.user_id, :team_id => @team2.id
+@feed5 = Feedback.create! :comments => 'It seems that you did not know what was going on. I understand that you are taking many classes this semester, but I do not think that is an excuse for slacking off on this project', :rating => '5', :giver_id => @e.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
+@feed6 = Feedback.create! :comments => 'You rock!', :rating => '35', :giver_id => @e.user_id, :receiver_id => @c.user_id, :team_id => @team2.id
+@feed7 = Feedback.create! :comments => 'Nice job! You helped out a lot', :rating => '30', :giver_id => @d.user_id, :receiver_id => @c.user_id, :team_id => @team2.id
+@feed8 = Feedback.create! :comments => 'Do more work please', :rating => '5', :giver_id => @d.user_id, :receiver_id => @k.user_id, :team_id => @team2.id
+@feed9 = Feedback.create! :comments => 'You did great', :rating => '20', :giver_id => @d.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
 
 @proj1.feedbacks << @feed1
 @proj1.feedbacks << @feed2
 @proj1.feedbacks << @feed3
 @proj1.feedbacks << @feed4
+@proj1.feedbacks << @feed5
+@proj1.feedbacks << @feed6
+@proj1.feedbacks << @feed7
+@proj1.feedbacks << @feed8
+@proj1.feedbacks << @feed9
 
-@proj2.feedbacks << @feed6
 
-@expired_proj.feedbacks << @feed5
+@feedextra = Feedback.create! :comments => 'Please try harder on this project even though its been due', :rating => '70', :giver_id => @k.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
+@feedexpired = Feedback.create! :comments => 'You did an awesome job and you really put in a lot of effort in everything you did.', :rating => '20', :giver_id => @d.user_id, :receiver_id => @e.user_id, :team_id => @team2.id
+
+
+@proj2.feedbacks << @feedextra
+
+@expired_proj.feedbacks << @feedexpired
 
 
 

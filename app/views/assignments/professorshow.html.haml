@@ -42,9 +42,9 @@
               - average_rating = students[student][0]
               - flag = students[student][1]
               .panel.panel-info
-                .panel-heading{:role => "tab", :id => student.full_name}
+                .panel-heading{:role => "tab", :id => student.full_name + team.name}
                   %h5.panel-title
-                    %a{"aria-controls" => student.user_id.to_s, "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#" + student.user_id.to_s}
+                    %a{"aria-controls" => student.user_id.to_s + team.name, "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#" + student.user_id.to_s + team.name}
                       - if flag < 1
                         %span= student.full_name + ": "
                         %span{:style => "color: Red;"}= average_rating
@@ -57,12 +57,12 @@
                       - else
                         %span= student.full_name+ ": "  #{%span{:style => "color: Green;"}= average_rating}
                         %span{:style => "color: Green;"}= average_rating
-                .panel-collapse.collapse{"aria-labelledby" => student.full_name, :role => "tabpanel", :id => student.user_id}
+                .panel-collapse.collapse{"aria-labelledby" => student.full_name.to_s + team.name.to_s, :role => "tabpanel", :id => student.user_id.to_s + team.name.to_s}
                   .panel-body
                     .row
-                      .col-sm-offset-1
-                        - student.feedback_received(@assignment).each do |feedback|
-                          %h5= User.find_by_user_id(feedback.giver_id).full_name
+                      - student.feedback_received(@assignment).each do |feedback|
+                        %h5{:style => "margin-left: 15px;"}= User.find_by_user_id(feedback.giver_id).full_name
+                        .col-sm-offset-1
                           %h6= "Rating: " + feedback.rating.to_s
                           %h6= "Comment: " + feedback.comments
       -#- else

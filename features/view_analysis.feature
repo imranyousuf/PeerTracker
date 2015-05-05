@@ -70,13 +70,13 @@ Background:
   Scenario: Sort by team name
     Given I am signed on with uid: 00000002
     Given I am on view assignment page for course "CS 169", assignment "2"
-    And I follow "team name"
+    And I follow "Team Name"
     Then I should see "Masta Ruiqi: 24"
     Then I should see "Masta Conrad: 11"
     Then I see "Masta Ruiqi" before "Masta Conrad"
 
-  Scenario: Sort by team name
+  Scenario: Sort by team's minimum score
     Given I am signed on with uid: 00000002
     Given I am on view assignment page for course "CS 169", assignment "2"
-    And I follow "minimum score"
+    And I follow "Minimum Score"
     Then I see "Masta Conrad" before "Masta Ruiqi" 

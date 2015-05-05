@@ -47,7 +47,8 @@ class AssignmentsController < ApplicationController
           num_members += 1
           average_rating = student.average_rating(@assignment)
           if average_rating != "N/A"
-            feedbacks_received += 1
+            count_student = @assignment.feedbacks.where(:receiver_id => student.user_id).count
+            feedbacks_received += count_student
             if average_rating.to_i < 20*(1-0.15)
               flag -= 1
             end
@@ -67,6 +68,7 @@ class AssignmentsController < ApplicationController
       if num_members == 0
         num_members = 1
       end
+      puts 
       @teams_info << [team, problem, min_score, students, feedbacks_received/(num_members.to_f * num_members.to_f)]
     end
     @teams_info = @teams_info.sort_by { |e| e[0].name }  if params[:sort_by].present? and params[:sort_by] == "team name"

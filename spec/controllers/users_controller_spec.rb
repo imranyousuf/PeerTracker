@@ -39,11 +39,11 @@ RSpec.describe UsersController, type: :controller do
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {user_id: 30000001, course: "CS 169"}
+    {user_id: 30000001, course_id: 1}
   }
 
   let(:invalid_attributes) {
-    {user_id: 30000006, course: "CS 169"}
+    {user_id: 30000006, course_id: 1}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -78,7 +78,7 @@ RSpec.describe UsersController, type: :controller do
     end
   end
   describe "POST #create" do
-    context "with valid params" do
+    context "with valid params" do 
       it "add a student to a course" do
         expect {
           post :create, {:user => valid_attributes}, valid_session

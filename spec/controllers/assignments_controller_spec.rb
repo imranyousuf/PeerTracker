@@ -23,9 +23,7 @@ DatabaseCleaner.strategy = :truncation
 RSpec.describe AssignmentsController, type: :controller do
   before(:each) do
     DatabaseCleaner.clean
-    # @request.env["devise.mapping"] = Devise.mappings[:student]
     @student = create(:student)
-    #puts @student.inspect
     @professor = create(:professor)
     @course = create(:course)
     @professor.add_role :professor
@@ -43,6 +41,10 @@ RSpec.describe AssignmentsController, type: :controller do
 
   let(:invalid_attributes) {
     {assignment_name: "proj1-1", course_id: @course.id, deadline: DateTime.now - 7.days, id: 1, 
+      created_at: DateTime.now + 7.days, updated_at: DateTime.now + 14.days}
+  }
+  let(:invalid_attributes2) {
+    {assignment_name: "", course_id: @course.id, deadline: DateTime.now - 7.days, id: 1, 
       created_at: DateTime.now + 7.days, updated_at: DateTime.now + 14.days}
   }
 
@@ -84,6 +86,15 @@ RSpec.describe AssignmentsController, type: :controller do
     context "with invalid params" do
       it "assigns a newly created but unsaved assignment as @assignment" do
         post :create, {:assignment => invalid_attributes, :course_id => @course.id}, valid_session
+        expect(assigns(:assignment)).to be_a_new(Assignment)
+      end
+      it "assignment name cannot be nil" do
+        post :create, {:assignment => invalid_attributes2, :course_id => @course.id}, valid_session
+        expect(assigns(:assignment)).to be_a_new(Assignment)
+      end
+      it "assignment name must be unique" do
+        post :create, {:assignment => valid_attributes, :course_id => @course.id}, valid_session
+        post :create, {:assignment => valid_attributes, :course_id => @course.id}, valid_session
         expect(assigns(:assignment)).to be_a_new(Assignment)
       end
 

@@ -11,12 +11,12 @@ Feature: add/remove students to courses with csv upload
       | Masta         | Phyllis        | 23421232         | pk@carry.com     | password | 30-Nov-2000 | 30-Nov-2000 |
     Given the following roles exist:
       | name          | 
-      | admin         |
+      | professor     |
       | instructor    |
       | student       |
     Given the following users_roles exist:
       | user_id  | role_id |
-      | 00000002 | 2       |
+      | 00000002 | 1       |
       | 12345678 | 3       |
       | 23421232 | 3       |
     Given the following courses exist:
@@ -39,8 +39,8 @@ Feature: add/remove students to courses with csv upload
   Scenario: Upload a csv file with invalid students
     Given I am signed on with uid: 00000002
     And I am on the add students page for course "CS 169"
-    When I upload the file "missing_student.csv"
-    Then I should see "Invalid CSV file format"
+    When I upload the file "course_students_invalid.csv"
+    Then I should see "Students/Instructors with these ID(s) not found: 00000000, 00000001, 00000003"
     Then I should see "Masta Ruiqi"
   
 

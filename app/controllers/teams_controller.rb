@@ -44,7 +44,6 @@ class TeamsController < ApplicationController
   # POST /teams
   # POST /teams.json
   def create
-    puts params
     @team = Team.new(name: team_params[:name], course_id: params[:course_id], group_number: team_params[:group_number])
     @team.users << current_user
     @student_sids = put_empty_members
@@ -58,7 +57,6 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.save and error.blank?
         format.html { redirect_to course_teams_path , notice: 'Team was successfully created.' }
-        #format.json { render :show, status: :created, location: @team }
       else         
         if !error.blank?
           @team.errors.add(:validate, error)
@@ -68,7 +66,6 @@ class TeamsController < ApplicationController
           flash.now[:error] = "Team name exists"
         end
         format.html { render :new }
-        #format.html { redirect_to new_course_team_path, notice: @team.errors[:name][0]}
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
@@ -91,10 +88,8 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.update(name: team_params[:name], course_id: params[:course_id], group_number: team_params[:group_number])
         format.html { redirect_to course_teams_path, notice: 'Team was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @team }
       else
         format.html { render :edit }
-        #format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end

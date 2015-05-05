@@ -25,9 +25,7 @@ RSpec.describe CoursesController, type: :controller do
 
   before(:each) do
     DatabaseCleaner.clean
-    # @request.env["devise.mapping"] = Devise.mappings[:student]
     @student = create(:student)
-    #puts @student.inspect
     @professor = create(:professor)
     @professor.add_role :professor
     @student.add_role :student

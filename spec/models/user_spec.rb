@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
    			it "returns no feedback received" do
    				@feedback_1.destroy
    				@feedback_2.destroy
-   				@student.average_rating(@assignment).should eq("No feedback received")
+   				@student.average_rating(@assignment).should eq("N/A")
    			end
    		end
    	end

@@ -55,7 +55,7 @@ class AssignmentsController < ApplicationController
             if average_rating.to_i < 20*(1-0.35)
               flag -= 1
             end
-            if flag < 2
+            if flag < problem
               problem = flag
             end
             if average_rating.to_i < min_score

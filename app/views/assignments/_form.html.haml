@@ -8,7 +8,7 @@
   .form-input{:width => "70%", :style => "vertical-align: middle;"}
     = f.input :instructions, :required => true, :input_html => {:rows => 12 }
   .form-input{:width => "70%"}
-    = f.input :deadline, :required => true, placeholder: "Deadline Here"
+    = f.input :deadline, label: "Deadline (UTC)",:required => true, placeholder: "Deadline Here"
 
   .form-actions
     = f.button :submit

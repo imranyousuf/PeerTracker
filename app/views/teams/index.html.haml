@@ -28,13 +28,13 @@
             %p.h5.group.inner.list-group-item-text
               - if current_user.has_role? :student or current_user.has_role? :professor
                 = "Instructor: " + team[1]
-            - if current_user.has_role? :instructor
+            - if current_user.has_role? :instructor or current_user.has_role? :professor
               .row
                 .col-xs-4.col-md-6
                   %a.btn.btn-primary{:href => edit_course_team_path(:id => team[3])} 
                     %span.glyphicon.glyphicon-edit>
                       Edit
-                  %a.btn.btn-danger{:href => course_team_path(:id => team[3]), :method => :delete, :data => { :confirm => "Are you sure?"}}
+                  %a.btn.btn-danger{:href => course_team_path(:id => team[3]), "data-method" => :delete, :data => { :confirm => "Are you sure?"}}
                     %span.glyphicon.glyphicon-trash>
                       Delete
 

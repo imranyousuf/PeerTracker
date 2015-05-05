@@ -24,8 +24,8 @@
                     -#%li= link_to "#{course.course_name} Assignments", all_assignments_path(course.id)
                   - else
                     %li= link_to "#{course.course_name}", course_path(course.id)
-                %li.divider
-                  %li.active= link_to "All Courses", courses_path
+                    %li.divider
+                %li= link_to "All Courses", courses_path, {style: "color: SteelBlue;"}
 
             %li.dropdown{:role => "presentation"}
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
@@ -42,13 +42,13 @@
               %ul.dropdown-menu{:role => "menu"}
                 -for team in current_user.teams
                   %li= link_to "#{team.name}", course_team_path(:course_id => team.course.id, :id => team.id)
+                %li.divider
                 -if !current_user.has_role? :student
-                  %li.divider
-                  -if !current_user.courses[0].nil? and !current_user.has_role? :student
+                  -if !current_user.courses[0].nil?
                     -for course in current_user.courses
                       %li= link_to "#{course.course_name} Teams", course_teams_path(:course_id => course.id)
                   %li.divider
-                  %li.active= link_to "All Students", users_path
+                  %li= link_to "All Students", users_path, {style: "color: SteelBlue;"}
 
 
             %li.dropdown{:role => "presentation"}
@@ -75,7 +75,7 @@
                       %li{align: :left}= link_to "#{assignment.assignment_name}", show_assignment_path(:course_id => course.id, :id => assignment.id)
                       -#if assignment.deadline > Time.zone.now
                         %li{align: :left}= link_to "#{assignment.assignment_name}", edit_course_assignment_path(:course_id => course.id, :id => assignment.id)
-                    %li.active= link_to "All #{course.course_name} Assignments", all_assignments_path(:course_id => course.id)
+                    %li= link_to "All #{course.course_name} Assignments", all_assignments_path(:course_id => course.id), {style: "color: SteelBlue;"}
                     -#%li.active= link_to "Add Assignment", new_course_assignment_path(:course_id => course.id)
 
         -if user_signed_in?

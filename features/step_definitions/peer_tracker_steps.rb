@@ -77,7 +77,7 @@ end
 
 When /^I upload the file "(.*)"$/ do |file_name|
   attach_file(:file, File.join('features/upload_files', file_name))
-  click_button "Upload Data"
+  click_button "Upload File"
 end
 
 Given /^I am signed on with uid: (.+)$/ do |uid|

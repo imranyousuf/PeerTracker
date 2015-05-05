@@ -30,6 +30,9 @@ module NavigationHelpers
     when /^create new team page for course "(.*)"$/ 
       @course = Course.where(course_name: "#{$1}").first
       "/courses/#{@course.id}/teams/new"
+    when /^the add students page for course "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      "/users/new?course_id=#{@course.id}"
     when /^edit team page for course "(.*)", team "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       @team = Team.where(name: "#{$2}", course_id: @course.id).first

@@ -17,7 +17,7 @@ Feature:
       | student       |
     Given the following users_roles exist:
       | user_id  | role_id |
-      | 00000002 | 1       |
+      | 00000001 | 1       |
       | 00000002 | 2       |
       | 12345678 | 3       |
       | 23421232 | 3       |

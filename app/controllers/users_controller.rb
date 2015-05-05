@@ -8,7 +8,6 @@ class UsersController < ApplicationController
       if current_user.has_role? :student
           redirect_to courses_path 
       elsif current_user.has_role? :professor 
-        #@users = find_students_for_professor
         @courses = Course.where(:user_id => current_user.user_id)
       elsif current_user.has_role? :instructor
         @users = find_students_for_instructor 
@@ -23,22 +22,18 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    #flash[:notice] = "No Information can be shown about student!" 
     redirect_to users_path
   end
 
   # GET /users/new
   def new
-
    @courses = Course.where(:user_id => current_user.user_id)
-   #flash[:notice] = params.inspect
-   @course =  Course.find(params["course_id"])
-   #user = User.new
-   
+   @course =  Course.find(params["course_id"])   
   end
 
   # GET /users/1/edit
   def edit
+    redirect_to users_path
   end
 
   # POST /users
@@ -49,21 +44,15 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user and !@course.users.include? @user
-        #if current_user.has_role? :professor
-        #course = Course.where(:user_id => current_user.user_id).first
         @course.users << @user
-        #end
         format.html { redirect_to @user, notice: 'User was successfully added.' }
-        #format.json { render :show, status: :created, location: @user }
       else
-        #@user = User.new
         if @course.users.include? @user
           flash.now[:error] = "User with ID: #{user_params[:user_id]} already enrolled in this class!"
         else
           flash.now[:error] = "User with ID: #{user_params[:user_id]} does not exist!"
         end
         format.html { render :new }
-        #format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -71,15 +60,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    #respond_to do |format|
-    #  if @user.update(user_params)
-    #    format.html { redirect_to @user, notice: 'User was successfully updated.' }
-    #    format.json { render :show, status: :ok, location: @user }
-    #  else
-    #    format.html { render :edit }
-    #    format.json { render json: @user.errors, status: :unprocessable_entity }
-    #  end
-    #end
+    redirect_to users_path
   end
 
   # DELETE /users/1
@@ -96,9 +77,7 @@ class UsersController < ApplicationController
 
   def import
     begin
-      puts params[:course_id]
       course = Course.where(:user_id => current_user.user_id).where(:id => params[:course_id]).first
-      puts course.inspect
       failed = User.import(params[:file], course)
       if !failed[0].empty?
         flash[:alert] = "Students/Instructors with these ID(s) not found: #{failed[0].join(', ')}"
@@ -108,7 +87,7 @@ class UsersController < ApplicationController
       end
       redirect_to users_path, notice: "User Data successfully uploaded"
     rescue
-      redirect_to users_path, notice: "Invalid CSV file format" 
+      redirect_to users_path, error: "Invalid CSV file format" 
    end 
   end
 
@@ -121,7 +100,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      #params[:user]
       params.require(:user).permit(:first_name, :last_name, :user_id, :email, :password, :sign_in_count)
     end
 

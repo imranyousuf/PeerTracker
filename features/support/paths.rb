@@ -24,12 +24,18 @@ module NavigationHelpers
     when /^view course page for "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       course_path(@course.id)
+    when /^view assignment page for course "(.*)", assignment "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      show_assignment_path(course_id: @course.id, id: $2)
     when /^view teams page for course "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       "/courses/#{@course.id}/teams" 
     when /^create new team page for course "(.*)"$/ 
       @course = Course.where(course_name: "#{$1}").first
       "/courses/#{@course.id}/teams/new"
+    when /^the add students page for course "(.*)"$/
+      @course = Course.where(course_name: "#{$1}").first
+      "/users/new?course_id=#{@course.id}"
     when /^edit team page for course "(.*)", team "(.*)"$/
       @course = Course.where(course_name: "#{$1}").first
       @team = Team.where(name: "#{$2}", course_id: @course.id).first

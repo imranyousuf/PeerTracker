@@ -22,7 +22,7 @@
       .panel.panel-default
         .panel-heading{:role => "tab", :id => team.group_number}
           %h4.panel-title
-            %a{"aria-controls" => team.name, "aria-expanded" => "true", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#" + team.name}
+            %a.inline{"aria-controls" => team.name, "aria-expanded" => "true", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#" + team.name}
               - if problem < 1
                 %h2{:style => "color: Red;"}= team.name
               - elsif problem < 2
@@ -30,8 +30,9 @@
               - else
                 %h2{:style => "color: Green;"}= team.name
         .panel-collapse.collapse.in{"aria-labelledby" => team.group_number, :role => "tabpanel", :id => team.name}
+          %h5{:style => "margin-left: 15px;"}= "Group Number #{team.group_number}"
           .panel-body
-            %h5= "Group Number #{team.group_number}"
+            %h5 % Feedbacks Received
             .progress
               .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{progress.round}", :role => "progressbar", :style => "width: #{progress.round}%; min-width: 2em;"}
                 ="#{progress.round}%"
@@ -68,4 +69,14 @@
         %h2= link_to assignment.assignment_name + " - Due Date: " + assignment.deadline.to_s, course_team_assignment_path(:course_id => params[:course_id], :team_id => params[:team_id], :id => assignment.id)  
 %br
 %br
-      
+
+:css
+
+  .progress {
+   width: 50%;
+   position: relative;
+  }
+
+  .progress-bar-info {
+    background: SteelBlue;
+  }

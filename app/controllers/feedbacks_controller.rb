@@ -14,8 +14,6 @@ class FeedbacksController < ApplicationController
     if @points.nil?
       @points = 0
     end
-
-    puts @feedbacksgiven.inspect
     @feedbacksreceived = @assignment.feedbacks.all.where(:receiver_id => current_user.user_id)
   end
 
@@ -109,7 +107,6 @@ class FeedbacksController < ApplicationController
         format.html { redirect_to course_team_assignment_feedbacks_path(params[:course_id], params[:team_id], params[:assignment_id]), notice: 'Feedback was successfully updated.' }
       else
         format.html { render :edit }
-        #format.json { render json: @feedback.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -33,7 +33,7 @@
                 %a.btn.btn-primary{:href => edit_course_assignment_path(:id => assignment.id)} 
                   %span.glyphicon.glyphicon-edit>
                     Edit
-                %a.btn.btn-danger{:href => delete_course_assignment_path(:id => assignment.id)}
+                %a.btn.btn-danger{:href => delete_course_assignment_path(:id => assignment.id), "data-method" => :delete, :data => { :confirm => "Are you sure?"}}
                   %span.glyphicon.glyphicon-trash>
                     Delete
 

@@ -75,7 +75,9 @@
                     %a.btn.btn-primary{:href => edit_course_path(:id => course.id)}
                       %span.glyphicon.glyphicon-edit>
                         Edit
-                    %a.btn.btn-danger{:href => course_path(:id => course.id , :method => :delete, :data => { :confirm => "Are you sure?"})}
+                    %hr
+                    = link_to "", course_path(:id => course.id), :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "a.btn.btn-danger"
+                    %a.btn.btn-danger{:href => course_path(:id => course.id), :method => :delete, :data => { :confirm => "Are you sure?"}}
                       %span.glyphicon.glyphicon-trash>
                         Delete
 
